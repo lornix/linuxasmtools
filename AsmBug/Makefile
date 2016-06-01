@@ -4,6 +4,9 @@ all:	$(TARGETS)
 #
 $(OBJS):
 #
+clean:
+	-rm -f $(TARGETS) $(OBJS)
+#
 doc:
 	../txt2man -t AsmBug asmbug.txt | gzip -c > asmbug.1.gz
 #

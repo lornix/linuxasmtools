@@ -15,7 +15,7 @@ all:
 #
 clean:
 	-rm -f asmlib.a
-	for dir in $(DIRS); do $(MAKE) -C $$dir clean; done
+	@for dir in $(DIRS); do $(MAKE) -C $$dir clean; done
 #
 archive:
 	-rm -f asmlib.a
@@ -23,7 +23,7 @@ archive:
 	cp -f asmlib.a ../
 #
 libs:
-	for dir in $(DIRS); do $(MAKE) -C $$dir all; done
+	@for dir in $(DIRS); do $(MAKE) -C $$dir all; done
 #
 syscall:
 	$(MAKE) make_syscall
