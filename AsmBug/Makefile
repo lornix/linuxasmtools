@@ -1,15 +1,10 @@
-
+#
 #
 # usage:  make         - compile asmedit executable
-#         make clean   - touch all source files
+#         make clean   - remove built binaries
 #         make install - install files
 #         make release - create release file
 #
-# Note: if linker gives warning "can not find start" it may
-#       be a nasm bug. Caused by adding the -O2 optimize flag,
-#       or the symbol _start may need to be public.  Some debuggers
-#       need a start label of "main" made public. - jeff
-######################################################
 #
 # modify the following as needed
 #
@@ -21,107 +16,32 @@
 OP = EX
 #OP=LIB
 #
-# select any of the following
-#    DEBUG = yes (include test code and debug info)
+include ../Makefile.Common
 #
-DEBUG=yes
-
-########################################################################
-#
-# hunt for library file, if this fails then set LIBS to file location
-# hunt at local dir, parent dir, then at $HOME/.a/
-lib1 = $(shell if test -f asmlib.a ; then echo asmlib.a ; fi)
-lib2 = $(shell if test -f ..//asmlib.a ; then echo ..//asmlib.a ; fi)
-lib3 = $(shell if test -f ../../asmlib.a ; then echo ../../asmlib.a ; fi)
-lib4 = $(shell if test -f /usr/lib/asmlib.a ; then echo /usr/lib/asmlib.a ; fi)
-
-ifeq "$(lib4)" ""
-#$(shell echo "$HOME/.a library not found" )
-else
-LIBS := /usr/lib/asmlibx.a $(lib4)
-endif
-
-ifeq "$(lib3)" ""
-#$(shell echo "../../ library not found" )
-else
-LIBS := ../../asmlibx.a $(lib3)
-endif
-
-ifeq "$(lib2)" ""
-#$(shell echo "no parent library")
-else
-LIBS := ..//asmlibx.a $(lib2)
-endif
-
-ifeq "$(lib1)" ""
-#$(shell echo "no local library")
-else
-LIBS := asmlibx.a $(lib1)
-endif
-
-ifeq "$(LIBS)"  ""
-LIBS = asmlibx.a asmlib.a
-endif
-
-# the following variables are probably ok
-
-#local = $(shell pwd)
-#home = $(HOME)
-#SHELL = /bin/bash
-#here = $(shell pwd)
-
-AS = nasm
-ifeq ($(DEBUG),yes)
-ASFLAGS := -g -O99
-DEFINES := -DDEBUG
-else
-ASFLAGS :=
-DEFINES=
-endif
-T = .asm
-
-LD = ld
-LDFLAGS =
-
-
-VERSION = $(shell cat VERSION)
-#dirs = $(shell dir -d *)
-srcs := $(shell dir *$(T))
-targets := $(subst .asm,, $(srcs))
-#targets := $(shell dir *$(T) | sed -e 's/$(T)//g')
-objs := $(subst .asm,.o, $(srcs))
-#objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')
-
-
 # template for each source compile
-%.o:    %$(T)
-	$(AS) $(ASFLAGS) $(DEFINES) $<
-#	$(AS) $(ASFLAGS) $(DEFINES) -l $*.lst $<
-
+%.o:    %.asm
+	$(AS) $(ASFLAGS) $<
+#
 # template for link
 %:      %.o
-	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
-
-all:	pre $(targets)
-
-$(objs):
-
-pre:
-	touch *.asm
-
-
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBSX) $(LIBS)
+#
+all:	$(TARGETS)
+#
+$(OBJS):
+#
 clean:
-	touch $(srcs)
-
-
+	-rm -f $(TARGETS) $(OBJS) *~
+#
 doc:
 	../txt2man -t AsmBug asmbug.txt | gzip -c > asmbug.1.gz
-
+#
 #
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
+#        TODO
 install:
 	@if test -w /etc/passwd ; \
 	then \
@@ -131,39 +51,35 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
 	  fi \
 #
 # asmtools programs
 #
+#	TODO
 uninstall:
-	@if test -w /etc/passwd ; \
-	then \
-	 echo "uninstalling asmbug in /usr/bin" ; \
-	 rm -f /usr/bin/asmbug ; \
-	 echo "uninstalling  support programs for asmbug" ; \
-	 rm -f /usr/share/man/man1/asmbug.1.gz ; \
+	@if test -w /etc/passwd ; then \
+		echo "uninstalling asmbug in /usr/bin" ; \
+		rm -f /usr/bin/asmbug ; \
+		echo "uninstalling  support programs for asmbug" ; \
+		rm -f /usr/share/man/man1/asmbug.1.gz ; \
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to uninstall at /usr/bin " ; \
-	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
-	  fi \
-
-
-
-
+		echo "-" ; \
+		echo "Root access needed to uninstall at /usr/bin " ; \
+	fi \
+#
+#	TODO
 release: tar deb rpm
-
+#
 tar:
 	strip asmbug
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/asmbug-$(VERSION).tar.gz -C .. AsmBug ElfDecode
-
+#
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
-
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+#
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmbug
-	sudo chown --reference Makefile ../release/asmbug*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmbug
+	chown --reference Makefile ../release/asmbug*
 	rm -f backup*
-
+#
