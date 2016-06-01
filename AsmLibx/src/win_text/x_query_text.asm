@@ -18,7 +18,8 @@
   [section .text align=1]
 ;---------- x_query_text ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
+  extern crt_str
   extern x_send_request
   extern x_wait_reply
   extern lib_buf

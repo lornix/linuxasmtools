@@ -1,14 +1,14 @@
 
   [section .text align=1]
 
-%include "../../include/signal.inc"
-%include "../../include/system.inc"
-%include "../../include/dcache_colors.inc"
+%include "../include/signal.inc"
+%include "../include/system.inc"
+%include "../include/dcache_colors.inc"
 ;%include "signal.inc"
 ;%include "system.inc"
 ;%include "dcache_colors.inc"
 
-;external library calls follow    
+;external library calls follow
   extern sys_exit
   extern delay
   extern sys_read
@@ -43,7 +43,7 @@
   extern list_get_from_front
   extern list_put_at_end
   extern list_check_end
- 
+
 ;The display is built in a buffer and then
 ;written with dcache_flush.  First, we need
 ;to find the display buffer size.
@@ -155,7 +155,7 @@ sigurg_loop:
   mov	edx,list_block
   call	list_get_from_front ;remove packet processed
   call	list_check_front;check if more data
-  jns	sigurg_loop	;jmp if more data  
+  jns	sigurg_loop	;jmp if more data
 ;all data has been processed, now do flush
   call	vt_flush
   jmp	event_loop
@@ -199,7 +199,7 @@ do_app_30:
   mov	[esi+4],eax	;store size
   call	list_put_at_end
 do_app_exit:
-  ret      
+  ret
 
 
 SIGIO_code:    ; key available
@@ -353,9 +353,9 @@ sigio_key:
   mov	ecx,key_buf
   mov	edx,2000
   call	sys_read
-  or	eax,eax    
+  or	eax,eax
   js	sigio_exit
-  
+
   or	[signal_hit_mask+2],byte 80h
   mov	[sigio_read_len],eax
 sigio_exit:
@@ -363,7 +363,7 @@ sigio_exit:
 ;---------------------
   [section .data]
 sigio_read_len: dd 0
-  [section .text]  
+  [section .text]
 ;--------------------
   [section .data]
 sig_table:
@@ -403,7 +403,7 @@ list_entry: dd 0  ;buffer address
 
 list_buffer: times 8*8 db 0
 list_buffer_end:
-  
+
 status	dd 0
 ;launch_name:	db '/home/jeff/bin/vttest',0,'-l',0,0
 ;launch_name:	db '/bin/bash',0,'-c',0,'/bin/bash',0,0

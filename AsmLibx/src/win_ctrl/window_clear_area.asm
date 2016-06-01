@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_clear_area ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern lib_buf
@@ -38,7 +38,7 @@
 ; OUTPUT:
 ;    error = sign flag set for js
 ;    success = sign flag set for jns
-;              
+;
 ; NOTES
 ;   source file: window_clear_area.asm
 ;<
@@ -63,7 +63,7 @@ window_clear_area:
   mov	[wca_width],eax
 
   pop	eax
-  mul	word [ebp+win.s_char_height]  
+  mul	word [ebp+win.s_char_height]
   mov	[wca_height],eax
 
   mov	eax,[ebp+win.s_win_id]

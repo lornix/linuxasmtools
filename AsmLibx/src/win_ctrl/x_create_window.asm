@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- x_create_window ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
 %endif
 
@@ -39,7 +39,7 @@
 ;    flag set (jns) if success
 ;    flag set (js) if err, eax=error code
 ;    [sequence] - sequence number of packet sent
-;              
+;
 ; NOTES
 ;   source file: x_create_window.asm
 ;<
@@ -53,6 +53,7 @@ x_create_window:
   mov	edi,cw_value
   movsd			;store background color
 %ifdef DEBUG
+extern crt_str
   mov	ecx,cw_msg
   call	crt_str
 %endif

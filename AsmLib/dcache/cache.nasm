@@ -20,7 +20,7 @@
 %include "dcache_colors.inc"
   extern read_stdin
   extern stdout_str
-  
+
   global _start,main
 main:
 _start:
@@ -155,8 +155,8 @@ key	db 'k',0
 ;       where: ff =   -1 (byte)
 ;              bb =   (byte) 0=left but  1=middle 2=right 3=release
 ;              cc =   binary column (byte)
-;              rr =   binary row (byte)  
-; NOTE 
+;              rr =   binary row (byte)
+; NOTE
 ;   source file key_read.asm
 ;   The "key" routines work together and other keyboard
 ;   functions should be avoided.  The "key" family is:
@@ -201,7 +201,7 @@ key_fread:
 ;      key_read - read key
 ;      key_check - check if key avail.
 ;      key_put - push a key back to buffer
-;<    
+;<
   extern sys_read
 
 key_read:
@@ -263,7 +263,7 @@ kr_exit2:
 ;             where: ff = db -1
 ;                    button = 0=left but  1=middle 2=right 3=release
 ;                    column = binary column (byte)
-;                    row = binary row (byte)  
+;                    row = binary row (byte)
 
 fix_mouse:
   cmp	word [ecx],5b1bh		;check if possible mouse
@@ -290,7 +290,7 @@ fix_mouse:
   sub	al,20h
   stosb				;store row
 mc_exit:
-  ret 
+  ret
 ;---------------------------------------------------
 ;>1 dcache
 ;key_check - check if key available, but do not read it
@@ -425,7 +425,7 @@ ks2:	times 14 db 0 ;key stirng 2
 ;                 esi=scratch
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 dcache_write_repeat:
   push	eax
   mov	[repeat_flag],ah	;0=horizontal
@@ -498,7 +498,7 @@ repeat_flag:	db 0	;0=horizontal 1=vertical
 ;     esi=ptr beyond last input char written
 ;     edi=image index
 ;     ebp=top of image buffer
-;<          
+;<
 ; registers kept: ah=color al=char out
 ;                 ebx -scratch
 ;                 ecx -scratch
@@ -506,7 +506,7 @@ repeat_flag:	db 0	;0=horizontal 1=vertical
 ;                 esi=input data ptr
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 ;---------------------------------------------------
 ;>1 dcache
 ;dcache_write_fstring - write string to cache and fill
@@ -523,7 +523,7 @@ repeat_flag:	db 0	;0=horizontal 1=vertical
 ;    esi=ptr beyond last input char written
 ;    edi=image index
 ;    ebp=top of image buffer
-;<          
+;<
 ; registers kept: ah=color al=char out
 ;                 ebx -scratch
 ;                 ecx -scratch
@@ -531,7 +531,7 @@ repeat_flag:	db 0	;0=horizontal 1=vertical
 ;                 esi=input data ptr
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 dcache_write_fstring:
   mov	al,1
   jmp	short dcache_entry
@@ -646,14 +646,14 @@ fill_flag	db 0	;0=no fill
 ;                 esi=input data ptr
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 ;---------------------------------------------------
 ;>1 dcache
 ;dcache_write_fblock - write block to cache and fill
 ;  same as dcache_write_block, with addition of fill
 ;  from end of block to right edge of display.
 ;
-; INPUT 
+; INPUT
 ;   esi = block ptr
 ;   ecx = block length
 ;   color and cursor location already set
@@ -672,7 +672,7 @@ fill_flag	db 0	;0=no fill
 ;                 esi=input data ptr
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 dcache_write_fblock:
   mov	al,1
   jmp	short dcache_bentry
@@ -772,7 +772,7 @@ dwb_tab:
 ;                 esi=input data ptr
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 ;---------------------------------------------------
 ;>1 dcache
 ;dcache_write_fline - write line to cache and fill
@@ -797,7 +797,7 @@ dwb_tab:
 ;                 esi=input data ptr
 ;                 edi=index into image
 ;                 ebp=image top
-;                 
+;
 dcache_write_fline:
   mov	al,1
   jmp	short dcache_xentry
@@ -893,7 +893,7 @@ dcache_set_color:
 ;   aafffbbb  aa-attr fff-foreground  bbb-background
 ;    0-blk 1-red 2-grn 3-brwn 4-blu 5-purple 6-cyan 7-gry
 ;    attributes 0-normal 1-bold 4-underscore 7-inverse
-;<        
+;<
 dcache_read_color:
   call	rowcol_to_index  ;eax=index ebx-modified
   mov	ebx,[image]
@@ -902,7 +902,7 @@ drx_loop:
   and	ah,7fh		;remove modified flag
   mov	al,ah
   stosb
-  loop	drx_loop  
+  loop	drx_loop
   ret
 ;---------------------------------------------------
 ;>1 dcache
@@ -922,7 +922,7 @@ drc_loop:
   mov	ax,[ebx+ecx*2]	;get data
   and	al,7fh		;remove modified flag
   stosb
-  loop	drc_loop  
+  loop	drc_loop
   ret
 ;---------------------------------------------------
 ;>1 dcache
@@ -1076,7 +1076,7 @@ df_color_change:
   rep	movsb
   pop	ecx
   pop	esi
-  pop	eax 
+  pop	eax
 ;stuff char
 df_stuff:
   cmp	ecx,edx		;is buf cursor = screen cursor?
@@ -1138,7 +1138,7 @@ to_entry:
   div	ecx
   or	dl,30h
   mov	byte [edi],dl
-  dec	edi  
+  dec	edi
   or	eax,eax
   jnz	to_entry
   ret
@@ -1154,7 +1154,7 @@ vt_column:
   db	'H'
 vt100_end:
   db	0		;end of string
-  
+
  [section .text]
 ;---------------------------------------------------
 write_out_buf:
@@ -1174,7 +1174,7 @@ write_out_buf:
 ; INPUT
 ;   al=color
 ; OUTPUT
-;   
+;
 ; NOTE
 ;   clear only sets display buffer, the function
 ;   dcache_flush must be called to update display
@@ -1212,7 +1212,7 @@ struc wnsize_struc
 endstruc
 ;wnsize_struc_size
 
-  global dcache_size 
+  global dcache_size
 dcache_size:
 ;get display size
   xor	ebx,ebx		;get code for stdin
@@ -1230,7 +1230,7 @@ dcache_size:
   mov	[dcache_columns],ax
 
 ;compute index size.
-  mul	word [dcache_rows]  
+  mul	word [dcache_rows]
   mov	ebx,eax		;move size of index
   inc	eax		;allow for ending word
   shl	eax,1		;multiply by 2
@@ -1254,7 +1254,7 @@ s_ypixel: dw 0
 ;   ;ebx = buffer pointer for tables
 ;   ;dl = blank screen color code
 ; OUTPUT
-;   ;js if error (buffer too small by neg about in eax)    
+;   ;js if error (buffer too small by neg about in eax)
 ; NOTES
 ;    source file: dcache_setup.asm
 ;
@@ -1390,7 +1390,7 @@ vcs2:			;foreground
   db	0		;ascii color number
   db	'm'
   db	0
-  
+
  [section .text]
 ;---------------
 ;---------------------------------------------------

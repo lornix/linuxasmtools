@@ -33,11 +33,12 @@
 ;    ecx = background color
 ; OUTPUT:
 ;    none
-;              
+;
 ; NOTES
 ;   source file: x_change_gc_colors.asm
 ;<
 ; * ----------------------------------------------
+extern x_send_request
 
   global x_change_gc_colors
 x_change_gc_colors:
@@ -45,6 +46,7 @@ x_change_gc_colors:
   mov	[foreground_color],ebx	;colors id
   mov	[background_color],ecx
 %ifdef DEBUG
+extern crt_str
   mov	ecx,cgc_msg
   call	crt_str
 %endif

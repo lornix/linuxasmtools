@@ -17,7 +17,7 @@
 
   [section .text align=1]
 ;---------- window_create ------------------
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern x_configure_window
@@ -38,7 +38,7 @@
 ;  to set window size and position.  From this the total
 ;  character rows and columns is calculated and the widow
 ;  is mapped (displayed).
-;  
+;
 ; INPUTS
 ;  function window_pre must be called first.
 ;  ebp = window block created by window_pre
@@ -53,7 +53,7 @@
 ;
 ;     The window is maped (visable)
 ;     Keyboard, mouse, and expose events are enabled.
-;              
+;
 ; NOTES
 ;   source file: window_create.asm
 ;<
@@ -77,7 +77,7 @@ window_create:
   mov	esi,[in_block_ptr]
   call	x_wm_hints
 
-  mov	eax,[ebp+win.s_win_id]	;get our window id  
+  mov	eax,[ebp+win.s_win_id]	;get our window id
   call	x_map_win
   js	wa_exit
 

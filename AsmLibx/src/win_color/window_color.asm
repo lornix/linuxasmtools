@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_color ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
   extern x_change_gc_colors
 %endif

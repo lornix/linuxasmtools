@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- select_desktop ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
 %endif
   extern root_win_id
@@ -31,7 +31,7 @@
 ; OUTPUT:
 ;    flag set (jns) if success
 ;    flag set (js) if err, eax=error code
-;              
+;
 ; NOTES
 ;   source file: select_desktop.asm
 ;<

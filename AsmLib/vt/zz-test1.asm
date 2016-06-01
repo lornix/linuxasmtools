@@ -1,12 +1,12 @@
 
   [section .text align=1]
 
-%include "../../include/signal.inc"
-%include "../../include/system.inc"
-%include "../../include/dcache_colors.inc"
+%include "../include/signal.inc"
+%include "../include/system.inc"
+%include "../include/dcache_colors.inc"
 
 
-;external library calls follow    
+;external library calls follow
   extern sys_exit
   extern delay
   extern sys_read
@@ -23,7 +23,7 @@
   extern vt_ptty_launch
   extern ptty_fd
   extern vt_in
- 
+
 ;The display is built in a buffer and then
 ;written with dcache_flush.  First, we need
 ;to find the display buffer size.

@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_clear ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern lib_buf
@@ -26,7 +26,7 @@
   extern x_send_request
 ;---------------------
 ;>1 win_ctrl
-;  window_clear - clear window              
+;  window_clear - clear window
 ; INPUTS
 ;  ebp = window block ptr
 ;  eax = 0 for default window color
@@ -35,7 +35,7 @@
 ; OUTPUT:
 ;    error = sign flag set for js
 ;    success = sign flag set for jns
-;              
+;
 ; NOTES
 ;   source file: window_clear.asm
 ;<

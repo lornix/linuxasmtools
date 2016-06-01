@@ -18,7 +18,8 @@
   [section .text align=1]
 ;---------- x_change_gc_font ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
+  extern crt_str
   extern x_send_request
 %endif
 
@@ -34,7 +35,7 @@
 ;    ebx = font id
 ; OUTPUT:
 ;    none
-;              
+;
 ; NOTES
 ;   source file: x_change_gc_font.asm
 ;<

@@ -18,18 +18,19 @@
   [section .text align=1]
 ;---------- x_map_win ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
+  extern crt_str
   extern x_send_request
 %endif
 
 ;---------------------
 ;>1 win_ctrl
-;  x_map_win - show window 
+;  x_map_win - show window
 ; INPUTS
 ;  eax = window id to map
 ; OUTPUT:
 ;    none (no reply is expected)
-;              
+;
 ; NOTES
 ;   source file: x_map_win.asm
 ;<
@@ -53,7 +54,7 @@ x_map_win:
   [section .data]
 map_win:
   db 8	;opcode
-  db 0	;unused 
+  db 0	;unused
   dw map_win_len / 4
 map_win_id:
   dd 02a00001h		;win id

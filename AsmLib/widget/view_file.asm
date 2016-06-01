@@ -669,5 +669,5 @@ help:
   db 0ah,0ah,0ah,0ah,0ah,0ah,0ah
   db 'inserted line',0ah
   db 'press escape to exit',0ah
-help_end
+help_end:
 %endif

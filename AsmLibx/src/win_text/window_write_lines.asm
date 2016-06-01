@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_write_lines ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
 
@@ -42,7 +42,7 @@
 ;        eax = negative error code
 ;    success
 ;        eax = postive value
-;              
+;
 ; NOTES
 ;   source file: window_write_lines.asm
 ;<

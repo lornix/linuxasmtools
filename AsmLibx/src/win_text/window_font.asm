@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_font ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
 ;%include "x_query_font.inc"

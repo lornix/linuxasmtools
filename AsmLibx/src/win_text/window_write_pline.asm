@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_write_pline ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
   extern x_write_block
 %endif
@@ -37,7 +37,7 @@
 ;        eax = negative error code
 ;    success
 ;        eax = write count
-;              
+;
 ; NOTES
 ;   source file: window_write_pline.asm
 ;<

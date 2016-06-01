@@ -22,13 +22,15 @@
 
   extern str_move
 
-%ifndef DEBUG
+%ifdef DEBUG
+  extern crt_str
+  extern ws_msg
   extern x_send_request
 %endif
 
 ;---------------------
 ;>1 win_text
-;  x_write_string - write a string to window 
+;  x_write_string - write a string to window
 ; INPUTS
 ;  eax = window id to map
 ;  ebx = window cid
@@ -37,7 +39,7 @@
 ;  esi = string
 ; OUTPUT:
 ;    "js" flag set for error
-;              
+;
 ; NOTES
 ;   source file: x_write_string.asm
 ;<
@@ -55,7 +57,7 @@ x_write_string:
   sub	esi,edx		;compute string length
   dec	esi
   mov	edx,esi
-  mov	[tm_str_len],dl	;save string length	  
+  mov	[tm_str_len],dl	;save string length
 %ifdef DEBUG
   push	edi
   mov	ecx,ws_msg

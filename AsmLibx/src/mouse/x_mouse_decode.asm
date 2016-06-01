@@ -17,7 +17,7 @@
 
   [section .text align=1]
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
 

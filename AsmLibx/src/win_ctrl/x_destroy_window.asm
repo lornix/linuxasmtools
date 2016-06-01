@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- x_destroy_window ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
 %endif
 
@@ -29,7 +29,7 @@
 ;  eax = window id to destroy
 ; OUTPUT:
 ;    none (no reply is expected)
-;              
+;
 ; NOTES
 ;   source file: x_destroy_window.asm
 ;<
@@ -39,6 +39,7 @@
 x_destroy_window:
   mov	[dw_id],eax
 %ifdef DEBUG
+extern crt_str
   mov	ecx,dw_msg
   call	crt_str
 %endif
@@ -58,7 +59,7 @@ dw_msg: db 0ah,'destroy_window (60)',0ah,0
   [section .data]
 dw_pkt:
   db 60	;opcode
-  db 0	;unused 
+  db 0	;unused
   dw 2
 dw_id:
   dd 02a00000h		;win id

@@ -24,7 +24,7 @@
   extern x_write_block_entry2
   extern color_id_table
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern x_send_request
@@ -55,7 +55,7 @@ endstruc
 
 ;---------------------
 ;>1 win_text
-;  window_write_table - display items for text window 
+;  window_write_table - display items for text window
 ; INPUTS
 ;  window_write_table_setup must be called once
 ;                 before using this function.
@@ -106,7 +106,7 @@ endstruc
 
 ; OUTPUT:
 ;   "js" flag set if error
-;              
+;
 ; NOTES
 ;   source file: window_write_table.asm
 ;<
@@ -190,10 +190,10 @@ wwd_lp:
   pop	edx
   pop	esi
   dec	dl
-  jnz	wwd_lp  
+  jnz	wwd_lp
   jmp	wwt_lp
 ;------------
-wwt_done:  
+wwt_done:
   pop	ebp
   ret
 ;------------------------
@@ -227,11 +227,11 @@ wwt_decode:
 ;>1 win_text
 ;  window_write_table_setup - setup for window_write_table
 ;  This function must be called before using the
-;  window_write_table function. 
+;  window_write_table function.
 ; INPUTS
 ;  ebp = win_block ptr
 ; OUTPUT:
-;              
+;
 ; NOTES
 ;   source file: window_write_table.asm
 ;<

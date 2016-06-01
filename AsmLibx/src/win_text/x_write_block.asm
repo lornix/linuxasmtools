@@ -22,7 +22,7 @@
 
   extern str_move
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
   extern tm_pkt
 %endif
@@ -39,17 +39,17 @@ struc tm
 endstruc
 ;---------------------
 ;>1 win_text
-;  x_write_block - write ascii block to window 
+;  x_write_block - write ascii block to window
 ; INPUTS
 ;  eax = window id to map
 ;  ebx = window cid
 ;  ecx = x location, pixel column (0=left edge)
 ;  edx = y location, pixel row (0=top of win)
 ;  esi = string
-;  edi = string length (max size is 255) 
+;  edi = string length (max size is 255)
 ; OUTPUT:
 ;   "js" flag set if error
-;              
+;
 ; NOTES
 ;   source file: x_write_block.asm
 ;<

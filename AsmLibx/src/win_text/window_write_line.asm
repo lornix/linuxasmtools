@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- window_write_line ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern x_write_block
@@ -37,7 +37,7 @@
 ;        eax = negative error code
 ;    success
 ;        eax = write count
-;              
+;
 ; NOTES
 ;   source file: window_write_line.asm
 ;<
@@ -56,7 +56,7 @@ window_write_line:
  mul	dword [ebp+win.s_char_height]
  add	eax,[ebp+win.s_char_ascent]
  mov	edx,eax		;pixel row -> edx
- 
+
  mov	eax,[ebp+win.s_win_id]	;window xx00001
  mov	ebx,eax
  inc	ebx		;gc xx00002

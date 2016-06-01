@@ -18,20 +18,20 @@
   [section .text align=1]
 ;---------- x_create_gc ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
 %endif
 
 ;---------------------
 ;>1 win_ctrl
-;  x_create_gc - create graphic context 
+;  x_create_gc - create graphic context
 ; INPUTS
 ;    eax = cid id to create
 ;    ebx = drawable (window id)
 ;    esi = ptr to value list (including mask at front)
 ; OUTPUT:
 ;    none
-;              
+;
 ; NOTES
 ;   source file: x_create_gc.asm
 ;<
@@ -61,6 +61,7 @@ cg_done:
   mov	[cgr_len],ax		;put length in pkt
   pop	edi
 %ifdef DEBUG
+extern crt_str
   push	edi
   mov	ecx,cg__msg
   call	crt_str

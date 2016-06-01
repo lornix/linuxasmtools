@@ -18,7 +18,8 @@
   [section .text align=1]
 ;---------- x_set_input_focus ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
+  extern crt_str
   extern x_send_request
 %endif
 

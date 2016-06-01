@@ -28,7 +28,7 @@
 ;
 ; OUTPUT    esi - points to end of input block
 ;           edi - points to end of output block
-;           ecx - zero   
+;           ecx - zero
 ;
 ; NOTES:  Source file is blk_move.asm
 ;         Block moves will be faster if data is
@@ -65,7 +65,7 @@ bb_exit:
 ;
 ; OUTPUT    esi - points to end of input block
 ;           edi - points to end of output block
-;           ecx - zero   
+;           ecx - zero
 ;
 ; NOTES:  Source file is blk_move.asm
 ;         Block moves will be faster if data is
@@ -82,19 +82,3 @@ blk_dmove:
   rep	movsd
 bd_exit:
   ret
-
-%ifdef DEBUG
-global main,_start
-main:
-_start:
-  mov	esi,data1
-  mov	edi,buffer
-  mov	ecx,13
-  call	blk_bmove
-  mov	eax,1
-  int	byte 80h
-
- [section .data]
-data1: db 1,2,3,4,5,6,7,8,9,0,1,2,3
-buffer: times 14 db 0
-%endif

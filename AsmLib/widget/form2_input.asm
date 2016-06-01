@@ -106,7 +106,7 @@
 ;<
 ; * ----------------------------------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
 
 struc in_block
 .iendrow	resb 1	;rows in window

@@ -18,7 +18,7 @@
   [section .text align=1]
 ;---------- x_allocate_named_color ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
   extern x_wait_reply
 %endif
@@ -86,6 +86,7 @@ x_allocate_named_color:
   mov	[anc_name_len],ax
 
 %ifdef DEBUG
+extern crt_str
   push	edx				;save packet length
   mov	ecx,anc_msg
   call	crt_str

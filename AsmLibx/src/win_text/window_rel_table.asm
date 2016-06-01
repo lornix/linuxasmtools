@@ -24,7 +24,7 @@
   extern x_write_block_entry2
   extern color_id_table
 
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern x_send_request

@@ -27,10 +27,10 @@ VERSION := $(shell cat $(VERSIONDIR)$(VERSIONFILE))
 ######################################################
 #
 # base library locations off of VERSION location
-ASMLIB := AsmLib/asmlib.a
+ASMLIB := asmlib.a
 ASMLIBPATH := $(VERSIONDIR)$(ASMLIB)
 #
-ASMLIBX := AsmLibx/asmlibx.a
+ASMLIBX := asmlibx.a
 ASMLIBXPATH := $(VERSIONDIR)$(ASMLIBX)
 #
 LIBS := $(ASMLIBPATH)
@@ -56,7 +56,13 @@ SRCS := $(sort $(wildcard *.asm))
 TARGETS := $(patsubst %.asm,%,$(SRCS))
 OBJS := $(patsubst %.asm,%.o,$(SRCS))
 #
+# template for assembling
+%.o: %.asm
+	$(AS) $(ASFLAGS) -o $@ $<
 #
+# template for linking
+%:      %.o
+	$(LD) $(LDFLAGS) $< -o $@ $(LIBSX) $(LIBS)
 #
 .show:
 	@echo "VERSION='$(VERSION)'"

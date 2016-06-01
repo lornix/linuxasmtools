@@ -61,11 +61,11 @@ DO_UNINSTALL = @ for i in $(DIRS); do $(MAKE) -C $$i uninstall; done
 DO_RELEASE = @ for i in $(RDIRS); do $(MAKE) -C $$i release; done
 DO_DOC = @ for i in $(DDIRS); do $(MAKE) -C $$i doc; done
 #
-all: $(DIRS)
-	echo $(MAKE) -C $<
+all:
+	for dir in $(DIRS); do $(MAKE) -C $$dir; done
 #
-clean: $(DIRS)
-	echo $(MAKE) -C $< clean
+clean:
+	for dir in $(DIRS); do $(MAKE) -C $$dir clean; done
 	-rm -rf release
 #
 docs:	post docs2

@@ -1,83 +1,37 @@
 #
-# usage:  make  - make library and test program
+# usage: make  - make library and test program
 #         make test - make test program
-#         make clean - touch all source files
+#         make clean - remove built binaries
 #         make doc - extract documentation from sources
 #         make install - install to $HOME/.asmide/asmlib.a
 #         make release - create a release tar.gz file
 #
-here = $(shell pwd)
-VERSION := $(shell cat VERSION)
-user = $(shell whoami)
-
-dirs := syscall char str str_conv terminal crt env blk str_cmp dir \
-        file widget sort sys \
-        str_parse date process log-error random draw file2 database hash \
-        menu signal timer \
-        trace math memory xterm dis compress sound list terminfo \
-        dcache vt
-
-
-# template for each source compile
-%.o:    %.asm
-	nasm -g $<
-
-# shell command to execute make in all directories
-DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
-
-sam:  pre all lib
-
-all:  $(dirs)
-	$(DO_MAKE)
-
-pre:
+include ../Makefile.Common
+#
+all:
 	./make_syscall
-srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))
-objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))
-
-lib:
-#	rm -f asmlib.a
-#	ar rcs asmlib.a $(objs)
+	for dir in $(DIRS); do $(MAKE) -C $$dir $@; done
+	-rm -f asmlib.a
 	find . -name '*.o' -print0 | xargs -0 ar rcs asmlib.a
 	cp -f asmlib.a ../
-#	strip ../asmlib.a	;do not enable, kills link
-
-
-test:  test.o
-	ld -static -o test test.o asmlib.a
-	rm -f test.o
-
-test.o:	test.asm
-	~/bin/nasm -g -o test.o test.asm
-
+#
 clean:
-	find . -depth -name '*.o' -exec rm -f '{}' \;
-	find . -depth -name '*~' -exec rm -f '{}' \;
-	find . -depth -name '*' -exec touch '{}' \;
-	find . -depth -type f -path '*.'test -exec rm -f '{}' \;
-
+	-rm -f asmlib.a
+	for dir in $(DIRS); do $(MAKE) -C $$dir $@; done
+#
+test: test.o all
+	$(LD) $(LDFLAGS) -o $@ $< $(LIBS)
 #
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
 install:
-	@echo "user="$(user)
-	@if [ $(user) = "root" ]; then \
-	install -D -m 644 ../asmlib.a /usr/lib/asmlib.a ; \
-	else \
-	  echo "Must be root to install library at /usr/lib." ; \
-	fi
-
+	install -D -m 644 ../asmlib.a /usr/lib/asmlib.a
+#
 uninstall:
-	@echo "user="$(user)
-	@if [ $(user) = "root" ]; then \
-	  rm -f /usr/lib/asmlib.a ; \
-	else \
-	  echo "Must be root to uninstall library at /usr/lib." ; \
-	fi
-
-
+	rm -f /usr/lib/asmlib.a
+#
 doc:
 	asmpub -f2 -n -s -r3 -i -oasmlib -k '*.asm'
 	cp -f header1.txt ../asmlib.txt
@@ -93,20 +47,18 @@ doc:
 	rm -f ../asmlib.txt
 	cp -f asmlib.txt doc-pak/
 	cp -f asmlib_index.txt doc-pak/
-
+#
 release: tar deb rpm
-
+#
 tar:
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/asmlib-$(VERSION).tar.gz -C .. AsmLib
-
+#
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
-
+#
 rpm:
 	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib
 	chown --reference Makefile ../release/asmlib*
 	rm -f backup*
-
-
-
+#

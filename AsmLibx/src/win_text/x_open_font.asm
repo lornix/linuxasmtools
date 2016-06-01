@@ -19,7 +19,7 @@
 
 ;---------- x_open_font ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
   extern x_send_request
 %endif
   extern str_move
@@ -27,7 +27,7 @@
 
 struc ofp
   resb 1	;db 45	;opcode
-  resb 1	;db 0	;unused 
+  resb 1	;db 0	;unused
 .of_pkt_length:
   resw 1	;dw open_font_len / 4
   resd 1	;dd 02a00001h		;win id
@@ -46,7 +46,7 @@ endstruc
 ;  esi = font string
 ; OUTPUT:
 ;    none (no reply is expected)
-;              
+;
 ; NOTES
 ;   source file: x_open_font.asm
 ;<
@@ -63,7 +63,7 @@ x_open_font:
   rep	movsb		;move packet
   pop	esi
   call	str_move	;move font name
-;compute font string length  
+;compute font string length
   push	edi
   lea	eax,[lib_buf+ofp.font_str]
   sub	edi,eax		;compute length
@@ -92,7 +92,7 @@ xof_10:
   [section .data]
 open_font:
   db 45	;opcode
-  db 0	;unused 
+  db 0	;unused
 of_pkt_len:
   dw open_font_len / 4
 open_font_id:

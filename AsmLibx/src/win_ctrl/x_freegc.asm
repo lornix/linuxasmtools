@@ -18,7 +18,8 @@
   [section .text align=1]
 ;---------- x_freegc ------------------
 
-%ifndef DEBUG
+%ifdef DEBUG
+  extern crt_str
   extern x_send_request
 %endif
 
@@ -30,7 +31,7 @@
 ;  eax = window id to map
 ; OUTPUT:
 ;    none (no reply is expected)
-;              
+;
 ; NOTES
 ;   source file: x_freegc.asm
 ;<
@@ -59,7 +60,7 @@ fgc_msg: db 0ah,'freegc (60)',0ah,0
   [section .data]
 fgc_pkt:
   db 60	;opcode
-  db 0	;unused 
+  db 0	;unused
   dw 2
 fgc_id:
   dd 02a00000h		;win id

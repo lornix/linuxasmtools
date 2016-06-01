@@ -87,6 +87,7 @@ x_change_attributes:
   mov	[ca_mask+4],ebx		;save value
   mov	[ca_id],ecx
 %ifdef DEBUG
+extern crt_str
   mov	ecx,ca_msg
   call	crt_str
 %endif

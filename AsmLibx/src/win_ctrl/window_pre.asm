@@ -31,7 +31,7 @@
   extern x_create_gc
   extern x_change_gc_font
   extern x_get_input_focus
-%ifndef DEBUG
+%ifdef DEBUG
 %include "../../include/window.inc"
 %endif
   extern window_font
@@ -66,7 +66,7 @@
 ;  edx = work buffer size
 ;  ecx = color number (see window_pre)
 ;  ebx = font width in pixels, 8,9,etc.
-;   
+;
 ; OUTPUT:
 ;    error = sign flag set for "js" instruction
 ;    success, win block built (see file window.inc)
@@ -91,7 +91,7 @@
 ;   If sucessful, the window is created with keyboard,
 ;   mouse, and exposure events enabled.  The background
 ;   color, size, and window position will be set.
-;   
+;
 ;   source file: window_pre.asm
 ;<
 ; * ----------------------------------------------
@@ -128,7 +128,7 @@ wp_10:
 ;          [root_win_pix_width] set (dword)
 ;          [root_win_pix_height] set (dword)
 ;    flag set (js) if err, eax=error code
-;        
+;
   mov	ax,[root_win_pix_width]
   mov	[ebp+win.s_root_width],ax
 
@@ -175,7 +175,7 @@ wp_10:
 ;000:<:0007: 40: Request(1): CreateWindow depth=0x00 window=0x02e00001 parent=0x00000063 x=0 y=0 width=480
 ; height=300 border-width=2 class=CopyFromParent(0x0000) visual=CopyFromParent(0x00000000)
 ;  value-list={background-pixel=0x0000ffff border-pixel=0x00000000}
-  
+
   mov	eax,[ebp+win.s_root]
   mov	[cw_root_win_id],eax
 
@@ -205,7 +205,7 @@ wp_10:
 
 ;  mov	eax,800h		;event mask bit
 ;  mov	ebx,1+4+8000h		;keypress + button press + exposure
-;  mov	ecx,[ebp+win.s_win_id]	;get window 
+;  mov	ecx,[ebp+win.s_win_id]	;get window
 ;;  call	x_change_attributes
 ;  js	wc_exit
 wc_exit:
@@ -251,7 +251,7 @@ color_setup:
   mov	eax,[root_win_color_map]
   mov	[ebp+win.s_map_id],eax
   mov	[anc_color_map],eax	;setup packet
- 
+
 ;request all color codes
   mov	esi,color_table
   mov	edi,[wp_buf]		;storage for color requests
@@ -396,7 +396,7 @@ bkt_tail:
   cmp	cl,byte [c_max_keycode]	;cmp to last map key#
   jb	bkt_lp2			;loop till done
   xor	eax,eax
-  jmp	short bkt_exit 
+  jmp	short bkt_exit
 bkt_err:
   mov	eax,-1
 bkt_exit:
