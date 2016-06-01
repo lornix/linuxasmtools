@@ -45,7 +45,7 @@ _start:
   je	do_decode	;jmp if no filename
   mov	ecx,err_msg
   call	crt_str
-  jmp	error_exit	
+  jmp	error_exit
 do_decode:
   lodsd			;get our name
   lodsd			;get file name ptr
@@ -126,7 +126,7 @@ menu_text:
  db 0ah,0ah
  db ' ',2,'-back- (ESC)',1,0ah
  db 0
-  
+
 ;----------------
   [section .text]
 
@@ -177,7 +177,7 @@ ss_found:
   mov	esi,sym_entry
   mov	eax,[fd_out]	;get fd
   call	show_hex
-  jmp	ss_tail  
+  jmp	ss_tail
 
 
 sss_show:
@@ -190,7 +190,7 @@ sss_show:
   inc	edi
   mov	esi,temp_file
   call	str_move
-  mov	esi,lib_buf+400  
+  mov	esi,lib_buf+400
   call	sys_run_wait
   mov	eax,[symbol_table_ptr]
   ret
@@ -220,7 +220,7 @@ show_libs:
   inc	edi
   mov	esi,abug_lib
   call	str_move
-  mov	esi,lib_buf+400  
+  mov	esi,lib_buf+400
   call	sys_run_wait
 sl_skip:
   ret
@@ -235,7 +235,7 @@ show_externals:
   inc	edi
   mov	esi,abug_externs
   call	str_move
-  mov	esi,lib_buf+400  
+  mov	esi,lib_buf+400
   call	sys_run_wait
 se_skip:
   ret
@@ -341,11 +341,11 @@ si_show:
   inc	edi
   mov	esi,temp_file
   call	str_move
-  mov	esi,lib_buf+400  
+  mov	esi,lib_buf+400
   call	sys_run_wait
   mov	eax,[symbol_table_ptr]
   call	m_close
-  ret  
+  ret
 ;---------------
   [section .data]
 
@@ -372,7 +372,7 @@ si_stuff_image:
 si_stuff_fimage:
   db 0
   db 0ah,0,0
-   
+
   db 0
 
 image_fd:  dd 0
@@ -421,7 +421,7 @@ show_summary:
 
   mov	ecx,preamble+pre.pheader_ptrs
 sp_loop:
-  mov	ebp,ptable  
+  mov	ebp,ptable
   mov	[ptable1],ecx	;save address
   mov	esi,[ecx]	;get sect. ptr
   or	esi,esi
@@ -446,14 +446,14 @@ sp_loop:
   add	ecx,4		;next phead
   jmp	short sp_loop
 sp_done:
-  
+
 
   mov	ecx,shead_msg
   call	crt_str		;show header
 
   mov	ecx,preamble+pre.sheader_ptrs
 ss_loop:
-  mov	ebp,stable  
+  mov	ebp,stable
   mov	[stable1],ecx	;save address
   mov	esi,[ecx]	;get sect. ptr
   or	esi,esi
@@ -503,10 +503,10 @@ ss_done:
   inc	edi
   mov	esi,temp_file
   call	str_move
-  mov	esi,lib_buf+400  
+  mov	esi,lib_buf+400
   call	sys_run_wait
 
-  ret  
+  ret
 
 
   [section .text]
@@ -521,11 +521,11 @@ ss_done:
   extern wordto_hexascii
   extern dwordto_hexascii
 
-;----------------------------------------------------  
+;----------------------------------------------------
 ;>1 crt
 ;   show_numbers - display assorted numbers
 ; INPUTS
-;    [fd_out] global set with fd (1=stdout) 
+;    [fd_out] global set with fd (1=stdout)
 ;    ebp = control  table
 ;
 ;    The control table is normal ascii with embedded
@@ -535,7 +535,7 @@ ss_done:
 ;                    -2 = ptr to word follows
 ;                    -3 = ptr to dword follows
 ;                    -4 = dump, followed by db count
-;                                           dd ptr          
+;                                           dd ptr
 ; OUTPUT
 ;   uses current color, see crt_set_color, crt_clear
 ; NOTES
@@ -555,7 +555,7 @@ sn_lp:
   jmp	short sn_lp
 sn_done:
   ret
-  	
+
 sn_number:
   cmp	al,-1
   je	sn_byte
@@ -599,7 +599,7 @@ num_tail:
 
 crt_str:
   xor edx, edx
-count_again:	
+count_again:
   cmp [ecx + edx], byte 0x0
   je crt_write
   inc edx

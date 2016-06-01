@@ -13,7 +13,7 @@
 ;   abug_lib.txt      - list of dynamic libraries used
 ;   abug_comment.dat  - comments extracted from source files
 ;
-; usage:  elf_prep  <input_file> 
+; usage:  elf_prep  <input_file>
 ;
 ;
 ;----------
@@ -28,10 +28,15 @@
 ;
 %include "system.inc"
 
-%macro _mov 2
-  push	byte %2
-  pop	%1
-%endmacro
+%ifmacro _mov 2
+    %error _mov macro already exists, FIXME
+%else
+    %warning %macro _mov 2 created
+    %macro _mov 2
+        push	byte %2
+        pop	%1
+    %endmacro
+%endif
 
   extern env_stack
   extern dir_current
@@ -150,7 +155,7 @@ write_header:
 struc stabs
 .sstr	resd 1	;string data offset if non-zero, and type=?
 .stype	resb 1	;type codes 44h=sline 64h=src_filename 84h=include_file 24h=set address
-.sother resb 1	;unused 
+.sother resb 1	;unused
 .sline  resw 1  ;line#
 .svalue resd 1	;address, if zero use address from previous type 24h
 stabs_rec_size:
@@ -225,7 +230,7 @@ wc_20:
 ;
 wc_lp3:
   mov	esi,[stabs_offset]
-  mov	al,[ebp + esi + stabs.stype]	;get type code  
+  mov	al,[ebp + esi + stabs.stype]	;get type code
   cmp	al,64h				;is this a file name
   je	wc_30				;jmp if filename
   cmp	al,84h				;is this a include file
@@ -245,7 +250,7 @@ wc_28:
   mov	eax,[ebp + esi + stabs.svalue]	;get address
   mov	[line_adr],eax			;save address
   jmp	short wc_tail
-;filename was found, open file, 
+;filename was found, open file,
 wc_30:
   mov	byte [wc_flag],0		;enable output, assume file ok
   mov	ebx,[ebp + esi + stabs.sstr]	;get string index
@@ -599,7 +604,7 @@ wz_exit:
   [section .data]
 zero_count dd 0
 zeros:	times 16 db 0
-  [section .text]  
+  [section .text]
 ;-----------------------------------------------------------
 ; write_flag_image
 ; -allocate memory for flag image
@@ -635,7 +640,7 @@ wfi_lp2:
   jmp	short wfi_lp2
 
 ;set bits in fimage using symbol table
-wfi_20:  
+wfi_20:
   mov	eax,[hash_table_ptr]
   mov	esi,[eax]		;get .entries_ptr
   mov	edx,[eax+4]		;get .avialable_entries_ptr
@@ -653,7 +658,7 @@ wfi_errj:
   add	eax,[flag_image_buf]	;compute address of flag byte
   mov	[eax],bl		;store flag
 wfi_slp_end:
-  add	esi,9			;move past symbol header 
+  add	esi,9			;move past symbol header
 ;scan to end of symbol name
 wfi_slp:
   lodsb				;next sym char
@@ -708,7 +713,7 @@ insert_start_label:
   call	_add_label_if		;define libc_csu_fini
   mov	esi,label_start
   jmp	short isl_60
-;add label for entry 
+;add label for entry
 isl_50:
   mov	esi,label_main
 isl_60:
@@ -820,7 +825,7 @@ wli_ignore:
   add	ebx,eax			;move to next section
   mov	[lib_sect_ptr],ebx
   cmp	ebx,[lib_section_end]
-  jne	wli_loop3  
+  jne	wli_loop3
 wli_done:
   mov	ebx,[lib_file_fd]
   call	block_close
@@ -858,7 +863,7 @@ process_dynsym:
 ;.st_value  dd  symbol value
 ;.st_size   dd  size
 ;.st_info	resb	1 ;types: 00=NOTYPE 01=OBJECT 02=FUNC 03=SECTION 04=FILE  -or- below
-;                          ;bind:  00=LOCAL 10h=GLOBAL 20h=WEAK  -or- with above. 
+;                          ;bind:  00=LOCAL 10h=GLOBAL 20h=WEAK  -or- with above.
 ;.st_other	resb	1 ;unused
 ;.st_shndx	resw	1 ;associates symbol with section#, if 0fff1h then no section assoc.
 ;                         ;example: 0=symbol appears in first section, 1=symbol in section 1
@@ -927,7 +932,7 @@ process_rel_dyn:
   mov	eax,[dis_externs_handle]
   call	pds_engine
 prd_exit:
-  ret  
+  ret
 ;------------------------------------------------------------
 ; process either .rel.dyn or .rel.plt blocks
 ;
@@ -935,7 +940,7 @@ prd_exit:
 ;          ebx = section pointer
 ;          ecx = number of entries in section
 ;
-; format of .rel.dyn or .rel.plt 
+; format of .rel.dyn or .rel.plt
 ;      value dd - ptr to .got.plt section entry
 ;      type  db - (see decode table)
 ;      sym#  db - index into dnysym 0,1,2,3, etc.
@@ -1072,7 +1077,7 @@ pds_strtab_ptr	dd	0	;pointer to string table
 pds_extern	db	' extern '
 pds_insert:	times 120 db 0
 sym_name_ptr:   dd	0
-  [section .text]  
+  [section .text]
 ;------------------------------------------------------------
 ; find code in dynamic section
 ;  input:  eax=code
@@ -1100,7 +1105,7 @@ ldc_done:
 ldc_exit:
   pop	esi
   or	eax,eax			;set sign flag bit
-  ret  
+  ret
 ;--------------
   [section .data]
 dynamic_section_ptr: dd 0	;ptr to dymanic section
@@ -1135,7 +1140,7 @@ pl_exit2:
 
 ;-----------------------------------------------------------------------
 insert_local_labels:
-;find address of symtab section  
+;find address of symtab section
   mov	edx,'.sym'
   call	find_named_section	;returns esi=header edi=section
   or	esi,esi
@@ -1173,7 +1178,7 @@ ill_loop:
   jc	ill_ignore		;jmp if not in load section
 ;  or	eax,eax
 ;  jz	ill_ignore		;ignore symbol if address=0
-  mov	bh,[ecx+symtab.st_info] ;get type 
+  mov	bh,[ecx+symtab.st_info] ;get type
   and	bh,0fh			;isolate type bits
 ; 00=NOTYPE 01=OBJECT 02=FUNC 03=SECTION 04=FILE
   mov	bl,10h			;preload data type
@@ -1191,7 +1196,7 @@ ill_ignore:
   add	ecx,elfsymtab_struc_size
   mov	[symtab_address],ecx
   cmp	ecx,[symtab_end_ptr]
-  jne	ill_loop  
+  jne	ill_loop
 ill_exit:
   ret
 
@@ -1224,7 +1229,7 @@ wl_bad_exit:
   stc
   jmp	short wl_exit
 wl_good_exit:
-  clc  
+  clc
 wl_exit:
   pop	ebp
   pop	ebx
@@ -1252,12 +1257,12 @@ _add_label_if:
   call	hash_lookup		;returns eax=0 if match and esi=ptr to match
   or	eax,eax
   jnz	ali_50			;jmp if label not found
-;label was found, update the type info 
+;label was found, update the type info
   mov	bl,[sym_type]
   or	[esi + sym.sym_typ],bl
   _mov	eax,1
   jmp	short ali_exit
-   
+
 ;this is a new label, check if name already used
 ali_50:
   mov	edi,[ali_name_ptr]
@@ -1430,7 +1435,7 @@ cp_21:
   mov	eax,[ebx+head.phys_start]
   add	eax,[ebx+head.size]
   jmp	cp_21		;loop looking for more
-;set end of code 
+;set end of code
 cp_22:
   mov	[preamble+pre.elf_phys_code_end],eax ;save code end
 ;look for end of load (file data)
@@ -1654,7 +1659,7 @@ pp_exit:
 ;------------
   [section .data]
 phead_ptrs_ptr dd preamble+pre.pheader_ptrs	;pointer to pointers in preamble
-phead_stuff_ptr	dd phead		;ptr to build area for 
+phead_stuff_ptr	dd phead		;ptr to build area for
   [section .text]
 ;-------------------------------------------------------
 ; INPUT edx="name" of section
@@ -1717,7 +1722,7 @@ find_indexed_section:
 fis_lookup:
   mov	esi,[ebp + elfheader.e_shoff]
   xor	eax,eax		;initialize index counter -> 0
-fis_loop:		;first section is null, 
+fis_loop:		;first section is null,
   call	next_sheader
   or	esi,esi
   js	fis_exit	;exit if not found
@@ -1728,14 +1733,14 @@ fis_loop:		;first section is null,
 fis_err:
   _mov	esi,-1
 fis_exit:
-  ret   
+  ret
 ;----------------
 ; find_typed_section
 ;  INPUT: ebx=section type
 ;         ebp = elf header pointer
 ;  OUTPUT: esi = ptr to header or -1 if not found
 ;          ebp,ebx unchanged
-;         
+;
 find_typed_section:
   mov	esi,[ebp + elfheader.e_shoff]
   or	esi,esi
@@ -1751,7 +1756,7 @@ fts_loop:
   or	esi,esi
   jns	fts_loop
 fts_exit:
-  ret   
+  ret
 ;----------------
 ; next_sheader - next program header
 ;  INPUT:  ebp = ptr to top of elf file
@@ -1770,7 +1775,7 @@ next_sheader:
   ret
 ns_at_end:
   mov	esi,-1
-  ret 
+  ret
 ;----------------
 ; find_pheader_by_type
 ;  INPUT: bl=section type
@@ -1778,7 +1783,7 @@ ns_at_end:
 ;  OUTPUT: esi = ptr to header or -1 if not found
 ;          ebp,ebx unchanged
 ;          al = psection  number
-;         
+;
 find_pheader_by_type:
    mov	[phead_num],byte 0		;setup for next_pheader
    mov	esi,[ebp + elfheader.e_phoff]
@@ -1790,7 +1795,7 @@ fpbt_loop:
   or	esi,esi
   jns	fpbt_loop
 fpbt_exit:
-  ret   
+  ret
 
 ;----------------
 ; next_pheader - next program header
@@ -1817,8 +1822,8 @@ np_at_end:
 ;------------------
   [section .data]
 phead_num	db 0	;counter
-  [section .text] 
-;          
+  [section .text]
+;
 ;-----------------------------------------------------------
 get_file:
   mov	eax,[target_file_ptr]
@@ -1881,7 +1886,7 @@ ad_21:
   mov	ecx,eax		;set ecx to buffer
 ;read elf file into memory
   mov	ebx,[target_file_ptr]
-  mov	edx,[elf_file_size]  
+  mov	edx,[elf_file_size]
   call	block_read_all
   or	eax,eax
   js	ad_24		;exit if error
