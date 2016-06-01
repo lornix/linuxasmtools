@@ -12,7 +12,7 @@ include ../Makefile.Common
 
 # template for link
 %: %.o
-	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
 
 all:	$(TARGETS)
 

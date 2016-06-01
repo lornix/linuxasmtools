@@ -15,7 +15,7 @@ all:	$(TARGETS)
 #
 # template for link
 %:      %.o
-	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
 #
 $(OBJS):
 #

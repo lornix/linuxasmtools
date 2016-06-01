@@ -42,8 +42,8 @@ ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
 
-#LFLAGS =
-LFLAGS = -static
+#LDFLAGS =
+LDFLAGS = -static
 
 # the following variables are probably ok
 ######################################################
@@ -77,7 +77,7 @@ DO_MAKE = @if test -e $(LIBS) ; then for i in $(dirs); \
 
 # template for link
 %:      %.o
-	ld $^ $(LFLAGS) -o $@ $(LIBS)
+	ld $^ $(LDFLAGS) -o $@ $(LIBS)
 
 
 all:  pre $(dirs) post

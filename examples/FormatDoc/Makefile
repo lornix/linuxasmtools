@@ -54,8 +54,8 @@ LIBS := $(lib1)
 endif
 
 
-#LFLAGS =
-LFLAGS = -static
+#LDFLAGS =
+LDFLAGS = -static
 
 # the following variables are probably ok
 ######################################################
@@ -101,7 +101,7 @@ objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')
 
 # template for link
 %:      %.o
-	ld $^ $(LFLAGS) -o $@ $(LIBS)
+	ld $^ $(LDFLAGS) -o $@ $(LIBS)
 
 all:	pre $(targets) post
 

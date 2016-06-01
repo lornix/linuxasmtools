@@ -53,8 +53,8 @@ ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
 
-#LFLAGS =
-LFLAGS = -static
+#LDFLAGS =
+LDFLAGS = -static
 LD = ld
 
 # the following variables are probably ok
@@ -80,7 +80,7 @@ objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 # template for link
 %:      %.o
-	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
 
 all:	clean $(targets)
 

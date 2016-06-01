@@ -8,30 +8,30 @@ export LDEMULATION=elf_i386
 #         make install - install files
 #         make release - create release file
 #
-VERSION := $(shell cat VERSION)
+VERSIONFILE := VERSION
+VERSIONDIR := $(shell \
+		if test -f $(VERSIONFILE); then echo ./; \
+		elif test -f ../$(VERSIONFILE); then echo ../; \
+		elif test -f ../../$(VERSIONFILE); then echo ../../; \
+		elif test -f ../../../$(VERSIONFILE); then echo ../../../; \
+		elif test -f ../../../../$(VERSIONFILE); then echo ../../../../; \
+		fi)
+#
+# did we find anything?
+ifeq ($(strip $(VERSIONDIR)),)
+$(error $(VERSIONFILE) not found, please provide a version number)
+endif
+#
+VERSION := $(shell cat $(VERSIONDIR)$(VERSIONFILE))
 #
 ######################################################
 #
-# hunt for library files
-ASMLIB := asmlib.a
-ASMLIBDIR := $(shell \
-		if test -f $(ASMLIB); then echo ./; \
-		elif test -f ../$(ASMLIB); then echo ../; \
-		elif test -f ../../$(ASMLIB); then echo ../../; \
-		elif test -f ../../../$(ASMLIB); then echo ../../../; \
-		fi)
+# base library locations off of VERSION location
+ASMLIB := AsmLib/asmlib.a
+ASMLIBPATH := $(VERSIONDIR)$(ASMLIB)
 #
-ASMLIBPATH := $(ASMLIBDIR)$(ASMLIB)
-#
-ASMLIBX := asmlibx.a
-ASMLIBXDIR := $(shell \
-		if test -f $(ASMLIBX); then echo ./; \
-		elif test -f ../$(ASMLIBX); then echo ../; \
-		elif test -f ../../$(ASMLIBX); then echo ../../; \
-		elif test -f ../../../$(ASMLIBX); then echo ../../../; \
-		fi)
-#
-ASMLIBXPATH := $(ASMLIBXDIR)$(ASMLIBX)
+ASMLIBX := AsmLibx/asmlibx.a
+ASMLIBXPATH := $(VERSIONDIR)$(ASMLIBX)
 #
 LIBS := $(ASMLIBPATH)
 LIBSX := $(ASMLIBXPATH)
@@ -59,6 +59,8 @@ OBJS := $(patsubst %.asm,%.o,$(SRCS))
 #
 #
 .show:
+	@echo "VERSION='$(VERSION)'"
+	@echo "VERSIONDIR='$(VERSIONDIR)'"
 	@echo "ASMLIBPATH='$(ASMLIBPATH)'"
 	@echo "ASMLIBXPATH='$(ASMLIBXPATH)'"
 	@echo "DIRS='$(DIRS)'"

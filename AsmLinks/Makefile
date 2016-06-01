@@ -46,8 +46,8 @@ ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
 
-#LFLAGS =
-LFLAGS = -static
+#LDFLAGS =
+LDFLAGS = -static
 LD = ld
 
 # the following variables are probably ok
@@ -98,7 +98,7 @@ targets := $(subst .asm,, $(srcs))
 
 # template for link
 %:      %.o
-	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
 
 all:	pre $(targets)
 

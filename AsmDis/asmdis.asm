@@ -1,4 +1,3 @@
-
 ;   Copyright (C) 2007 Jeff Owens
 ;
 ;   This program is free software: you can redistribute it and/or modify
@@ -67,7 +66,7 @@
   extern hash_archive
   extern view_file
   extern reset_clear_terminal
-   
+
 global _start
 _start:
   cld
@@ -268,7 +267,7 @@ up_key:
   mov	[win_top_offset],ebp
 up_key_exit:
   xor	eax,eax
-  ret  
+  ret
 ;--------------------- EVENT -------------------------------------
 ;in=our_adr out= -(exit) 0(redisplay) 1(resize) +(hunt&redisplay)
 down_key:
@@ -294,7 +293,7 @@ dk_10:
   call	offset2flag_ptr
   call	next_offset
   mov	[win_top_offset],ebp	;move wondow top down 1
-  
+
 down_key_exit:
   xor	eax,eax
   ret
@@ -359,7 +358,7 @@ sd_20:
   mov	[section_end_offset],ebp
 sd_exit:
   xor	eax,eax
-  ret  
+  ret
 ;--------------------- EVENT -------------------------------------
 ;in=our_adr out= -(exit) 0(redisplay) 1(resize) +(hunt&redisplay)
 show_bss:
@@ -383,7 +382,7 @@ sb_20:
   mov	[section_end_offset],ebp
 sb_exit:
   xor	eax,eax
-  ret  
+  ret
 ;--------------------- EVENT -------------------------------------
 ;in=our_adr out= -(exit) 0(redisplay) 1(resize) +(hunt&redisplay)
 show_help:
@@ -410,7 +409,7 @@ save_exit:
   mov	esi,[flag_image_size]
   call	block_write_all
 
-  mov	ebx,asmdis_sym  
+  mov	ebx,asmdis_sym
   call	hash_archive
   _mov	eax,-1
   ret
@@ -490,7 +489,7 @@ set_datap:
   mov	[edx],al
   xor	eax,eax
   ret
-  
+
 ;--------------------- EVENT -------------------------------------
 set_codep:
   mov	ebp,[select_bar_offset]
@@ -511,7 +510,7 @@ set_codep:
   call	physical2offset
   call	offset2flag_ptr
   or	[edx],byte 80h	;set code here
-sc_exit:  
+sc_exit:
   _mov	eax,2
   ret
 ;--------------------- EVENT -------------------------------------
@@ -558,7 +557,7 @@ goto_end:
   mov	[select_bar_offset],eax
 ge_exit:
   xor	eax,eax
-  ret 
+  ret
 ;--------------------- EVENT -------------------------------------
 ;in=our_adr out= -(exit) 0(redisplay) 1(resize) +(hunt&redisplay)
 ;find:
@@ -649,7 +648,7 @@ read_files:
   mov	al,2		;writable flag
   call	find_pheader_type
   jz	rf_bss		;jmp if no writeable blocks
-  mov	eax,[ebx+head.size]	
+  mov	eax,[ebx+head.size]
   mov	[data_section_size],eax
 ;find .bss section size
 rf_bss:
@@ -762,8 +761,8 @@ adjust_loop:
 update_tail:
   stosd
   cmp	esi,preamble+pre.target_time	;are we done
-  jb	adjust_loop	
- 
+  jb	adjust_loop
+
   jmp	pi_exit3		;jmp if history found
 ;no history file and no parametes, what now?
 pi_err:
@@ -821,7 +820,7 @@ offset2flag_ptr:
 ;-----------------------------------------------------------
 ;input: al = type code 1=exec 2=write 4=read 8=bss
 ;output: if "jnz" true then ebx=ptr to head struc
-;        if "jz" true then pheader not found 
+;        if "jz" true then pheader not found
 find_pheader_type:
   lea	esi,[preamble+pre.pheader_ptrs]
 fpt_lp:

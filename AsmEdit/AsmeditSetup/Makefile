@@ -53,8 +53,8 @@ ifeq "$(LIBS)"  ""
 LIBS = asmlibx.a asmlib.a
 endif
 
-#LFLAGS =
-LFLAGS = -static
+#LDFLAGS =
+LDFLAGS = -static
 
 
 here = $(shell pwd)

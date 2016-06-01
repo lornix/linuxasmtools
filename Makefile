@@ -14,30 +14,23 @@
 #           5. make doc      (add asmtools-...tar.gz with latest
 ######################################################
 #
-# global environment variables to set defaults for nasm & ld
-export NASMENV=-felf32
-export LDEMULATION=elf_i386
-#
-#
 include Makefile.Common
 #
-SHELL = /bin/bash
-
-#dirs - used for install,uninstall
-dirs = AsmLib AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc \
-       AsmView AsmFind AsmTimer ElfDecode AsmDis AsmBug AsmFile \
-       AsmTrace AsmLinks AsmMenu FileBrowse FileSet MiniBug Domac Tracex \
-       Xhelper Copy AsmIDE
-#adirs - used as destination for README,COPYING,INSTALL files
-adirs = AsmLib AsmLibx AsmEdit AsmMgr AsmRef \
+#DIRS - used for install,uninstall
+# DIRS = AsmLib AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc \
+#        AsmView AsmFind AsmTimer ElfDecode AsmDis AsmBug AsmFile \
+#        AsmTrace AsmLinks AsmMenu FileBrowse FileSet MiniBug Domac Tracex \
+#        Xhelper Copy AsmIDE
+#ADIRS - used as destination for README,COPYING,INSTALL files
+ADIRS = AsmLib AsmLibx AsmEdit AsmMgr AsmRef \
         examples/FormatDoc examples/KeyEcho examples/CrtTest \
 	examples/Ainfo examples/AsmColor AsmView AsmFind AsmTimer \
 	AsmDis AsmBug AsmFile AsmTrace AsmLinks AsmMenu \
 	examples/Sort examples/StepTest examples/WalkTest \
 	FileBrowse FileSet AsmPlan AsmPub ElfDecode MiniBug Domac \
         AsmSrc Tracex Xhelper Copy AsmIDE
-#cdirs - used for compiles
-cdirs = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef \
+#CDIRS - used for compiles
+CDIRS = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef \
         examples/FormatDoc examples/KeyEcho examples/CrtTest \
 	examples/Ainfo examples/AsmColor \
 	examples/Sort examples/StepTest examples/WalkTest \
@@ -47,41 +40,42 @@ cdirs = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef \
         AsmView AsmFind AsmTimer \
 	AsmDis AsmBug AsmFile AsmTrace AsmLinks MiniBug Domac \
 	Tracex Xhelper Copy AsmIDE
-#ddirs - used to make documentation
-ddirs = AsmLib AsmLib_tutor AsmLibx AsmBug AsmDis AsmEdit AsmMenu AsmFile FileSet \
+#DDIRS - used to make documentation
+DDIRS = AsmLib AsmLib_tutor AsmLibx AsmBug AsmDis AsmEdit AsmMenu AsmFile FileSet \
 	AsmFind AsmLinks AsmMgr AsmProject AsmPlan AsmPub \
 	AsmRef AsmSrc AsmTimer AsmTrace AsmView MiniBug Domac Tracex \
 	Xhelper Copy  web
-#rdirs - used to make releases
-rdirs = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc \
+#RDIRS - used to make releases
+RDIRS = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc \
        AsmView AsmFind AsmTimer AsmMenu \
        FileBrowse FileSet examples/Ainfo examples/AsmColor \
        examples/CrtTest examples/FormatDoc examples/KeyEcho \
        examples/Sort examples/StepTest examples/WalkTest \
        AsmDis AsmBug AsmFile AsmTrace AsmLinks AsmProject \
        ElfDecode MiniBug Domac Tracex Xhelper Copy AsmIDE \
-
-
+#
 # shell command to execute make in all directories
-DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
-DO_INSTALL = @ for i in $(dirs); do $(MAKE) -C $$i install; done
-DO_UNINSTALL = @ for i in $(dirs); do $(MAKE) -C $$i uninstall; done
-DO_RELEASE = @ for i in $(rdirs); do $(MAKE) -C $$i release; done
-DO_DOC = @ for i in $(ddirs); do $(MAKE) -C $$i doc; done
-
-all:  $(cdirs)
-	$(DO_MAKE)
-
-
-doc:	post doc2
-
-
+DO_MAKE = @ for i in $(DIRS); do $(MAKE) -C $$i $@; done
+DO_INSTALL = @ for i in $(DIRS); do $(MAKE) -C $$i install; done
+DO_UNINSTALL = @ for i in $(DIRS); do $(MAKE) -C $$i uninstall; done
+DO_RELEASE = @ for i in $(RDIRS); do $(MAKE) -C $$i release; done
+DO_DOC = @ for i in $(DDIRS); do $(MAKE) -C $$i doc; done
+#
+all: $(DIRS)
+	echo $(MAKE) -C $<
+#
+clean: $(DIRS)
+	echo $(MAKE) -C $< clean
+	-rm -rf release
+#
+docs:	post docs2
+#
 post:
-	for i in $(adirs); do cp -f README ./$$i/README; done
-	for i in $(adirs); do cp -f COPYING ./$$i/COPYING; done
-	for i in $(adirs); do cp -f INSTALL ./$$i/INSTALL; done
-
-doc2:	$(ddirs)
+	#for i in $(adirs); do cp -f README ./$$i/README; done
+	#for i in $(adirs); do cp -f COPYING ./$$i/COPYING; done
+	#for i in $(adirs); do cp -f INSTALL ./$$i/INSTALL; done
+#
+docs2:	$(ddirs)
 	@if test -e /usr/bin/asmpub ; \
 	then \
 	for i in $(ddirs); do $(MAKE) -C $$i doc; done ; \
@@ -91,11 +85,10 @@ doc2:	$(ddirs)
 	echo "press  Enter key to continue" ; \
 	read AKEY ; \
 	fi
-
-
+#
 install:
 	$(DO_INSTALL)
-
+#
 uninstall:
 	$(DO_UNINSTALL)
 	@if test -w /etc/passwd ; \
@@ -110,19 +103,11 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall /tmp files" ; \
-	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	  fi
-
-clean:
-	find . -depth -name '*.o' -exec rm -f '{}' \;
-	find . -depth -name '*~' -exec rm -f '{}' \;
-	find . -depth -name '*tar.gz' -exec rm -f '{}' \;
-	find . -depth -name '.abugrc' -exec rm -f '{}' \;
-	rm -f release/*
-	if [ -e "release" ] ; then rmdir release ; fi
-
+#
+#	TODO
 release: tar deb rpm
-
+#
 tar:
 	if [ ! -e "release" ] ; then mkdir release ; fi
 	rm -f release/*.tar.gz
@@ -130,14 +115,13 @@ tar:
 	rm -f release/*.rpm
 	tar cfz ./release/asmtools-$(VERSION).tar.gz --exclude=release --exclude="web/out/*.gz" --exclude="web/out/*.deb" --exclude="web/out/*.rpm" -C .. asmtools
 	$(DO_RELEASE)
-
-
+#
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=./release --maintainer=jeff@linuxasmtools.net -y --pkgname=asmtools
-
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=./release --maintainer=jeff@linuxasmtools.net -y --pkgname=asmtools
+#
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=./release -y --pkgname=asmtools
-	sudo chown --reference Makefile ./release/asmtools*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=./release -y --pkgname=asmtools
+	chown --reference Makefile ./release/asmtools*
 	rm -f backup*
-
-
+#
+#

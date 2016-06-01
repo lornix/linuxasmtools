@@ -100,7 +100,7 @@ objs := $(subst .asm,.o, $(srcs))
 
 # template for link
 %:      %.o
-	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
+	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
 
 all:	pre $(targets)
 

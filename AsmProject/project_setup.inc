@@ -263,8 +263,8 @@ make_assembler:
  db '#',0ah
  db 'LIBS = /usr/lib/asmlib.a',0ah
  db ' ',0ah
- db '#LFLAGS =',0ah
- db 'LFLAGS = -static',0ah
+ db '#LDFLAGS =',0ah
+ db 'LDFLAGS = -static',0ah
  db 'LD = ld',0ah
  db 0ah
  db '# the following variables are probably ok',0ah
@@ -313,7 +313,7 @@ make_assembler:
  db 0ah
  db '# template for link',0ah
  db '%:      %.o',0ah
- db '	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)',0ah
+ db '	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)',0ah
  db 0ah
  db '$(targets):',0ah
  db 0ah
