@@ -1,5 +1,5 @@
 
-%ifndef DEBUG
+%ifdef DEBUG
 struc	menu_struc
 .menu_line	resb	1	;menu display line number
 .menu_columns	resb	1	;number of columns in menu

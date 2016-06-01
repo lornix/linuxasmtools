@@ -18,9 +18,7 @@
   [section .text align=1]
 ;---------- select_desktop ------------------
 
-%ifdef DEBUG
   extern x_send_request
-%endif
   extern root_win_id
   extern atom_NET_CURRENT_DESKTOP
 ;---------------------

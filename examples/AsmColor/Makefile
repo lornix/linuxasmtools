@@ -4,6 +4,9 @@ all:	$(TARGETS)
 #
 $(OBJS):
 #
+clean:
+	-rm -f $(TARGETS) $(OBJS)
+#
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
@@ -16,9 +19,6 @@ install:
 uninstall:
 	echo "uninstalling asmcolor in /usr/bin"
 	rm -f /usr/bin/asmcolor
-#
-clean:
-	-rm -f $(TARGETS) $(OBJS)
 #
 doc:
 	../../txt2man -t AsmColor asmcolor.txt | gzip -c > asmcolor.1.gz

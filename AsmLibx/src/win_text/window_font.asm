@@ -18,9 +18,7 @@
   [section .text align=1]
 ;---------- window_font ------------------
 
-%ifdef DEBUG
 %include "../../include/window.inc"
-%endif
 ;%include "x_query_font.inc"
   extern x_query_font
 
@@ -80,7 +78,7 @@ endstruc
 ;    success - returns the following items in window block
 ;       .s_char_width  resd 1
 ;       .s_char_height resd 1
-;              
+;
 ; NOTES
 ;   source file: window_create.asm
 ;   If font selection fails, it may be necessary to try a
@@ -113,7 +111,7 @@ wf_assign:
 wf_05:
   shl	esi,2		;make dword ptr
   add	esi,font_ptrs
-  mov	esi,[esi]	;get ptr to font patterns  
+  mov	esi,[esi]	;get ptr to font patterns
 got_strings:
   mov	eax,[wf_buffer]
   mov	edx,[wf_buf_size]
@@ -171,7 +169,7 @@ font_ptrs:
 ;                             '*-fixed-bold-*-18-*',0
 ;                             '10x20*',0
 ;                             '*-fixed-*-20-*',0
-;   
+;
 
 font8:  db "8x16",0,'8x*',0
 font9:  db "9x15",0,'9x*',0

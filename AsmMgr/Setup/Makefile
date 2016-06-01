@@ -23,38 +23,38 @@ lib1 = $(shell if test -f asmlib.a ; then echo asmlib.a ; fi)
 lib2 = $(shell if test -f ..//asmlib.a ; then echo ..//asmlib.a ; fi)
 lib3 = $(shell if test -f ../../asmlib.a ; then echo ../../asmlib.a ; fi)
 lib4 = $(shell if test -f /usr/lib/asmlib.a ; then echo /usr/lib/asmlib.a ; fi)
-
+#
 ifeq "$(lib4)" ""
 #$(shell echo "$HOME/.a library not found" )
 else
 LIBS := $(lib4)
 endif
-
+#
 ifeq "$(lib3)" ""
 #$(shell echo "../../ library not found" )
 else
 LIBS := $(lib3)
 endif
-
+#
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
 LIBS := $(lib2)
 endif
-
+#
 ifeq "$(lib1)" ""
 #$(shell echo "no local library")
 else
 LIBS := $(lib1)
 endif
-
+#
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
-
+#
 #LDFLAGS =
 LDFLAGS = -static
-
+#
 # the following variables are probably ok
 ######################################################
 ifeq "$(assembler)" "nasm"
@@ -62,66 +62,66 @@ CC = nasm
 DEBUG = -g
 CFLAGS =
 endif
-
+#
 ifeq "$(assembler)" "as"
 CC = as
 DEBUG = -stabs
 CFLAGS =
 endif
-
+#
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
 CFLAGS =
 endif
-
-
+#
+#
 ifeq "$(assembler)" "fasm"
 CC = fasm
 DEBUG =
 CFLAGS =
 endif
-
+#
 SHELL = /bin/bash
 here = $(shell pwd)
-
+#
 .SUFFIXES : .o .asm
-
+#
 dirs = $(shell dir -d *)
 targets := $(shell dir *.asm | sed -e 's/.asm//g')
 srcs := $(shell dir *.asm)
 objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')
-
-
+#
+#
 # template for each source compile
 %.o:    %.asm
 	$(CC) $(DEBUG) $(CFLAGS) $<
-
+#
 # template for link
 %:      %.o
 	ld $^ $(LDFLAGS) -o $@ $(LIBS)
-
+#
 all:	pre $(targets) post
-
+#
 $(objs):
-
+#
 pre:
 	  @if test -e $(LIBS) ; then \
-             echo "asmlib found, compilng Setup" ; \
+             echo "asmlib found, compilng Setup"
           else  \
-	     echo "asmlib not found, needed by Setup" ; \
-             suspend ; \
+	     echo "asmlib not found, needed by Setup"
+             suspend
           fi
-
-
+#
+#
 post:
 #ifeq "$(copy_executable)" "yes"
 #	@for d in $(targets); do echo $$d ; cp $$d ../ ; strip ../$$d ; done
 #endif
 #	cp -f fprocess ../
 #	strip ../../fprocess
-
+#
 clean:
 	touch $(srcs)
-
-
+#
+#

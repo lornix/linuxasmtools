@@ -18,10 +18,8 @@
   [section .text align=1]
 ;---------- window_color ------------------
 
-%ifdef DEBUG
 %include "../../include/window.inc"
   extern x_change_gc_colors
-%endif
   extern color_id_table
 ;---------------------
 ;>1 win_color
@@ -56,7 +54,7 @@
 ;   source file: window_create.asm
 ;   Color selection stays active for window writes
 ;   and clears.  If fonts are changed, the default
-;   colors are restored from window create.  
+;   colors are restored from window create.
 ;<
 ; * ----------------------------------------------
 ;---------------------
@@ -74,7 +72,7 @@
 ;   source file: window_create.asm
 ;   Color selection stays active for window writes
 ;   and clears.  If fonts are changed, the default
-;   colors are restored from window create.  
+;   colors are restored from window create.
 ;<
 ; * ----------------------------------------------
 

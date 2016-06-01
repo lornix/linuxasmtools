@@ -64,6 +64,8 @@ OBJS := $(patsubst %.asm,%.o,$(SRCS))
 %:      %.o
 	$(LD) $(LDFLAGS) $< -o $@ $(LIBSX) $(LIBS)
 #
+.phony: .show
+#
 .show:
 	@echo "VERSION='$(VERSION)'"
 	@echo "VERSIONDIR='$(VERSIONDIR)'"
@@ -73,3 +75,4 @@ OBJS := $(patsubst %.asm,%.o,$(SRCS))
 	@echo "SRCS='$(SRCS)'"
 	@echo "OBJS='$(OBJS)'"
 	@echo "TARGETS='$(TARGETS)'"
+#

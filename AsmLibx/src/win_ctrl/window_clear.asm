@@ -18,9 +18,7 @@
   [section .text align=1]
 ;---------- window_clear ------------------
 
-%ifdef DEBUG
 %include "../../include/window.inc"
-%endif
   extern lib_buf
   extern window_write_line
   extern x_send_request

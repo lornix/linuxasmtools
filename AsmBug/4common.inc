@@ -3,7 +3,7 @@
   extern window_rel_table_setup
 ;%include "window_rel_table.inc"
 
-%ifndef DEBUG
+%ifdef DEBUG
 struc mouse_pkt
 .code	resb 1		;code = 4(press) 5(release) 6(MotionNotify)
 .but	resb 1		;evemt window code

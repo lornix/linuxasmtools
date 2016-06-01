@@ -1,13 +1,13 @@
 include ../Makefile.Common
 #
 all:	$(TARGETS)
-	for i in $(DIRS); do $(MAKE) -C $$i all; done
+	@for i in $(DIRS); do $(MAKE) -C $$i all; done
 #
 $(OBJS):
 #
 clean:
-	for i in $(DIRS); do $(MAKE) -C $$i clean; done
-	-rm -f $(TARGETS) $(OBJS)
+	@for i in $(DIRS); do $(MAKE) -C $$i clean; done
+	@-rm -f $(TARGETS) $(OBJS)
 #
 doc:
 	../txt2man -t AsmEdit asmedit.txt | gzip -c > asmedit.1.gz

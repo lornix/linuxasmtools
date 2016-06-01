@@ -1,4 +1,4 @@
-
+#
 #
 # usage:  make         - compile asmedit executable
 #         make clean   - touch all source files
@@ -25,7 +25,7 @@ OP = EX
 #    DEBUG = yes (include test code and debug info)
 #
 DEBUG=yes
-
+#
 ########################################################################
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -34,42 +34,42 @@ lib1 = $(shell if test -f asmlib.a ; then echo asmlib.a ; fi)
 lib2 = $(shell if test -f ..//asmlib.a ; then echo ..//asmlib.a ; fi)
 lib3 = $(shell if test -f ../../asmlib.a ; then echo ../../asmlib.a ; fi)
 lib4 = $(shell if test -f /usr/lib/asmlib.a ; then echo /usr/lib/asmlib.a ; fi)
-
+#
 ifeq "$(lib4)" ""
 #$(shell echo "$HOME/.a library not found" )
 else
 LIBS := /usr/lib/asmlibx.a $(lib4)
 endif
-
+#
 ifeq "$(lib3)" ""
 #$(shell echo "../../ library not found" )
 else
 LIBS := ../../asmlibx.a $(lib3)
 endif
-
+#
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
 LIBS := ..//asmlibx.a $(lib2)
 endif
-
+#
 ifeq "$(lib1)" ""
 #$(shell echo "no local library")
 else
 LIBS := asmlibx.a $(lib1)
 endif
-
+#
 ifeq "$(LIBS)"  ""
 LIBS = asmlibx.a asmlib.a
 endif
-
+#
 # the following variables are probably ok
-
+#
 #local = $(shell pwd)
 #home = $(HOME)
 #SHELL = /bin/bash
 #here = $(shell pwd)
-
+#
 AS = nasm
 ifeq ($(DEBUG),yes)
 ASFLAGS := -g
@@ -79,11 +79,11 @@ ASFLAGS :=
 DEFINES=
 endif
 T = .asm
-
+#
 LD = ld
 LDFLAGS =
-
-
+#
+#
 VERSION := $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
@@ -91,80 +91,80 @@ targets := $(subst .asm,, $(srcs))
 #targets := $(shell dir *$(T) | sed -e 's/$(T)//g')
 objs := $(subst .asm,.o, $(srcs))
 #objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')
-
-
+#
+#
 # template for each source compile
 %.o:    %$(T)
 	$(AS) $(ASFLAGS) $(DEFINES) $<
 #	$(AS) $(ASFLAGS) $(DEFINES) -l $*.lst $<
-
+#
 # template for link
 %:      %.o
 	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
-
+#
 all:	pre $(targets)
-
+#
 $(objs):
-
+#
 pre:
 	touch *.asm
-
-
+#
+#
 clean:
 	touch $(srcs)
-
-
+#
+#
 doc:
 	../txt2man -t Domac domac.txt | gzip -c > domac.1.gz
-
+#
 #
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
 install:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	 echo "installing file_browse in /usr/bin" ; \
-	 install -s file_browse /usr/bin/file_browse ; \
+	 echo "installing file_browse in /usr/bin"
+	 install -s file_browse /usr/bin/file_browse
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to install at /usr/bin " ; \
+	  echo "-"
+	  echo "Root access needed to install at /usr/bin "
 	  fi \
 #
 # asmide programs
 #
 uninstall:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	 echo "uninstalling domac in /usr/bin" ; \
-	 rm -f /usr/bin/domac ; \
-	 echo "uninstalling  support programs for domac" ; \
-	 rm -f /usr/share/man/man1/domac.1.gz ; \
+	 echo "uninstalling domac in /usr/bin"
+	 rm -f /usr/bin/domac
+	 echo "uninstalling  support programs for domac"
+	 rm -f /usr/share/man/man1/domac.1.gz
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to uninstall at /usr/bin " ; \
+	  echo "-"
+	  echo "Root access needed to uninstall at /usr/bin "
 	  fi \
-
-
-
+#
+#
+#
 release: tar deb rpm
-
+#
 tar:
 	strip file_browse
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/file_browse-$(VERSION).tar.gz -C .. FileBrowse
-
+#
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
-
+#
 rpm:
 	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=file_browse
 	chown --reference Makefile ../release/file_browse*
 	rm -f backup*
-
-
-
-
-
-
+#
+#
+#
+#
+#
+#

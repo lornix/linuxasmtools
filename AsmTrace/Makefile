@@ -1,4 +1,4 @@
-
+#
 #
 # usage:  make         - compile asmedit executable
 #         make clean   - touch all source files
@@ -27,39 +27,39 @@ lib1 = $(shell if test -f asmlib.a ; then echo asmlib.a ; fi)
 lib2 = $(shell if test -f ../asmlib.a ; then echo ../asmlib.a ; fi)
 lib3 = $(shell if test -f ../../asmlib.a ; then echo ../../asmlib.a ; fi)
 lib4 = $(shell if test -f /usr/lib/asmlib.a ; then echo /usr/lib/asmlib.a ; fi)
-
+#
 ifeq "$(lib4)" ""
 #$(shell echo "$HOME/.a library not found" )
 else
 LIBS := $(lib4)
 endif
-
+#
 ifeq "$(lib3)" ""
 #$(shell echo "../../ library not found" )
 else
 LIBS := $(lib3)
 endif
-
+#
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
 LIBS := $(lib2)
 endif
-
+#
 ifeq "$(lib1)" ""
 #$(shell echo "no local library")
 else
 LIBS := $(lib1)
 endif
-
+#
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
-
+#
 #LDFLAGS =
 LDFLAGS = -static
 LD = ld
-
+#
 # the following variables are probably ok
 ######################################################
 ifeq "$(assembler)" "nasm"
@@ -68,22 +68,22 @@ DEBUG = -g
 CFLAGS = -O99
 T = asm
 endif
-
+#
 ifeq "$(assembler)" "as"
 CC = as
 DEBUG = -gstabs
 CFLAGS = -o $@
 T = s
 endif
-
+#
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
 CFLAGS =
 T = asm
 endif
-
-
+#
+#
 ifeq "$(assembler)" "fasm"
 CC = fasm
 DEBUG =
@@ -91,85 +91,85 @@ CFLAGS =
 T = asm
 LD = echo
 endif
-
+#
 SHELL = /bin/bash
 here = $(shell pwd)
-
+#
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
 objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
-
-
+#
+#
 # template for each source compile
 %.o:    %.$(T)
 	$(CC) $(DEBUG) $(CFLAGS) $<
-
+#
 # template for link
 %:      %.o
 	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
-
+#
 all:	pre $(targets)
-
+#
 $(objs):
-
+#
 pre:
 	touch *.asm
 	  @if test -e $(LIBS) ; then \
-             echo "asmlib found, compilng asmtrace" ; \
+             echo "asmlib found, compilng asmtrace"
           else  \
-	     echo "asmlib not found, needed by asmtrace" ; \
-             suspend ; \
+	     echo "asmlib not found, needed by asmtrace"
+             suspend
           fi
-
+#
 #
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
 install:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	echo "installing asmtrace in /usr/bin" ; \
-	install -s asmtrace /usr/bin ; \
-	install -D asmtrace.1.gz /usr/share/man/man1/ ; \
+	echo "installing asmtrace in /usr/bin"
+	install -s asmtrace /usr/bin
+	install -D asmtrace.1.gz /usr/share/man/man1/
 	else \
-	  echo "need to be root for install to /usr/bin" ; \
-	  echo "switch to root for /usr/bin install " ; \
+	  echo "need to be root for install to /usr/bin"
+	  echo "switch to root for /usr/bin install "
 	fi
-
+#
 uninstall:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
         then \
-	echo "uninstalling asmtrace from /usr/bin" ; \
-	rm -f /usr/bin/asmtrace ; \
-	rm -f /usr/share/man/man1/asmtrace.1.gz ; \
+	echo "uninstalling asmtrace from /usr/bin"
+	rm -f /usr/bin/asmtrace
+	rm -f /usr/share/man/man1/asmtrace.1.gz
 	else \
-	echo "need to be root for uninstall" ; \
+	echo "need to be root for uninstall"
 	fi
-
+#
 clean:
 	rm -f asmtrace.o *~
 	touch $(srcs)
-
+#
 doc:
 	../txt2man -t AsmTrace asmtrace.txt | gzip -c > asmtrace.1.gz
-
-
+#
+#
 release: tar deb rpm
-
+#
 tar:
 	strip asmtrace
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/asmtrace-$(VERSION).tar.gz -C .. AsmTrace
-
+#
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
-
+#
 rpm:
 	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmtrace
 	chown --reference Makefile ../release/asmtrace*
 	rm -f backup*
-
-
-
+#
+#
+#

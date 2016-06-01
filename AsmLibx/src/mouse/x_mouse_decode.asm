@@ -17,9 +17,7 @@
 
   [section .text align=1]
 
-%ifdef DEBUG
 %include "../../include/window.inc"
-%endif
 
 ;------------------ x_mouse_decode.inc -----------------------
 
@@ -61,7 +59,7 @@ endstruc
 ;    eax = 0 if no process found for click area
 ;          process address if click in table
 ;    flags set for jz (no process) or jnz (process found)
-;              
+;
 ; NOTES
 ;   source file: x_mouse_decode
 ;<

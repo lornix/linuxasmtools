@@ -1,4 +1,4 @@
-
+#
 #
 # usage:  make         - compile asmedit executable
 #         make clean   - touch all source files
@@ -25,7 +25,7 @@ OP = EX
 #    DEBUG = yes (include test code and debug info)
 #
 DEBUG=yes
-
+#
 ########################################################################
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -34,42 +34,42 @@ lib1 = $(shell if test -f asmlib.a ; then echo asmlib.a ; fi)
 lib2 = $(shell if test -f ..//asmlib.a ; then echo ..//asmlib.a ; fi)
 lib3 = $(shell if test -f ../../asmlib.a ; then echo ../../asmlib.a ; fi)
 lib4 = $(shell if test -f /usr/lib/asmlib.a ; then echo /usr/lib/asmlib.a ; fi)
-
+#
 ifeq "$(lib4)" ""
 #$(shell echo "$HOME/.a library not found" )
 else
 LIBS := $(lib4)
 endif
-
+#
 ifeq "$(lib3)" ""
 #$(shell echo "../../ library not found" )
 else
 LIBS := $(lib3)
 endif
-
+#
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
 LIBS := $(lib2)
 endif
-
+#
 ifeq "$(lib1)" ""
 #$(shell echo "no local library")
 else
 LIBS := $(lib1)
 endif
-
+#
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
-
+#
 # the following variables are probably ok
-
+#
 #local = $(shell pwd)
 #home = $(HOME)
 #SHELL = /bin/bash
 #here = $(shell pwd)
-
+#
 AS = nasm
 ifeq ($(DEBUG),yes)
 ASFLAGS := -g -O99
@@ -79,85 +79,85 @@ ASFLAGS :=
 DEFINES=
 endif
 T = .asm
-
+#
 LD = ld
 LDFLAGS =
-
+#
 VERSION := $(shell cat VERSION)
-
+#
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
 #targets := $(shell dir *$(T) | sed -e 's/$(T)//g')
 objs := $(subst .asm,.o, $(srcs))
 #objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')
-
-
+#
+#
 # template for each source compile
 %.o:    %$(T)
 	$(AS) $(ASFLAGS) $(DEFINES) $<
-
+#
 # template for link
 %:      %.o
 	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
-
+#
 all:	pre $(targets)
-
+#
 $(objs):
-
+#
 pre:
 	touch *.asm
-
-
+#
+#
 clean:
 	touch $(srcs)
-
-
+#
+#
 #
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
 install:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	 echo "installing asmsrc in /usr/bin" ; \
-	 install -s asmsrc  /usr/bin/asmsrc ; \
-	 echo "installing  support programs " ; \
-	 install -D -m 666 asmsrc.1.gz /usr/share/man/man1/asmsrc.1.gz ; \
+	 echo "installing asmsrc in /usr/bin"
+	 install -s asmsrc  /usr/bin/asmsrc
+	 echo "installing  support programs "
+	 install -D -m 666 asmsrc.1.gz /usr/share/man/man1/asmsrc.1.gz
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to install at /usr/bin " ; \
+	  echo "-"
+	  echo "Root access needed to install at /usr/bin "
 	  fi \
-
+#
 uninstall:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	 rm -f /usr/bin/asmsrc ; \
-	 echo "uninstalling  support programs" ; \
-	 rm -f /usr/share/man/man1/asmsrc.1.gz ; \
+	 rm -f /usr/bin/asmsrc
+	 echo "uninstalling  support programs"
+	 rm -f /usr/share/man/man1/asmsrc.1.gz
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
+	  echo "-"
+	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr"
 	  fi \
-
-
+#
+#
 doc:
 	../txt2man -t AsmSrc asmsrc.txt | gzip -c > asmsrc.1.gz
-
-
+#
+#
 release: tar deb rpm
-
+#
 tar:
 	strip asmsrc
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/asmsrc-$(VERSION).tar.gz -C .. AsmSrc ElfDecode
-
+#
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
-
+#
 rpm:
 	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmsrc
 	chown --reference Makefile ../release/asmsrc*
 	rm -f backup*
-
+#

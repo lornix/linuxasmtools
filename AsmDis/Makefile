@@ -31,31 +31,31 @@ doc:
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
 install:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	 echo "installing asmdis in /usr/bin" ; \
-	 install -s asmdis  /usr/bin/asmdis ; \
-	 echo "installing  support programs at /usr/share/asmmgr" ; \
-	 install -D -m 666 asmdis_help.txt /usr/share/doc/asmref/asmdis_help.txt ; \
-	 install -D -m 666 asmdis.1.gz /usr/share/man/man1/asmdis.1.gz ; \
+	 echo "installing asmdis in /usr/bin"
+	 install -s asmdis  /usr/bin/asmdis
+	 echo "installing  support programs at /usr/share/asmmgr"
+	 install -D -m 666 asmdis_help.txt /usr/share/doc/asmref/asmdis_help.txt
+	 install -D -m 666 asmdis.1.gz /usr/share/man/man1/asmdis.1.gz
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to install at /usr/bin " ; \
+	  echo "-"
+	  echo "Root access needed to install at /usr/bin "
 	  fi \
 #
 # asmpre is not uninstalled, it may be needed by other asmide programs
 #
 uninstall:
-	@if test -w /etc/passwd ; \
+	@if test -w /etc/passwd
 	then \
-	 echo "uninstalling asmdis in /usr/bin" ; \
-	 rm -f /usr/bin/asmdis ; \
-	 echo "uninstalling  support programs for asmdis" ; \
-	 rm -f /usr/share/doc/asmref/asmdis_help.txt ; \
-	 rm -f /usr/share/man/man1/asmdis.1.gz ; \
+	 echo "uninstalling asmdis in /usr/bin"
+	 rm -f /usr/bin/asmdis
+	 echo "uninstalling  support programs for asmdis"
+	 rm -f /usr/share/doc/asmref/asmdis_help.txt
+	 rm -f /usr/share/man/man1/asmdis.1.gz
 	else \
-	  echo "-" ; \
-	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
+	  echo "-"
+	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr"
 	  fi \
 #
 #

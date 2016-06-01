@@ -7,8 +7,9 @@
 include ../Makefile.Common
 #
 all:	$(TARGETS)
-
+#
 $(OBJS):
-
+#
 clean:
-	rm -f $(TARGETS) $(OBJS) $(TARGETS)
+	-rm -f $(TARGETS) $(OBJS)
+#
