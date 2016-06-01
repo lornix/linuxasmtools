@@ -106,8 +106,6 @@
 ;<
 ; * ----------------------------------------------
 
-%ifdef DEBUG
-
 struc in_block
 .iendrow	resb 1	;rows in window
 .iendcol	resb 1	;ending column
@@ -145,8 +143,6 @@ struc in_def
 .process resd 1 ;process to handle this
 ;in_def_size:
 endstruc
-
-%endif
 
 ;---------------------------------------------------------
 ;input: ebp=in_block ptr
