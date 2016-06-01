@@ -29,7 +29,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -45,7 +45,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 LD = ld
@@ -55,7 +55,7 @@ LD = ld
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 endif
 
@@ -69,7 +69,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 endif
 
@@ -87,7 +87,7 @@ here = $(shell pwd)
 
 dirs = $(shell dir -d *)
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 #targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 targets := $(subst .asm,, $(srcs))
 
@@ -105,7 +105,7 @@ all:	pre $(targets)
 $(objs):
 
 pre:
-	touch $(srcs)  
+	touch $(srcs)
 #
 # the "install" program uses flags
 #        -D       create any needed directories
@@ -137,7 +137,7 @@ uninstall:
 
 
 doc:
-	../txt2man -t AsmLinks asmlinks.txt | gzip -c > asmlinks.1.gz 
+	../txt2man -t AsmLinks asmlinks.txt | gzip -c > asmlinks.1.gz
 
 clean:
 	rm -f asmlinks.o *~

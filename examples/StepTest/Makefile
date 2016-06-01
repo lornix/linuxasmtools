@@ -19,7 +19,7 @@
 #
 DEBUG=yes
 
-########################################################################          
+########################################################################
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -40,7 +40,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3) ../../asmlibx.a $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -52,7 +52,7 @@ ifeq "$(lib1)" ""
 else
 LIBS := $(lib1) asmlibx.a $(lib1)
 endif
- 
+
 # the following variables are probably ok
 
 #local = $(shell pwd)
@@ -62,10 +62,10 @@ endif
 
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g
+ASFLAGS := -g
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf
+ASFLAGS :=
 DEFINES=
 endif
 T = .asm
@@ -80,7 +80,7 @@ srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
 #targets := $(shell dir *$(T) | sed -e 's/$(T)//g')
 objs := $(subst .asm,.o, $(srcs))
-#objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')     
+#objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')
 
 
 # template for each source compile
@@ -101,7 +101,7 @@ pre:
 
 
 clean:
-	touch $(srcs)  
+	touch $(srcs)
 
 
 #
@@ -147,7 +147,7 @@ rpm:
 	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=steptest
 	sudo chown --reference Makefile ../../release/steptest*
 	rm -f backup*
- 
+
 
 
 

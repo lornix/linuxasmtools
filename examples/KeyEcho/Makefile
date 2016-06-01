@@ -17,7 +17,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -47,7 +47,7 @@ key_echo:	key_echo.o
 	ld -static -o key_echo key_echo.o $(LIBS)
 
 key_echo.o: key_echo.asm
-	nasm -g -felf -o key_echo.o key_echo.asm
+	nasm -g -o key_echo.o key_echo.asm
 #
 # the "install" program uses flags
 #        -D       create any needed directories
@@ -88,7 +88,7 @@ rpm:
 	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=key_echo
 	sudo chown --reference Makefile ../../release/key_echo*
 	rm -f backup*
- 
+
 
 
 

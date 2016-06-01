@@ -57,6 +57,5 @@ gs_exit:
 release_semaphore:
   mov	[semaphore],byte 0
   ret
-touch *.asm
 nasm -felf -g -DDEBUG sbug.asm
 ld sbug.o  -o sbug /usr/lib/asmlibx.a /usr/lib/asmlib.a

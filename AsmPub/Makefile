@@ -19,9 +19,9 @@ version := $(shell cat VERSION)
 # select assembler, nasm, fasm, as, yasm
 #
 assembler :=nasm
-#                      
 #
-#                      
+#
+#
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -41,7 +41,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -57,7 +57,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 LD = ld
@@ -67,7 +67,7 @@ LD = ld
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 endif
 
@@ -81,7 +81,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 endif
 
@@ -100,7 +100,7 @@ here = $(shell pwd)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -155,12 +155,12 @@ uninstall:
 
 
 doc:
-	../txt2man -t AsmPub asmpub.txt | gzip -c > asmpub.1.gz 
+	../txt2man -t AsmPub asmpub.txt | gzip -c > asmpub.1.gz
 
 
 clean:
 	rm -f asmpub.o *~
-	touch $(srcs)  
+	touch $(srcs)
 	rm -f release/*
 	-rmdir release
 

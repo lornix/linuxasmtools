@@ -20,7 +20,7 @@ home = $(HOME)
 version := $(shell cat VERSION)
 SHELL = /bin/bash
 here = $(shell pwd)
-#                      
+#
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -40,7 +40,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -56,7 +56,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 
@@ -65,7 +65,7 @@ LFLAGS = -static
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -O2 -f elf
+CFLAGS = -O2
 endif
 
 ifeq "$(assembler)" "as"
@@ -77,7 +77,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 
@@ -95,7 +95,7 @@ here = $(shell pwd)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.asm | sed -e 's/.asm//g')
 srcs := $(shell dir *.asm)
-objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')     
+objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')
 
 
 # template for each source compile
@@ -158,12 +158,12 @@ uninstall:
 
 clean:
 	rm -f fileset.o *~
-	touch $(srcs)  
+	touch $(srcs)
 	rm -f release/*
 	-rmdir release
 
 doc:
-	../txt2man -t FileSet fileset.txt | gzip -c > fileset.1.gz 
+	../txt2man -t FileSet fileset.txt | gzip -c > fileset.1.gz
 
 
 release: tar deb rpm

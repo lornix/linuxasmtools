@@ -13,6 +13,12 @@
 #           4. make release  (create new release with updated docs)
 #           5. make doc      (add asmtools-...tar.gz with latest
 ######################################################
+#
+# global environment variables to set defaults for nasm & ld
+export NASMENV=-felf32
+export LDEMULATION=elf_i386
+#
+#
 local = $(shell pwd)
 home = $(HOME)
 version := $(shell cat VERSION)
@@ -24,7 +30,7 @@ here = $(shell pwd)
 dirs = AsmLib AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc \
        AsmView AsmFind AsmTimer ElfDecode AsmDis AsmBug AsmFile \
        AsmTrace AsmLinks AsmMenu FileBrowse FileSet MiniBug Domac Tracex \
-       Xhelper Copy AsmIDE 
+       Xhelper Copy AsmIDE
 #adirs - used as destination for README,COPYING,INSTALL files
 adirs = AsmLib AsmLibx AsmEdit AsmMgr AsmRef \
         examples/FormatDoc examples/KeyEcho examples/CrtTest \
@@ -32,8 +38,8 @@ adirs = AsmLib AsmLibx AsmEdit AsmMgr AsmRef \
 	AsmDis AsmBug AsmFile AsmTrace AsmLinks AsmMenu \
 	examples/Sort examples/StepTest examples/WalkTest \
 	FileBrowse FileSet AsmPlan AsmPub ElfDecode MiniBug Domac \
-        AsmSrc Tracex Xhelper Copy AsmIDE 
-#cdirs - used for compiles 
+        AsmSrc Tracex Xhelper Copy AsmIDE
+#cdirs - used for compiles
 cdirs = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef \
         examples/FormatDoc examples/KeyEcho examples/CrtTest \
 	examples/Ainfo examples/AsmColor \
@@ -43,7 +49,7 @@ cdirs = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef \
 	FileSet AsmMgr/Setup ElfDecode\
         AsmView AsmFind AsmTimer \
 	AsmDis AsmBug AsmFile AsmTrace AsmLinks MiniBug Domac \
-	Tracex Xhelper Copy AsmIDE 
+	Tracex Xhelper Copy AsmIDE
 #ddirs - used to make documentation
 ddirs = AsmLib AsmLib_tutor AsmLibx AsmBug AsmDis AsmEdit AsmMenu AsmFile FileSet \
 	AsmFind AsmLinks AsmMgr AsmProject AsmPlan AsmPub \
@@ -57,7 +63,7 @@ rdirs = AsmLib AsmLib_tutor AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc 
        examples/Sort examples/StepTest examples/WalkTest \
        AsmDis AsmBug AsmFile AsmTrace AsmLinks AsmProject \
        ElfDecode MiniBug Domac Tracex Xhelper Copy AsmIDE \
-       
+
 
 # shell command to execute make in all directories
 DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
@@ -109,7 +115,7 @@ uninstall:
 	  echo "Root access needed to uninstall /tmp files" ; \
 	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	  fi
-	
+
 clean:
 	find . -depth -name '*.o' -exec rm -f '{}' \;
 	find . -depth -name '*~' -exec rm -f '{}' \;

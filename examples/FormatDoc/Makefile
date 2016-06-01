@@ -40,7 +40,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -53,7 +53,7 @@ else
 LIBS := $(lib1)
 endif
 
- 
+
 #LFLAGS =
 LFLAGS = -static
 
@@ -62,7 +62,7 @@ LFLAGS = -static
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 ifeq "$(assembler)" "as"
@@ -74,7 +74,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 
@@ -92,7 +92,7 @@ here = $(shell pwd)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.asm | sed -e 's/.asm//g')
 srcs := $(shell dir *.asm)
-objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')     
+objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')
 
 
 # template for each source compile
@@ -108,47 +108,42 @@ all:	pre $(targets) post
 $(objs):
 
 pre:
-	  @if test -e $(LIBS) ; then \
-             echo "asmlib found, compilng format_doc" ; \
-          else  \
-	     echo "asmlib not found, needed by format_doc" ; \
-             suspend ; \
-          fi
+	@if test -e $(LIBS) ; then \
+		echo "asmlib found, compilng format_doc" ; \
+	else  \
+		echo "asmlib not found, needed by format_doc" ; \
+		suspend ; \
+	fi
 
 post:
 #ifeq "$(copy_executable)" "yes"
 #	@for d in $(targets); do echo $$d ; cp $$d ../ ; strip ../$$d ; done
 #endif
-
+#
 clean:
-	touch $(srcs)  
-
+	# do nothing
 #
 # the "install" program uses flags
 #        -D       create any needed directories
 #        -s       strip executables
 #        -m 644   set file attributes to 644 octal
 install:
-	@if test -w /etc/passwd ; \
-	then \
-	echo "installing format_doc in /usr/bin" ; \
-	install -s format_doc /usr/bin ; \
+	@if test -w /etc/passwd ; then \
+		echo "installing format_doc in /usr/bin" ; \
+		install -s format_doc /usr/bin ; \
 	else \
-	  echo "need to be root for install to /usr/bin" ; \
-	  echo "switch to root for /usr/bin install " ; \
+		echo "need to be root for install to /usr/bin" ; \
+		echo "switch to root for /usr/bin install " ; \
 	fi
 
 uninstall:
-	@if test -w /etc/passwd ; \
-	then \
-	echo "uninstalling format_doc " ; \
-	rm -f /usr/bin/format_doc ; \
+	@if test -w /etc/passwd ; then \
+		echo "uninstalling format_doc " ; \
+		rm -f /usr/bin/format_doc ; \
 	else \
-	  echo "need to be root for install to /usr/bin" ; \
-	  echo "switch to root for /usr/bin install " ; \
+		echo "need to be root for install to /usr/bin" ; \
+		echo "switch to root for /usr/bin install " ; \
 	fi
-
-
 
 release: tar deb rpm
 
@@ -163,7 +158,3 @@ rpm:
 	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=format_doc
 	sudo chown --reference Makefile ../../release/format_doc*
 	rm -f backup*
- 
-
-
-

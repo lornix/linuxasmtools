@@ -7,7 +7,7 @@
 local = $(shell pwd)
 home = $(HOME)
 version := $(shell cat VERSION)
-########################################################################          
+########################################################################
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -27,7 +27,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -43,7 +43,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 # the following variables are probably ok
 
 #local = $(shell pwd)
@@ -53,10 +53,10 @@ endif
 
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g
+ASFLAGS := -g
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf
+ASFLAGS :=
 DEFINES=
 endif
 T = asm
@@ -66,7 +66,7 @@ LDFLAGS =
 
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -194,7 +194,7 @@ clean:
 	-rmdir release
 
 doc:
-	../txt2man -t AsmIDE asmide.txt | gzip -c > asmide.1.gz 
+	../txt2man -t AsmIDE asmide.txt | gzip -c > asmide.1.gz
 
 release: tar deb rpm
 

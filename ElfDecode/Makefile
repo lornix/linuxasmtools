@@ -26,7 +26,7 @@ OP = EX
 #
 DEBUG=yes
 
-########################################################################          
+########################################################################
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -46,7 +46,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -62,7 +62,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 # the following variables are probably ok
 
 #local = $(shell pwd)
@@ -72,10 +72,10 @@ endif
 
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g -O99
+ASFLAGS := -g -O99
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf
+ASFLAGS :=
 DEFINES=
 endif
 T = .asm
@@ -90,7 +90,7 @@ srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
 #targets := $(shell dir *$(T) | sed -e 's/$(T)//g')
 objs := $(subst .asm,.o, $(srcs))
-#objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')     
+#objs := $(shell dir *$(T) | sed -e 's/$(T)/.o/g')
 
 
 # template for each source compile
@@ -110,7 +110,7 @@ pre:
 
 
 clean:
-	touch $(srcs)  
+	touch $(srcs)
 
 
 #
@@ -149,7 +149,7 @@ release: tar deb rpm
 tar:
 	strip elfdecode
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/elfdecode-$(version).tar.gz -C .. ElfDecode 
+	tar cfz ../release/elfdecode-$(version).tar.gz -C .. ElfDecode
 
 
 deb:

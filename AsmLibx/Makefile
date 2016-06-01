@@ -13,12 +13,12 @@ user = $(shell whoami)
 dirs := src/keyboard src/mouse src/server src/win_color \
         src/win_ctrl src/win_info src/win_text src/xtest \
         src/mgr_info src/mgr_ctrl
-srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))     
-objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))     
+srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))
+objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))
 
 # template for each source compile
 %.o:    %.asm
-	nasm -g -f elf $<
+	nasm -g $<
 
 # shell command to execute make in all directories
 DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
@@ -52,7 +52,7 @@ install:
 	install -D -m 644 asmlibx.a /usr/lib/asmlibx.a ; \
 	else \
 	  echo "Must be root to install library at /usr/lib." ; \
-	fi  
+	fi
 
 uninstall:
 	@echo "user="$(user)
@@ -60,8 +60,8 @@ uninstall:
 	  rm -f /usr/lib/asmlibx.a ; \
 	else \
 	  echo "Must be root to uninstall library at /usr/lib." ; \
-	fi  
-	
+	fi
+
 
 doc:
 	find . -depth -name '*~' -exec rm -f '{}' \;
@@ -76,7 +76,7 @@ doc:
 	cp -f docs/asmlibx.txt  ../doc/lib/asmlibx.txt
 	rm -f docs/libx.txt
 	mv -f docs/libx.index docs/asmlibx_index.txt
-	
+
 release: tar deb rpm
 
 tar:

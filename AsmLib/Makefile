@@ -20,7 +20,7 @@ dirs := syscall char str str_conv terminal crt env blk str_cmp dir \
 
 # template for each source compile
 %.o:    %.asm
-	nasm -g -f elf $<
+	nasm -g $<
 
 # shell command to execute make in all directories
 DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
@@ -32,14 +32,14 @@ all:  $(dirs)
 
 pre:
 	./make_syscall
-srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))     
-objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))     
+srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))
+objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))
 
 lib:
 #	rm -f asmlib.a
 #	ar rcs asmlib.a $(objs)
-	find . -name '*.o' -exec ar rcs asmlib.a '{}' ';'
-	mv -f asmlib.a ../
+	find . -name '*.o' -print0 | xargs -0 ar rcs asmlib.a
+	cp -f asmlib.a ../
 #	strip ../asmlib.a	;do not enable, kills link
 
 
@@ -48,7 +48,7 @@ test:  test.o
 	rm -f test.o
 
 test.o:	test.asm
-	~/bin/nasm -g -f elf -o test.o test.asm
+	~/bin/nasm -g -o test.o test.asm
 
 clean:
 	find . -depth -name '*.o' -exec rm -f '{}' \;
@@ -67,7 +67,7 @@ install:
 	install -D -m 644 ../asmlib.a /usr/lib/asmlib.a ; \
 	else \
 	  echo "Must be root to install library at /usr/lib." ; \
-	fi  
+	fi
 
 uninstall:
 	@echo "user="$(user)
@@ -75,8 +75,8 @@ uninstall:
 	  rm -f /usr/lib/asmlib.a ; \
 	else \
 	  echo "Must be root to uninstall library at /usr/lib." ; \
-	fi  
-	
+	fi
+
 
 doc:
 	asmpub -f2 -n -s -r3 -i -oasmlib -k $(here)/'*.asm'

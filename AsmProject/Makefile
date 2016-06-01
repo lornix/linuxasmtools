@@ -14,9 +14,9 @@
 # select assembler, nasm, fasm, as, yasm
 #
 assembler :=nasm
-#                      
 #
-#                      
+#
+#
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -36,7 +36,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -52,7 +52,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 LD = ld
@@ -61,7 +61,7 @@ LD = ld
 ######################################################
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 
 SHELL = /bin/bash
@@ -71,7 +71,7 @@ version = $(shell cat VERSION)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -87,7 +87,7 @@ all:	clean $(targets)
 $(objs):
 
 clean:
-	touch $(srcs)  
+	touch $(srcs)
 	  @if test -e $(LIBS) ; then \
              echo "asmlib found, compilng project" ; \
           else  \
@@ -127,7 +127,7 @@ uninstall:
 	  fi \
 
 doc:
-	../txt2man -t AsmProject asmproject.txt | gzip -c > asmproject.1.gz 
+	../txt2man -t AsmProject asmproject.txt | gzip -c > asmproject.1.gz
 
 release: tar deb rpm
 

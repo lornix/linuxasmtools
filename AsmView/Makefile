@@ -29,7 +29,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -45,7 +45,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 LD = ld
@@ -55,7 +55,7 @@ LD = ld
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 endif
 
@@ -69,7 +69,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 T = asm
 endif
 
@@ -88,7 +88,7 @@ here = $(shell pwd)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -104,7 +104,7 @@ all:	pre $(targets)
 $(objs):
 
 pre:
-	touch $(srcs)  
+	touch $(srcs)
 #
 # the "install" program uses flags
 #        -D       create any needed directories
@@ -141,7 +141,7 @@ clean:
 	rm -f asmview.o *~
 
 doc:
-	../txt2man -t AsmView asmview.txt | gzip -c > asmview.1.gz 
+	../txt2man -t AsmView asmview.txt | gzip -c > asmview.1.gz
 
 
 release: tar deb rpm

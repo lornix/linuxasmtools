@@ -40,7 +40,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -56,7 +56,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 
@@ -65,7 +65,7 @@ LFLAGS = -static
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 ifeq "$(assembler)" "as"
@@ -77,7 +77,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 
@@ -95,7 +95,7 @@ here = $(shell pwd)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.asm | sed -e 's/.asm//g')
 srcs := $(shell dir *.asm)
-objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')     
+objs := $(shell dir *.asm | sed -e 's/.asm/.o/g')
 
 
 # template for each source compile
@@ -121,7 +121,7 @@ post:
 #	strip ../../a_config
 
 clean:
-	touch $(srcs)  
+	touch $(srcs)
 
 #
 # the "install" program uses flags
@@ -163,7 +163,7 @@ rpm:
 	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=crt_test
 	sudo chown --reference Makefile ../../release/crt_test*
 	rm -f backup*
- 
+
 
 
 

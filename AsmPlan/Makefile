@@ -28,7 +28,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -47,11 +47,11 @@ endif
 
 all:	pre asmplan
 
-asmplan: asmplan.o 
+asmplan: asmplan.o
 	ld -e main -o asmplan asmplan.o $(LIBS)
 
 asmplan.o: asmplan.asm edit.inc setup.inc exit.inc search.inc help.inc
-	nasm -g -felf -O99 -o asmplan.o asmplan.asm
+	nasm -g -O99 -o asmplan.o asmplan.asm
 
 pre:
 	touch *.asm
@@ -103,7 +103,7 @@ uninstall:
 	echo "-" ; \
 	echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
 	echo "aborting uninstall, switcht to root user with su or sudo then retry" ; \
-	fi 
+	fi
 
 
 clean:
@@ -112,7 +112,7 @@ clean:
 	-rmdir release
 
 doc:
-	../txt2man -t AsmPlan asmplan.txt | gzip -c > asmplan.1.gz 
+	../txt2man -t AsmPlan asmplan.txt | gzip -c > asmplan.1.gz
 
 release: tar deb rpm
 

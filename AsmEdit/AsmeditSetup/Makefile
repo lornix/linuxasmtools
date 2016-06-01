@@ -16,7 +16,7 @@ assembler := nasm
 #
 copy_executable := yes
 
-#                      
+#
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -36,7 +36,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := ../../asmlibx.a $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -52,7 +52,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlibx.a asmlib.a
 endif
- 
+
 #LFLAGS =
 LFLAGS = -static
 
@@ -68,10 +68,10 @@ asmedit_setup:	asmedit_setup.o
 	ld -static -o asmedit_setup asmedit_setup.o $(LIBS)
 
 asmedit_setup.o: asmedit_setup.asm
-	nasm -g -felf -o asmedit_setup.o asmedit_setup.asm
+	nasm -g -o asmedit_setup.o asmedit_setup.asm
 
 
 clean:
-	touch *.asm  
+	touch *.asm
 	rm -f a.ini
 

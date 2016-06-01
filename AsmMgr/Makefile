@@ -23,7 +23,7 @@ here = $(shell pwd)
 #
 assembler := nasm
 #
-#                      
+#
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -43,7 +43,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -60,7 +60,7 @@ ifeq "$(LIBS)"  ""
 LIBS = asmlib.a
 endif
 
- 
+
 #LFLAGS =
 LFLAGS = -static
 
@@ -69,7 +69,7 @@ LFLAGS = -static
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -O99 -f elf
+CFLAGS = -O99
 endif
 
 ifeq "$(assembler)" "as"
@@ -81,7 +81,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 
@@ -95,9 +95,9 @@ endif
 
 dirs := Setup
 
-srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))     
+srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))
 
-objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))     
+objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))
 
 # shell command to execute make in all directories
 #DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
@@ -126,7 +126,7 @@ pre:
 	touch asmmgr.asm
 	echo "building asmmgr"
 	touch Setup/*.asm
-	
+
 post: asmmgr
 
 clean:
@@ -208,7 +208,7 @@ uninstall:
 	  fi \
 
 doc:
-	../txt2man -t AsmMgr asmmgr.txt | gzip -c > asmmgr.1.gz 
+	../txt2man -t AsmMgr asmmgr.txt | gzip -c > asmmgr.1.gz
 
 
 release: tar deb rpm

@@ -11,7 +11,7 @@
 #
 assembler := nasm
 #
-#                      
+#
 #
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
@@ -31,7 +31,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -61,7 +61,7 @@ usr=$(shell basename $(HOME) )
 ifeq "$(assembler)" "nasm"
 CC = nasm
 DEBUG = -g
-CFLAGS = -f elf -O99
+CFLAGS = -O99
 endif
 
 ifeq "$(assembler)" "as"
@@ -73,7 +73,7 @@ endif
 ifeq "$(assembler)" "yasm"
 CC = yasm
 DEBUG = -g stabs
-CFLAGS = -f elf
+CFLAGS =
 endif
 
 
@@ -87,9 +87,9 @@ endif
 
 dirs := AsmeditSetup ShowSysErr
 
-srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))     
+srcs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.asm))
 
-objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))     
+objs := $(foreach dir,$(dirs),$(wildcard $(dir)/*.o))
 
 # shell command to execute make in all directories
 #DO_MAKE = @ for i in $(dirs); do $(MAKE) -C $$i $@; done
@@ -120,7 +120,7 @@ post: asmedit
 
 
 doc:
-	../txt2man -t AsmEdit asmedit.txt | gzip -c > asmedit.1.gz 
+	../txt2man -t AsmEdit asmedit.txt | gzip -c > asmedit.1.gz
 
 #
 # the "install" program uses flags

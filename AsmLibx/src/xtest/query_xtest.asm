@@ -31,7 +31,7 @@
 ;    failure - eax = negative error code
 ;              flags set for "js"
 ;    success - eax = xtest op code
-;              
+;
 ; NOTES
 ;   source file: query_xtest.asm
 ;<
@@ -54,6 +54,6 @@ qx_exit2:
 
   [section .data]
 saved_xtest_query:	dd 0
-xtest	db 'XTEST'
+xtest:	db 'XTEST'
   [section .text]
 

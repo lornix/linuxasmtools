@@ -26,7 +26,7 @@ OP=LIB
 #
 DEBUG=no
 
-########################################################################          
+########################################################################
 ifeq ($(OP),EX)
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -48,7 +48,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := ../../asmlibx.a $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -61,7 +61,7 @@ else
 LIBS := asmlibx.a $(lib1)
 endif
 
- 
+
 # the following variables are probably ok
 
 #local = $(shell pwd)
@@ -71,10 +71,10 @@ endif
 
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g -O99
+ASFLAGS := -g -O99
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf -O99
+ASFLAGS := -O99
 DEFINES=
 endif
 T = asm
@@ -86,7 +86,7 @@ LDFLAGS =
 #dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -107,11 +107,11 @@ pre:
 
 clean:
 	rm -f asmpub.o *~
-	touch $(srcs)  
+	touch $(srcs)
 
 endif
 
-########################################################################          
+########################################################################
 ifeq ($(OP),LIB)
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -133,7 +133,7 @@ ifeq "$(lib3)" ""
 else
 LIBS := ../../asmlibx.a $(lib3)
 endif
-  
+
 ifeq "$(lib2)" ""
 #$(shell echo "no parent library")
 else
@@ -149,7 +149,7 @@ endif
 ifeq "$(LIBS)"  ""
 LIBS = asmlibx.a asmlib.a
 endif
- 
+
 # the following variables are probably ok
 
 #local = $(shell pwd)
@@ -159,10 +159,10 @@ endif
 
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g -O99
+ASFLAGS := -g -O99
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf -O99
+ASFLAGS := -O99
 DEFINES=
 endif
 T = asm
@@ -174,7 +174,7 @@ LDFLAGS =
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -208,6 +208,6 @@ pre2:
 
 clean:
 	rm -f asmpub.o *~
-	touch $(srcs)  
+	touch $(srcs)
 
 endif

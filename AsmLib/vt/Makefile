@@ -26,16 +26,16 @@ OP=LIB
 #
 DEBUG=no
 
-########################################################################          
+########################################################################
 ifeq ($(OP),EX)
 LIBS := /usr/lib/asmlibx.a /usr/lib/asmlib.a
- 
+
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g
+ASFLAGS := -g
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf -O 999
+ASFLAGS := -O 999
 DEFINES=
 endif
 T = asm
@@ -46,7 +46,7 @@ LDFLAGS =
 
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -67,20 +67,20 @@ pre:
 
 clean:
 	rm -f *~
-	touch $(srcs)  
+	touch $(srcs)
 
 endif
 
-########################################################################          
+########################################################################
 ifeq ($(OP),LIB)
 LIBS := /usr/lib/asmlibx.a /usr/lib/asmlib.a
 
 AS = nasm
 ifeq ($(DEBUG),yes)
-ASFLAGS := -felf -g -O 999
+ASFLAGS := -g -O 999
 DEFINES := -DDEBUG
 else
-ASFLAGS := -felf -O 999
+ASFLAGS := -O 999
 DEFINES=
 endif
 T = asm
@@ -92,7 +92,7 @@ LDFLAGS =
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
-objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')     
+objs := $(shell dir *.$(T) | sed -e 's/.$(T)/.o/g')
 
 
 # template for each source compile
@@ -128,6 +128,6 @@ pre2:
 clean:
 	rm -f *~
 	rm -f *.o
-	touch $(srcs)  
+	touch $(srcs)
 
 endif
