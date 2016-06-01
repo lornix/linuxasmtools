@@ -7,10 +7,9 @@ $(OBJS):
 clean:
 	-rm -f $(TARGETS) $(OBJS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
+doc:
+	../txt2man -t AsmView asmview.txt | gzip -c > asmview.1.gz
+#
 install:
 	install -s asmview /usr/bin
 	install -m 777 viewer /usr/bin
@@ -20,9 +19,6 @@ uninstall:
 	rm -f /usr/bin/asmview
 	rm -f /usr/bin/viewer
 	rm -f /usr/share/man/man1/asmview.1.gz
-#
-doc:
-	../txt2man -t AsmView asmview.txt | gzip -c > asmview.1.gz
 #
 release: tar deb rpm
 #

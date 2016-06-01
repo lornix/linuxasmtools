@@ -10,10 +10,6 @@ clean:
 doc:
 	../txt2man -t Domac domac.txt | gzip -c > domac.1.gz
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
 install:
 	install -s file_browse /usr/bin/file_browse
 #

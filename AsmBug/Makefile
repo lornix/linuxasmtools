@@ -10,10 +10,6 @@ clean:
 doc:
 	../txt2man -t AsmBug asmbug.txt | gzip -c > asmbug.1.gz
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
 install:
 	install -s asmbug /usr/bin/asmbug
 	install -D -m 666 asmbug.1.gz /usr/share/man/man1/asmbug.1.gz

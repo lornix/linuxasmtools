@@ -1,10 +1,3 @@
-#
-#
-# usage:  make         - compile asmedit executable
-#         make clean   - remove built binaries
-#         make install - install files
-#         make release - create release file
-#
 # note: to create a release
 #           1. make clean
 #           2. make
@@ -61,14 +54,10 @@ clean:
 	@for dir in $(DIRS); do $(MAKE) -C $$dir clean; done
 	@-rm -rf release
 #
-docs:	post docs2
-#
-post:
+docs:	$(DDIRS)
 	#for i in $(adirs); do cp -f README ./$$i/README; done
 	#for i in $(adirs); do cp -f COPYING ./$$i/COPYING; done
 	#for i in $(adirs); do cp -f INSTALL ./$$i/INSTALL; done
-#
-docs2:	$(DDIRS)
 	@for i in $(DDIRS); do $(MAKE) -C $$i doc; done
 #
 install:

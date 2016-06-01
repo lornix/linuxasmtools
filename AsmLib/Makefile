@@ -1,11 +1,3 @@
-#
-# usage: make  - make library and test program
-#         make test - make test program
-#         make clean - remove built binaries
-#         make doc - extract documentation from sources
-#         make install - install to $HOME/.asmide/asmlib.a
-#         make release - create a release tar.gz file
-#
 include ../Makefile.Common
 #
 all:
@@ -32,16 +24,6 @@ syscall:
 test: test.o all
 	$(LD) $(LDFLAGS) -o $@ $< $(LIBS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
-install:
-	install -D -m 644 ../asmlib.a /usr/lib/asmlib.a
-#
-uninstall:
-	rm -f /usr/lib/asmlib.a
-#
 doc:
 	asmpub -f2 -n -s -r3 -i -oasmlib -k '*.asm'
 	cp -f header1.txt ../asmlib.txt
@@ -57,6 +39,12 @@ doc:
 	rm -f ../asmlib.txt
 	cp -f asmlib.txt doc-pak/
 	cp -f asmlib_index.txt doc-pak/
+#
+install:
+	install -D -m 644 ../asmlib.a /usr/lib/asmlib.a
+#
+uninstall:
+	rm -f /usr/lib/asmlib.a
 #
 release: tar deb rpm
 #

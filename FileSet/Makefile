@@ -5,24 +5,18 @@ all:	$(TARGETS)
 $(OBJS):
 #
 clean:
-	@-rm -f $(TARGETS) $(OBJS)
+	-rm -f $(TARGETS) $(OBJS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
+doc:
+	../txt2man -t FileSet fileset.txt | gzip -c > fileset.1.gz
+#
 install:
-	echo "installing fileset in /usr/bin"
 	install -s fileset /usr/bin/fileset
 	install -D -m 666 fileset.1.gz /usr/share/man/man1/fileset.1.gz
 #
 uninstall:
-	echo "we are root, uninstall /usr/bin/fileset"
 	rm -f /usr/bin/fileset
 	rm -f /usr/share/man/man1/fileset.1.gz
-#
-doc:
-	../txt2man -t FileSet fileset.txt | gzip -c > fileset.1.gz
 #
 release: tar deb rpm
 #

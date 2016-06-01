@@ -7,10 +7,9 @@ $(OBJS):
 clean:
 	-rm -f $(TARGETS) $(OBJS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
+doc:
+	../txt2man -t AsmRef asmref.txt | gzip -c > asmref.1.gz
+#
 install:
 	install asmref /usr/bin/asmref
 	install ../AsmLinks/asmlinks /usr/bin/asmlinks
@@ -48,15 +47,11 @@ uninstall:
 	echo "uninstalling  support documents at /usr/share/doc/asmref"
 	rm -rf /usr/share/doc/asmref
 #
-doc:
-	../txt2man -t AsmRef asmref.txt | gzip -c > asmref.1.gz
-#
 release: tar deb rpm
 #
 tar:
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/asmref-$(VERSION).tar.gz -C .. AsmRef AsmLinks doc
-#
 #
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
@@ -66,8 +61,4 @@ rpm:
 	chown --reference Makefile ../release/asmref*
 	rm -f backup*
 #
-#
-#
-#
-#
-#
+

@@ -6,10 +6,9 @@ all:  $(DIRS)
 clean:
 	-rm -f $(TARGETS) $(OBJS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
+doc:
+	../txt2man -t AsmMgr asmmgr.txt | gzip -c > asmmgr.1.gz
+#
 install:
 	install -s asmmgr /usr/bin/asmmgr
 	install -s ../AsmProject/asmproject /usr/bin/asmproject
@@ -38,16 +37,12 @@ uninstall:
 	rm -f /usr/bin/viewer
 	rm -rf /usr/share/asmmgr
 #
-doc:
-	../txt2man -t AsmMgr asmmgr.txt | gzip -c > asmmgr.1.gz
-#
 release: tar deb rpm
 #
 tar:
 	strip asmmgr
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/asmmgr-$(VERSION).tar.gz -C .. AsmMgr AsmProject FileSet AsmMenu AsmView examples/AsmColor
-#
 #
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y

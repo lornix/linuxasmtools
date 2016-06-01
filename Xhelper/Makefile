@@ -10,10 +10,6 @@ clean:
 doc:
 	../txt2man -t xhelper xhelper.txt | gzip -c > xhelper.1.gz
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
 install:
 	install -s xhelper /usr/bin/xhelper
 	install -D -m 666 xhelper.1.gz /usr/share/man/man1/xhelper.1.gz
@@ -28,7 +24,6 @@ tar:
 	strip xhelper
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
 	tar cfz ../release/xhelper-$(VERSION).tar.gz -C .. Xhelper
-#
 #
 deb:
 	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y

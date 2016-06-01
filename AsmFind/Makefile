@@ -7,12 +7,10 @@ $(OBJS):
 clean:
 	-rm -f $(TARGETS) $(OBJS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
+doc:
+	../txt2man -t AsmFind asmfind.txt | gzip -c > asmfind.1.gz
+#
 install:
-	echo "installing asmfind in /usr/bin"
 	install -s asmfind /usr/bin
 	install -D -m 666 asmfind.1.gz /usr/share/man/man1/
 	install -D -m 666 ../asmview/asmview.1.gz /usr/share/man/man1/
@@ -21,13 +19,9 @@ install:
 	install  ../AsmView/opener /usr/bin/opener
 #
 uninstall:
-	echo "uninstalling asmfind at /usr/bin"
 	rm -f /usr/bin/asmfind
 	rm -f /usr/share/doc/asmref/asmfind.txt
 	rm -f /usr/share/man/man1/asmfind.1.gz
-#
-doc:
-	../txt2man -t AsmFind asmfind.txt | gzip -c > asmfind.1.gz
 #
 release: tar deb rpm
 #

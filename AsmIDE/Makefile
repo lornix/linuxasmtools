@@ -7,16 +7,13 @@ $(OBJS):
 clean:
 	-rm -f $(TARGETS) $(OBJS)
 #
-# the "install" program uses flags
-#        -D       create any needed directories
-#        -s       strip executables
-#        -m 644   set file attributes to 644 octal
+doc:
+	../txt2man -t AsmIDE asmide.txt | gzip -c > asmide.1.gz
+#
 install:	asmide
-	echo "installing asmref in /usr/bin"
 	install ../AsmRef/asmref /usr/bin/asmref
 	install ../AsmLinks/asmlinks /usr/bin/asmlinks
 	install -D -m 666 ../AsmRef/asmref.1.gz /usr/share/man/man1/asmref.1.gz
-	echo "installing  support documents at /usr/share/doc/asmref"
 	mkdir -p -m 777 /usr/share/doc/asmref
 	mkdir -p -m 777 /usr/share/doc/asmref/cpu
 	mkdir -p -m 777 /usr/share/doc/asmref/kfun
@@ -43,28 +40,20 @@ install:	asmide
 	install -D -m 666 ../AsmRef/k_code.lnk /usr/share/doc/asmref/
 	install -D -m 666 ../AsmRef/asmlibe.lnk /usr/share/doc/asmref/
 	install -D -m 666 ../AsmRef/asmlibxe.lnk /usr/share/doc/asmref/
-	echo "installing minibug in /usr/bin"
 	install -s ../MiniBug/minibug /usr/bin/minibug
 	install -D -m 666 ../MiniBug/minibug.1.gz /usr/share/man/man1/minibug.1.gz
 	install -D -m 644 ../asmlib.a /usr/lib/asmlib.a
 	install -s asmide /usr/bin/asmide
 #
 uninstall:
-	echo "uninstalling asmref at /usr/bin"
 	rm -f /usr/bin/asmref
 	rm -f /usr/share/man/man1/asmref.1.gz
-	echo "uninstalling  support documents at /usr/share/doc/asmref"
 	rm -f -r /usr/share/doc/asmref/*
 	rmdir /usr/share/doc/asmref
-	echo "uninstalling minibug in /usr/bin"
 	rm -f /usr/bin/minibug
-	echo "uninstalling  support programs for minibug"
 	rm -f /usr/share/man/man1/minibug.1.gz
 	rm -f /usr/lib/asmlib.a
 	rm -f /usr/bin/asmide
-#
-doc:
-	../txt2man -t AsmIDE asmide.txt | gzip -c > asmide.1.gz
 #
 release: tar deb rpm
 #
