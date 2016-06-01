@@ -68,7 +68,7 @@ blp1:
 	call	decode_key			;ecx = index or err(0)
 	jecxz	skip1				;jmp if not in table
 	call	display_key_name
-skip1:	call	display_terminfo_index	
+skip1:	call	display_terminfo_index
 	cmp	byte [kbuf],'q'
 	jne	blp1			;loop till 'q' pressed
 exit:
@@ -86,7 +86,7 @@ dti_lp:
 	or	ax,ax
 	js	dti_next
 	add	eax,[terminfo_strings]
-	push	esi	
+	push	esi
 	mov	esi,eax		;get string ptr
 
 	mov	edi,kbuf	;get ptr to key
@@ -120,7 +120,7 @@ stuff:	db	'    was found for this key',0ah,0
   [section .text]
 ;--------------------------------------------------------------
 ;
-display_key_string:			
+display_key_string:
 	mov	ecx,9				; 8 bytes
 	mov	esi,bufx			;storage for ascii
 	mov	edi,kbuf			;get ptr to char
@@ -136,7 +136,7 @@ lp1:
 done1:	mov	byte [esi],0ah
 	sub	esi,bufx-3
 	mov	edx,esi				;amount of data to display
-	
+
 	mov	eax,4				;sys_write
 	mov	ebx,1
 	mov	ecx,prefix
@@ -147,7 +147,7 @@ done1:	mov	byte [esi],0ah
 ;
 ; inputs:    al = hex byte
 ;          esi = storage buffer for ascii
-;         
+;
 ; output:   esi = points past last store (bumped by 2)
 ;* * * * * * * * * * * * * *
 
@@ -173,10 +173,10 @@ btha:	and	al,0fh
 ;	je	btha_stuff
 ;	int	29h
 ;	ret
-btha_stuff:	
+btha_stuff:
 	mov	byte [esi],al
 	inc	esi
-	ret	
+	ret
 ;********************************** decode logic ********************
 ; lookup_key - scan key strings looking for match
 ;   ecx - index if found, 0 if not found
@@ -184,37 +184,38 @@ btha_stuff:
 lookup_key:
 	mov	esi,keystring_tbl
 	xor	ecx,ecx
-k1:	mov	edi,kbuf
+m1:
+	mov	edi,kbuf
 	mov	al,byte [edi]		;get kbuf entry
 	cmp	al,byte [esi]		;compare to keystring
-	je	k4			;initial char. match
-k2:	inc	esi
-k3:	cmp	byte [esi],0		;end of tbl entry
-	jne	k2			;loop if not end of tbl str
-k3a:	inc	esi
+	je	m4			;initial char. match
+m2:	inc	esi
+m3:	cmp	byte [esi],0		;end of tbl entry
+	jne	m2			;loop if not end of tbl str
+m3a:	inc	esi
 	inc	ecx
 	cmp	byte [esi],0		;check if end of table
-	jne	k1			;jmp if more strings
+	jne	m1			;jmp if more strings
 	xor	ecx,ecx			;flag no match
-	jmp	k6
+	jmp	m6
 ;
 ; we have a match
 ;
-k4:	inc	esi
+m4:	inc	esi
 	inc	edi
 	mov	al,byte [edi]		;get next kbuf entry
 	cmp	byte [esi],al		;match?
-	jne	k3			;jmp if no match
+	jne	m3			;jmp if no match
 	cmp	al,0			;end of kbuf string
-	je	k5			;jmp if match at zero in both
+	je	m5			;jmp if match at zero in both
 	cmp	byte [esi],0		;end of table string
-	jne	k4			;keep comparing if more data
+	jne	m4			;keep comparing if more data
 ;
 ; are we at end of this string
 
-	jmp	k3a		
-k5:	inc	ecx			;point ecx at match
-k6:	ret
+	jmp	m3a
+m5:	inc	ecx			;point ecx at match
+m6:	ret
 ;---------------------
 ; decode_key - look up processing for this key
 ;  input - kbuf - has char zero terminated
@@ -232,18 +233,18 @@ decode_key:
 ;	dec	ecx
 ;	jecxz	dk3		;jmp if view mode
 ;	mov	ebx,cmd_index_tbl-1 ;we must be in cmd mode
-	
+
 ;dk3:	add	ebx,eax		;index into table
 ;	xor	eax,eax
 ;	mov	byte al,[ebx]	;get byte index to processing
 
 ;	mov	dword [process_index],eax	;; temp save of index
-	
+
 ;	shl	eax,2		;convert to dword index
 ;	mov	ecx,process_adr_tbl
 ;	add	ecx,eax
 dk_end:	ret
-	
+
 ;-------------------------------
 ; strout - output string
 ;  input: ecx - ponter to string
@@ -254,12 +255,12 @@ dk_end:	ret
 
 strout:
 	xor edx, edx
-    .count_again:	
+    .count_again:
 	cmp [ecx + edx], byte 0x0
 	je .done_count
 	inc edx
 	jmp .count_again
-    .done_count:	
+    .done_count:
 	mov eax, 0x4			; system call 0x4 (write)
 	mov ebx, stdout			; file desc. is stdout
 	int 0x80
@@ -298,14 +299,14 @@ iis2	inc	esi
 	cmp	byte [esi],ah		;end of string?
 	jne	iis2
 	inc	esi			;loop till zero found
-	jmp	iis1	
+	jmp	iis1
 iis3:
-	ret	
+	ret
 ;-------------------------------------------------------
 mouse_enable:
   mov	ecx,mouse_escape
   call	strout
-  ret  
+  ret
 
 mouse_escape	db   1bh,"[?1000h",0	;enables mouse reporting
 ;-------------------------------------------------------------
@@ -372,7 +373,7 @@ rm_20:
   mov	byte [esi],0		;terminate string
 rm_exit:
   call	raw_unset2
-  ret 
+  ret
 ;------------------
   [section .data]
 kpoll_tbl	dd	0	;stdin
@@ -384,7 +385,7 @@ delay_struc:
   dd	1	;nanoeconds
   [section .text]
 
-;---------------------------------------------------------------------------	
+;---------------------------------------------------------------------------
  [section .data]
 
 msg	db   'press key, press q to quit',0ah
@@ -407,7 +408,7 @@ bufx	db	0,0,0,0,0,0,0,0
 	db	0,0,0,0,0,0
 
 	db	77h
-	
+
 oldtermios:
 c_iflag	dd	0
 c_oflag dd	0
@@ -539,8 +540,8 @@ keyname_tbl:
  db 'k',0		;86
  db 'l',0		;87
  db ';',0		;88
- db 'rquote',0		;89 single quote 
- db 'enter',0		;90  enter 
+ db 'rquote',0		;89 single quote
+ db 'enter',0		;90  enter
  db 'A',0		;91
  db 'S',0		;92
  db 'D',0		;93
@@ -676,8 +677,8 @@ keystring_tbl:
  db 'k',0		;86
  db 'l',0		;87
  db ';',0		;88
- db 27h,0		;89 single quote 
- db 0dh,0		;90  enter 
+ db 27h,0		;89 single quote
+ db 0dh,0		;90  enter
  db 'A',0		;91
  db 'S',0		;92
  db 'D',0		;93

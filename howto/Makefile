@@ -6,17 +6,9 @@
 #
 include ../Makefile.Common
 #
-# template for each source compile
-%.o: %.asm
-	$(ASM) $(DEBUG) $(ASFLAGS) $<
-
-# template for link
-%: %.o
-	$(LD) $^ $(LDFLAGS) -o $@ $(LIBS)
-
 all:	$(TARGETS)
 
 $(OBJS):
 
 clean:
-	rm -f $(OBJS) $(TARGETS) *~
+	rm -f $(TARGETS) $(OBJS) $(TARGETS)

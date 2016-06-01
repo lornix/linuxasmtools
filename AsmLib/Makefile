@@ -9,15 +9,24 @@
 include ../Makefile.Common
 #
 all:
-	./make_syscall
-	for dir in $(DIRS); do $(MAKE) -C $$dir $@; done
+	$(MAKE) syscall
+	$(MAKE) libs
+	$(MAKE) archive
+#
+clean:
+	-rm -f asmlib.a
+	for dir in $(DIRS); do $(MAKE) -C $$dir clean; done
+#
+archive:
 	-rm -f asmlib.a
 	find . -name '*.o' -print0 | xargs -0 ar rcs asmlib.a
 	cp -f asmlib.a ../
 #
-clean:
-	-rm -f asmlib.a
-	for dir in $(DIRS); do $(MAKE) -C $$dir $@; done
+libs:
+	for dir in $(DIRS); do $(MAKE) -C $$dir all; done
+#
+syscall:
+	./make_syscall
 #
 test: test.o all
 	$(LD) $(LDFLAGS) -o $@ $< $(LIBS)

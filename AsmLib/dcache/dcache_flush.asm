@@ -56,7 +56,7 @@ df_color_change:
   rep	movsb
   pop	ecx
   pop	esi
-  pop	eax 
+  pop	eax
 ;stuff char
 df_stuff:
   cmp	ecx,edx		;is buf cursor = screen cursor?
@@ -118,7 +118,7 @@ to_entry:
   div	ecx
   or	dl,30h
   mov	byte [edi],dl
-  dec	edi  
+  dec	edi
   or	eax,eax
   jnz	to_entry
   ret
@@ -134,7 +134,7 @@ vt_column:
   db	'H'
 vt100_end:
   db	0		;end of string
-  
+
  [section .text]
 ;---------------------------------------------------
 write_out_buf:

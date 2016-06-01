@@ -39,7 +39,7 @@ LIBSX := $(ASMLIBXPATH)
 LDFLAGS := -static
 LD := ld -melf_i386
 #
-DEBUG := yes
+#DEBUG := yes
 #
 AS := nasm
 #

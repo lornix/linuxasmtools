@@ -25,7 +25,7 @@
 ; OUTPUT:
 ;    eax = window pixel height
 ;    ebx = window pixel width
-;    
+;
 ; NOTES
 ;   source file: win_size.asm
 ;

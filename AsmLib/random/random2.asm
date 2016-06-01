@@ -53,32 +53,32 @@ cont4:	push	si
 	xor	di,di
 	mov	ax,permute1
 	mul	word [prev_rand]
-	mov	si,ax		
+	mov	si,ax
 	mov	bx,dx
-	add	bx,ax		
+	add	bx,ax
 	mov	cx,dx
 
 	mov	ax,permute2
 	mul	word [prev_rand+2]
-	add	bx,ax			
+	add	bx,ax
 	adc	cx,dx
 	adc	di,0
-	add	cx,ax			
+	add	cx,ax
 	adc	di,dx
 
-	mov	ax,permute2-permute1	
-	mul	word [rand_delta]	
-	add	bx,ax			
+	mov	ax,permute2-permute1
+	mul	word [rand_delta]
+	add	bx,ax
 	adc	cx,dx
 	adc	di,0
 
 	shl	bx,1
 	rcl	cx,1
-	rcl	di,1			
-	shr	bx,1			
+	rcl	di,1
+	shr	bx,1
 
-	add	si,cx			
-	adc	bx,di			
+	add	si,cx
+	adc	bx,di
 
 	mov	[prev_rand+2],bx		;save random number
 	mov	[prev_rand],si		;  as seed for next entry
