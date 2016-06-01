@@ -1,4 +1,4 @@
-q; -- source template - edit as needed --
+; -- source template - edit as needed --
   [section .text]
   extern sys_exit
   global _start,main
@@ -19,7 +19,7 @@ _start:
   call	stdout_str
   jmp	cmos_exit
 
-we_root:  
+we_root:
   mov	ecx,cmos_msg
   mov	edx,cmos_msg_size
   call	crt_write
@@ -72,7 +72,7 @@ waitx:
 wx: loop wx
   ret
 ;---------------------------------------------
-  
+
  [section .data]
 
 cmos_table:
@@ -90,11 +90,11 @@ cmos_table:
 
  db  -1		;end of table
 
-cmos_table_ptr	dd cmos_table
-cmos_value	times 5 db 0
+cmos_table_ptr:	dd cmos_table
+cmos_value:	times 5 db 0
 
 warning: db 0ah,'Root access required',0ah,0
 
 cmos_msg:
 incbin "cmos.inc"
-cmos_msg_size equ $ - cmos_msg
+cmos_msg_size: equ $ - cmos_msg

@@ -19,10 +19,8 @@ export NASMENV=-felf32
 export LDEMULATION=elf_i386
 #
 #
-local = $(shell pwd)
-home = $(HOME)
-version := $(shell cat VERSION)
-
+include "Makefile.Common"
+#
 SHELL = /bin/bash
 here = $(shell pwd)
 
