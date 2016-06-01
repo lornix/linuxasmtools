@@ -178,11 +178,11 @@ tar:
 	tar cfz ../release/asmfile-$(VERSION).tar.gz -C .. AsmFile
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmfile
-	sudo chown --reference Makefile ../release/asmfile*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmfile
+	chown --reference Makefile ../release/asmfile*
 	rm -f backup*
 
 

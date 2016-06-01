@@ -122,7 +122,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin" ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -133,7 +132,6 @@ uninstall:
 	else \
 	echo "-" ; \
 	echo "Root access needed to uninstall at /usr/bin " ; \
-	echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	fi \
 
 

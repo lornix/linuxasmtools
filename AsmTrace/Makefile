@@ -164,11 +164,11 @@ tar:
 	tar cfz ../release/asmtrace-$(VERSION).tar.gz -C .. AsmTrace
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmtrace
-	sudo chown --reference Makefile ../release/asmtrace*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmtrace
+	chown --reference Makefile ../release/asmtrace*
 	rm -f backup*
 
 

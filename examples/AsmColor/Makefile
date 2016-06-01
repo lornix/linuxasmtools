@@ -165,11 +165,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=asmcolor
-	sudo chown --reference Makefile ../../release/asmcolor*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=asmcolor
+	chown --reference Makefile ../../release/asmcolor*
 	rm -f backup*
 
 

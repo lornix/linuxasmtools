@@ -82,7 +82,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin and /usr/share/asmmgr" ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -97,7 +96,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin " ; \
-	  echo "aborting uninstall, switcht to root user with su or sudo then retry" ; \
 	  fi \
 
 clean:
@@ -117,11 +115,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmref
-	sudo chown --reference Makefile ../release/asmref*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmref
+	chown --reference Makefile ../release/asmref*
 	rm -f backup*
 
 

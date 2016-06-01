@@ -149,10 +149,10 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=sort
-	sudo chown --reference Makefile ../../release/sort*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=sort
+	chown --reference Makefile ../../release/sort*
 	rm -f backup*
 
 

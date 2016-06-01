@@ -8,7 +8,7 @@
   mov  ecx,p1
   int  80h
 
-  
+
    Get the I/O scheduling class and priority of one or more processes.
 
 args
@@ -82,7 +82,7 @@ Return values
    following command will set the set the scheduler for the hda device to
    cfq:
 
-   $ su Password: # echo cfq > /sys/block/hda/queue/scheduler
+   # echo cfq > /sys/block/hda/queue/scheduler
 
    The Completely Fair Queuing (CFQ) I/O Scheduler:
    Since v3 (aka CFQ Time Sliced) CFQ implements I/O nice levels similar

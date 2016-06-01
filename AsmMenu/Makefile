@@ -134,8 +134,7 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
-	  fi \
+	  fi
 
 
 uninstall:
@@ -148,7 +147,7 @@ uninstall:
 	  echo "no local /bin and we do not have root status" ; \
 	  echo "switch to root for /usr/bin install or create local /bin directory" ; \
 	  echo "Note: /bin directory may need to be placed in path" ; \
-	  fi \
+	  fi
 
 clean:
 	rm -f asmpub.o *~
@@ -168,11 +167,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmmenu
-	sudo chown --reference Makefile ../release/asmmenu*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmmenu
+	chown --reference Makefile ../release/asmmenu*
 	rm -f backup*
 
 

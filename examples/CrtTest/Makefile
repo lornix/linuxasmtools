@@ -158,10 +158,10 @@ tar:
 	tar cfz ../../release/crt_test-$(VERSION).tar.gz -C .. CrtTest
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=crt_test
-	sudo chown --reference Makefile ../../release/crt_test*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=crt_test
+	chown --reference Makefile ../../release/crt_test*
 	rm -f backup*
 
 

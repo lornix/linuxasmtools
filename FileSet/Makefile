@@ -140,7 +140,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
 	  fi \
 
 
@@ -174,11 +173,11 @@ tar:
 	tar cfz ../release/fileset-$(VERSION).tar.gz -C .. FileSet
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=fileset
-	sudo chown --reference Makefile ../release/fileset*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=fileset
+	chown --reference Makefile ../release/fileset*
 	rm -f backup*
 
 

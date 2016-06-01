@@ -138,7 +138,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -150,7 +149,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin " ; \
-	  echo "aborting uninstall, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 
@@ -173,11 +171,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmpub
-	sudo chown --reference Makefile ../release/asmpub*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmpub
+	chown --reference Makefile ../release/asmpub*
 	rm -f backup*
 
 

@@ -164,11 +164,11 @@ tar:
 	tar cfz ../release/asmtimer-$(VERSION).tar.gz -C .. AsmTimer
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmtimer
-	sudo chown --reference Makefile ../release/asmtimer*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmtimer
+	chown --reference Makefile ../release/asmtimer*
 	rm -f backup*
 
 

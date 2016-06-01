@@ -124,7 +124,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin and /usr/share/asmedit" ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
 	fi
 
 uninstall:
@@ -148,7 +147,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall /usr/share/asmedit" ; \
-	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	  fi
 	@if test -d $(HOME)/bin ; \
 	then \
@@ -172,10 +170,10 @@ tar:
 	tar cfz ../release/asmedit-$(VERSION).tar.gz -C .. AsmBug AsmMenu FileBrowse
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmedit
-	sudo chown --reference Makefile ../release/asmedit*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmedit
+	chown --reference Makefile ../release/asmedit*
 	rm -f backup*
 

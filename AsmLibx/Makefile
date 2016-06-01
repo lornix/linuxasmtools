@@ -84,11 +84,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlibx
-	sudo chown --reference Makefile ../release/asmlibx*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlibx
+	chown --reference Makefile ../release/asmlibx*
 	rm -f backup*
 
 

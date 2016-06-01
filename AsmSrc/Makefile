@@ -128,7 +128,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -140,7 +139,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
-	  echo "aborting uninstall, switcht to root user with su or sudo then retry" ; \
 	  fi \
 
 
@@ -156,10 +154,10 @@ tar:
 	tar cfz ../release/asmsrc-$(VERSION).tar.gz -C .. AsmSrc ElfDecode
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmsrc
-	sudo chown --reference Makefile ../release/asmsrc*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmsrc
+	chown --reference Makefile ../release/asmsrc*
 	rm -f backup*
 

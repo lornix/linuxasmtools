@@ -108,7 +108,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
 	  fi \
 #
 # asmide programs
@@ -123,7 +122,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin " ; \
-	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	  fi \
 
 doc:
@@ -138,11 +136,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmproject
-	sudo chown --reference Makefile ../release/asmproject*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmproject
+	chown --reference Makefile ../release/asmproject*
 	rm -f backup*
 
 

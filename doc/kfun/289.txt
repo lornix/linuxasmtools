@@ -79,7 +79,7 @@ Return values
    following command will set the set the scheduler for the hda device to
    cfq:
 
-   $ su Password: # echo cfq > /sys/block/hda/queue/scheduler
+   # echo cfq > /sys/block/hda/queue/scheduler
 
    The Completely Fair Queuing (CFQ) I/O Scheduler:
 

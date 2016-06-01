@@ -1,7 +1,7 @@
 strip asmide
 if [ ! -e "../release" ] ; then mkdir ../release ; fi
 tar cfz ../release/asmide-0.9.05.tar.gz -C .. AsmIDE MiniBug asmlib.a AsmRef AsmLinks doc AsmIDE/AsmIDE_install.txt
-sudo checkinstall -D --pkgversion=0.9.05 --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+checkinstall -D --pkgversion=0.9.05 --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 checkinstall 1.6.1, Copyright 2002 Felipe Eduardo Sanchez Diaz Duran
            This software is released under the GNU GPL.

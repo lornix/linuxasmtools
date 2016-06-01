@@ -131,7 +131,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, switch to root user with su or sudo then retry" ; \
 	  fi \
 #
 # asmtools programs
@@ -146,7 +145,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin " ; \
-	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	  fi \
 
 
@@ -160,11 +158,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=minibug
-	sudo chown --reference Makefile ../release/minibug*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=minibug
+	chown --reference Makefile ../release/minibug*
 	rm -f backup*
 
 

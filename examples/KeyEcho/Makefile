@@ -83,10 +83,10 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=key_echo
-	sudo chown --reference Makefile ../../release/key_echo*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=key_echo
+	chown --reference Makefile ../../release/key_echo*
 	rm -f backup*
 
 

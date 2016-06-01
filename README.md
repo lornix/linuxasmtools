@@ -45,7 +45,7 @@ The AsmTool family consists of:
   libraries
   utilities
   sample programs
-  
+
 For support and discussions signup at yahoogroups
 mailing list DesktopLinuxAsm. To join by email
 send a blank email to:
@@ -68,7 +68,7 @@ Construct the sourceforge URL as follows:
  http://sourceforge.net/projects/asmref
  http://sourceforge.net/projects/asmmgr
 
- 
+
 Installing
 ----------
 
@@ -80,11 +80,10 @@ assume other programs are available.
 
 The easiest way to get started is to install the
 complete package (AsmTools).  To read the documentation
-install AsmRef and execute it in a terminal.  If sudo
-isn't available use "su". 
+install AsmRef and execute it in a terminal.
 
    cd AsmRef
-   sudo make install
+   make install
    asmref
 
 

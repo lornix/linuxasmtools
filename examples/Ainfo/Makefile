@@ -156,10 +156,10 @@ tar:
 	tar cfz ../../release/ainfo-$(VERSION).tar.gz -C .. Ainfo
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=ainfo
-	sudo chown --reference Makefile ../../release/ainfo*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=ainfo
+	chown --reference Makefile ../../release/ainfo*
 	rm -f backup*
 
 

@@ -160,9 +160,9 @@ tar:
 	tar cfz ../release/copy-$(VERSION).tar.gz -C .. Copy
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=copy
-	sudo chown --reference Makefile ../release/copy*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=copy
+	chown --reference Makefile ../release/copy*
 	rm -f backup*

@@ -167,7 +167,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin and /usr/share/asmmgr" ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -204,8 +203,7 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
-	  echo "aborting uninstall, switcht to root user with su or sudo then retry" ; \
-	  fi \
+	  fi
 
 doc:
 	../txt2man -t AsmMgr asmmgr.txt | gzip -c > asmmgr.1.gz
@@ -220,11 +218,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmmgr
-	sudo chown --reference Makefile ../release/asmmgr*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmmgr
+	chown --reference Makefile ../release/asmmgr*
 	rm -f backup*
 
 

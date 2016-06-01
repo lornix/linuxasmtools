@@ -126,7 +126,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 #
 # asmpre is not uninstalled, it may be needed by other asmide programs
@@ -139,7 +138,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
-	  echo "aborting uninstall, switch to root user with su or sudo then retry" ; \
 	  fi \
 
 
@@ -153,11 +151,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=elfdecode
-	sudo chown --reference Makefile ../release/elfdecode*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=elfdecode
+	chown --reference Makefile ../release/elfdecode*
 	rm -f backup*
 
 

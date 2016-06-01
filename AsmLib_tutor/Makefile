@@ -137,11 +137,11 @@ tar:
 	tar cfz ../release/asmlib_tutor-$(VERSION).tar.gz -C .. AsmLib_tutor
 
 deb:
-#	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y --nodoc -d2
+#	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y --nodoc -d2
 
 rpm:
-#	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib_tutor --nodoc -d2
-#	sudo chown --reference Makefile ../release/asmlib_tutor*
+#	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib_tutor --nodoc -d2
+#	chown --reference Makefile ../release/asmlib_tutor*
 #	rm -f backup*
 
 

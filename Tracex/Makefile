@@ -165,11 +165,11 @@ tar:
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=tracex
-	sudo chown --reference Makefile ../release/tracex*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=tracex
+	chown --reference Makefile ../release/tracex*
 	rm -f backup*
 
 

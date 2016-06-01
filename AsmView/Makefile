@@ -120,7 +120,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin" ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -133,7 +132,6 @@ uninstall:
 	else \
 	echo "-" ; \
 	echo "Root access needed to uninstall at /usr/bin " ; \
-	echo "aborting uninstall, switcht to root user with su or sudo then retry" ; \
 	fi \
 
 
@@ -152,11 +150,11 @@ tar:
 	tar cfz ../release/asmview-$(VERSION).tar.gz -C .. AsmView
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmview
-	sudo chown --reference Makefile ../release/asmview*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmview
+	chown --reference Makefile ../release/asmview*
 	rm -f backup*
 
 

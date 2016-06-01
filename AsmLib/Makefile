@@ -101,11 +101,11 @@ tar:
 	tar cfz ../release/asmlib-$(VERSION).tar.gz -C .. AsmLib
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib
-	sudo chown --reference Makefile ../release/asmlib*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib
+	chown --reference Makefile ../release/asmlib*
 	rm -f backup*
 
 

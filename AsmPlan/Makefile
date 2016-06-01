@@ -74,7 +74,6 @@ install:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin " ; \
-	  echo "aborting install, swithct to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -97,7 +96,6 @@ uninstall:
 	else \
 	echo "-" ; \
 	echo "Root access needed to uninstall at /usr/bin and /usr/share/asmmgr" ; \
-	echo "aborting uninstall, switcht to root user with su or sudo then retry" ; \
 	fi
 
 
@@ -117,11 +115,11 @@ tar:
 	tar cfz ../release/asmplan-$(VERSION).tar.gz -C .. AsmPlan
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmplan
-	sudo chown --reference Makefile ../release/asmplan*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmplan
+	chown --reference Makefile ../release/asmplan*
 	rm -f backup*
 
 

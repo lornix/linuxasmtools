@@ -153,8 +153,8 @@ tar:
 	tar cfz ../../release/format_doc-$(VERSION).tar.gz -C .. FormatDoc
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=format_doc
-	sudo chown --reference Makefile ../../release/format_doc*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=format_doc
+	chown --reference Makefile ../../release/format_doc*
 	rm -f backup*

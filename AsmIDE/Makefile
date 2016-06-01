@@ -163,7 +163,6 @@ install:	asmide
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to install at /usr/bin and /usr/share/asmmgr" ; \
-	  echo "aborting install, switcht to root user with su or sudo then retry" ; \
 	  fi \
 
 uninstall:
@@ -184,7 +183,6 @@ uninstall:
 	else \
 	  echo "-" ; \
 	  echo "Root access needed to uninstall at /usr/bin " ; \
-	  echo "aborting uninstall, swittch to root user with su or sudo then retry" ; \
 	  fi \
 
 clean:
@@ -204,11 +202,11 @@ tar:
 	tar cfz ../release/asmide-$(VERSION).tar.gz -C .. AsmIDE MiniBug asmlib.a AsmRef AsmLinks doc AsmIDE/AsmIDE_install.txt
 
 deb:
-	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmide
-	sudo chown --reference Makefile ../release/asmide*
+	checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmide
+	chown --reference Makefile ../release/asmide*
 	rm -f backup*
 
 

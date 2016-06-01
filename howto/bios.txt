@@ -17,7 +17,7 @@
   4. How do we find the BIOS
 
   5. Running the Example program
-  
+
   6. Compiling the example program
 
   7. Finding more information
@@ -136,5 +136,5 @@ dmi_search:
   7. Finding more information
 
      Standards are at:
-     http://www.dmtf.org/standards/smbios    
+     http://www.dmtf.org/standards/smbios
 
