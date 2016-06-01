@@ -84,7 +84,7 @@ LD = ld
 LDFLAGS =
 
 
-version = $(shell cat VERSION)
+VERSION = $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
@@ -157,13 +157,13 @@ release: tar deb rpm
 tar:
 	strip asmbug
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmbug-$(version).tar.gz -C .. AsmBug ElfDecode
+	tar cfz ../release/asmbug-$(VERSION).tar.gz -C .. AsmBug ElfDecode
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmbug
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmbug
 	sudo chown --reference Makefile ../release/asmbug*
 	rm -f backup*
 

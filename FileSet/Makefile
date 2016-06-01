@@ -17,7 +17,7 @@ assembler := nasm
 copy_executable := yes
 
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 SHELL = /bin/bash
 here = $(shell pwd)
 #
@@ -171,13 +171,13 @@ release: tar deb rpm
 tar:
 	strip fileset
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/fileset-$(version).tar.gz -C .. FileSet
+	tar cfz ../release/fileset-$(VERSION).tar.gz -C .. FileSet
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=fileset
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=fileset
 	sudo chown --reference Makefile ../release/fileset*
 	rm -f backup*
 

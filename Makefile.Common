@@ -8,9 +8,8 @@ export LDEMULATION=elf_i386
 #         make install - install files
 #         make release - create release file
 #
-local = $(shell pwd)
-home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
+#
 # Note: if linker gives warning "can not find start" it may
 #       be a nasm bug. Caused by adding the -O2 optimize flag,
 #       or the symbol _start may need to be public.  Some debuggers

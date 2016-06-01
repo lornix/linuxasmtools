@@ -83,7 +83,7 @@ T = .asm
 LD = ld
 LDFLAGS =
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
@@ -149,14 +149,14 @@ release: tar deb rpm
 tar:
 	strip elfdecode
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/elfdecode-$(version).tar.gz -C .. ElfDecode
+	tar cfz ../release/elfdecode-$(VERSION).tar.gz -C .. ElfDecode
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=elfdecode
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=elfdecode
 	sudo chown --reference Makefile ../release/elfdecode*
 	rm -f backup*
 

@@ -7,7 +7,7 @@
 #
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 assembler = nasm
 
 #
@@ -148,14 +148,14 @@ release: tar deb rpm
 tar:
 	strip asmlinks
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmlinks-$(version).tar.gz -C .. AsmLinks
+	tar cfz ../release/asmlinks-$(VERSION).tar.gz -C .. AsmLinks
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmlinks
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlinks
 	sudo chown --reference Makefile ../release/asmlinks*
 	rm -f backup*
 

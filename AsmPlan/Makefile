@@ -5,9 +5,7 @@
 #         make install - install files
 #         make release - create release file
 #
-local = $(shell pwd)
-home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -86,18 +84,15 @@ uninstall:
 	rm -f /usr/bin/asmplan ; \
 	rm -f /usr/share/man/man1/asmplan.1.gz ; \
 	echo "uninstalling demo plan in /$HOME/.asmplan" ; \
-	rm -f  $(home)/.asmplan/plan/demo ; \
-	rm -f  $(home)/.asmplan/plan/hints ; \
+	rm -f  $(HOME)/.asmplan/plan/demo ; \
+	rm -f  $(HOME)/.asmplan/plan/hints ; \
 	echo "-----------------------------" ; \
 	echo "remove all stored todos? y/n" ; \
 	read AKEY ; \
 	echo "-----------------------------" ; \
 	  if [ $(AKEY) = "y" ] ; then \
 	  echo "removing all todo files" ; \
-	  rm -f $(home)/.asmplan/plan/* ; \
-	  rmdir $(home)/.asmplan/plan ; \
-	  rm -f $(home)/.asmplan/* ; \
-	  rmdir $(home)/.asmplan ; \
+	  rm -fr $(HOME)/.asmplan/* ; \
 	  fi ;  \
 	else \
 	echo "-" ; \
@@ -119,13 +114,13 @@ release: tar deb rpm
 tar:
 	strip asmplan
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmplan-$(version).tar.gz -C .. AsmPlan
+	tar cfz ../release/asmplan-$(VERSION).tar.gz -C .. AsmPlan
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmplan
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmplan
 	sudo chown --reference Makefile ../release/asmplan*
 	rm -f backup*
 

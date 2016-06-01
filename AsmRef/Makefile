@@ -6,7 +6,7 @@
 #
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 all:
 
@@ -113,14 +113,14 @@ release: tar deb rpm
 
 tar:
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmref-$(version).tar.gz -C .. AsmRef AsmLinks doc
+	tar cfz ../release/asmref-$(VERSION).tar.gz -C .. AsmRef AsmLinks doc
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmref
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmref
 	sudo chown --reference Makefile ../release/asmref*
 	rm -f backup*
 

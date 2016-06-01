@@ -7,7 +7,7 @@
 #
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 # Note: if linker gives warning "can not find start" it may
 #       be a nasm bug. Caused by adding the -O2 optimize flag,
 #       or the symbol _start may need to be public.  Some debuggers
@@ -161,14 +161,14 @@ release: tar deb rpm
 tar:
 	strip tracex
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/tracex-$(version).tar.gz -C .. Tracex
+	tar cfz ../release/tracex-$(VERSION).tar.gz -C .. Tracex
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=tracex
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=tracex
 	sudo chown --reference Makefile ../release/tracex*
 	rm -f backup*
 

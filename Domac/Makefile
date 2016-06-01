@@ -84,7 +84,7 @@ LD = ld
 LDFLAGS =
 
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
@@ -156,13 +156,13 @@ release: tar deb rpm
 tar:
 	strip domac
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/domac-$(version).tar.gz -C .. Domac
+	tar cfz ../release/domac-$(VERSION).tar.gz -C .. Domac
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=domac
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=domac
 	sudo chown --reference Makefile ../release/domac*
 	rm -f backup*
 

@@ -146,7 +146,7 @@ release: tar
 
 tar:
 	if [ ! -e "release" ] ; then mkdir release ; fi
-	tar cfz ./release/asmpre$(version)tar.gz --exclude=release -C .. AsmPre
+	tar cfz ./release/asmpre$(VERSION)tar.gz --exclude=release -C .. AsmPre
 
 
 endif

@@ -7,25 +7,16 @@
 include ../Makefile.Common
 #
 # template for each source compile
-%.o:    %.$(T)
-	$(CC) $(DEBUG) $(CFLAGS) $<
+%.o: %.asm
+	$(ASM) $(DEBUG) $(ASFLAGS) $<
 
 # template for link
-%:      %.o
+%: %.o
 	$(LD) $^ $(LFLAGS) -o $@ $(LIBS)
 
-all:	pre $(targets)
+all:	$(TARGETS)
 
-$(objs):
-
-pre:
-	@if test -e $(LIBS) ; then \
-		echo "asmlib found, compilng howTos" ; \
-	else  \
-		echo "asmlib not found, needed by Examples" ; \
-		suspend ; \
-	fi
-
+$(OBJS):
 
 clean:
-	rm -f $(objs) $(targets) *~
+	rm -f $(OBJS) $(TARGETS) *~

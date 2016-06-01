@@ -7,7 +7,7 @@
 #         make release - create a release tar.gz file
 #
 here = $(shell pwd)
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 user = $(shell whoami)
 
 dirs := syscall char str str_conv terminal crt env blk str_cmp dir \
@@ -79,7 +79,7 @@ uninstall:
 
 
 doc:
-	asmpub -f2 -n -s -r3 -i -oasmlib -k $(here)/'*.asm'
+	asmpub -f2 -n -s -r3 -i -oasmlib -k '*.asm'
 	cp -f header1.txt ../asmlib.txt
 	cat ../VERSION >> ../asmlib.txt
 	cat header2.txt >> ../asmlib.txt
@@ -98,13 +98,13 @@ release: tar deb rpm
 
 tar:
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmlib-$(version).tar.gz -C .. AsmLib
+	tar cfz ../release/asmlib-$(VERSION).tar.gz -C .. AsmLib
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmlib
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib
 	sudo chown --reference Makefile ../release/asmlib*
 	rm -f backup*
 

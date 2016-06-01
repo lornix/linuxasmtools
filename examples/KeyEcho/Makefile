@@ -38,7 +38,7 @@ endif
 
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 all:	key_echo
 
@@ -79,13 +79,13 @@ release: tar deb rpm
 tar:
 	strip key_echo
 	if [ ! -e "../../release" ] ; then mkdir ../../release ; fi
-	tar cfz ../../release/key_echo-$(version).tar.gz -C .. KeyEcho
+	tar cfz ../../release/key_echo-$(VERSION).tar.gz -C .. KeyEcho
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=key_echo
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=key_echo
 	sudo chown --reference Makefile ../../release/key_echo*
 	rm -f backup*
 

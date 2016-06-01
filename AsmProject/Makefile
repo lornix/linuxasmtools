@@ -67,7 +67,7 @@ T = asm
 SHELL = /bin/bash
 here = $(shell pwd)
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 dirs = $(shell dir -d *)
 targets := $(shell dir *.$(T) | sed -e 's/.$(T)//g')
 srcs := $(shell dir *.$(T))
@@ -134,14 +134,14 @@ release: tar deb rpm
 tar:
 	strip asmproject
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmproject-$(version).tar.gz -C .. AsmProject
+	tar cfz ../release/asmproject-$(VERSION).tar.gz -C .. AsmProject
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmproject
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmproject
 	sudo chown --reference Makefile ../release/asmproject*
 	rm -f backup*
 

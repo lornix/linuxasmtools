@@ -6,8 +6,7 @@
 #         make install - install to $HOME/.asmide/asmlibx.a
 #         make release - create a release tar.gz file
 #
-here = $(shell pwd)
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 user = $(shell whoami)
 
 dirs := src/keyboard src/mouse src/server src/win_color \
@@ -64,8 +63,8 @@ uninstall:
 
 
 doc:
-	find . -depth -name '*~' -exec rm -f '{}' \;
-	asmpub -f2 -n -s -r3 -i -odocs/libx -k $(here)/src/'*.asm'
+	find . -name '*~' -print0 | xargs -0 rm -f \;
+	asmpub -f2 -n -s -r3 -i -odocs/libx -k ./src/'*.asm'
 	cp -f docs/header1.txt docs/asmlibx.txt
 	cat VERSION >> docs/asmlibx.txt
 	cat docs/header2.txt >> docs/asmlibx.txt
@@ -81,14 +80,14 @@ release: tar deb rpm
 
 tar:
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmlibx-$(version).tar.gz -C .. AsmLibx
+	tar cfz ../release/asmlibx-$(VERSION).tar.gz -C .. AsmLibx
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmlibx
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlibx
 	sudo chown --reference Makefile ../release/asmlibx*
 	rm -f backup*
 

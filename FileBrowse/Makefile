@@ -84,7 +84,7 @@ LD = ld
 LDFLAGS =
 
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
@@ -155,13 +155,13 @@ release: tar deb rpm
 tar:
 	strip file_browse
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/file_browse-$(version).tar.gz -C .. FileBrowse
+	tar cfz ../release/file_browse-$(VERSION).tar.gz -C .. FileBrowse
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=file_browse
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=file_browse
 	sudo chown --reference Makefile ../release/file_browse*
 	rm -f backup*
 

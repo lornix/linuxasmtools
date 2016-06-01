@@ -84,7 +84,7 @@ LD = ld
 LDFLAGS =
 
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
@@ -156,14 +156,14 @@ release: tar deb rpm
 tar:
 	strip xhelper
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/xhelper-$(version).tar.gz -C .. Xhelper
+	tar cfz ../release/xhelper-$(VERSION).tar.gz -C .. Xhelper
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=xhelper
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=xhelper
 	sudo chown --reference Makefile ../release/xhelper*
 	rm -f backup*
 

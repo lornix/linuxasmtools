@@ -83,7 +83,7 @@ T = .asm
 LD = ld
 LDFLAGS =
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
@@ -134,13 +134,13 @@ release: tar deb rpm
 
 tar:
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmlib_tutor-$(version).tar.gz -C .. AsmLib_tutor
+	tar cfz ../release/asmlib_tutor-$(VERSION).tar.gz -C .. AsmLib_tutor
 
 deb:
-#	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y --nodoc -d2
+#	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y --nodoc -d2
 
 rpm:
-#	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmlib_tutor --nodoc -d2
+#	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmlib_tutor --nodoc -d2
 #	sudo chown --reference Makefile ../release/asmlib_tutor*
 #	rm -f backup*
 

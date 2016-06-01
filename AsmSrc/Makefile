@@ -83,7 +83,7 @@ T = .asm
 LD = ld
 LDFLAGS =
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
@@ -153,13 +153,13 @@ release: tar deb rpm
 tar:
 	strip asmsrc
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmsrc-$(version).tar.gz -C .. AsmSrc ElfDecode
+	tar cfz ../release/asmsrc-$(VERSION).tar.gz -C .. AsmSrc ElfDecode
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmsrc
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmsrc
 	sudo chown --reference Makefile ../release/asmsrc*
 	rm -f backup*
 

@@ -84,7 +84,7 @@ LD = ld
 LDFLAGS =
 
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
@@ -124,6 +124,6 @@ release: tar rpm
 tar:
 	strip align
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/align-$(version).tar.gz -C .. Align
+	tar cfz ../release/align-$(VERSION).tar.gz -C .. Align
 
 rpm:

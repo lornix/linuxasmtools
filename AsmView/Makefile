@@ -7,7 +7,7 @@
 #
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 assembler = nasm
 
 #
@@ -149,13 +149,13 @@ release: tar deb rpm
 tar:
 	strip asmview
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmview-$(version).tar.gz -C .. AsmView
+	tar cfz ../release/asmview-$(VERSION).tar.gz -C .. AsmView
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmview
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmview
 	sudo chown --reference Makefile ../release/asmview*
 	rm -f backup*
 

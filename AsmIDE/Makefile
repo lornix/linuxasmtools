@@ -6,7 +6,7 @@
 #
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 ########################################################################
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -201,13 +201,13 @@ release: tar deb rpm
 tar:
 	strip asmide
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmide-$(version).tar.gz -C .. AsmIDE MiniBug asmlib.a AsmRef AsmLinks doc AsmIDE/AsmIDE_install.txt
+	tar cfz ../release/asmide-$(VERSION).tar.gz -C .. AsmIDE MiniBug asmlib.a AsmRef AsmLinks doc AsmIDE/AsmIDE_install.txt
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmide
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmide
 	sudo chown --reference Makefile ../release/asmide*
 	rm -f backup*
 

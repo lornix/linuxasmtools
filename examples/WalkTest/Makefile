@@ -84,7 +84,7 @@ LD = ld
 LDFLAGS =
 
 
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 #dirs = $(shell dir -d *)
 srcs := $(shell dir *$(T))
 targets := $(subst .asm,, $(srcs))
@@ -148,13 +148,13 @@ release: tar deb rpm
 tar:
 	strip walktest
 	if [ ! -e "../../release" ] ; then mkdir ../../release ; fi
-	tar cfz ../../release/walktest-$(version).tar.gz -C .. WalkTest
+	tar cfz ../../release/walktest-$(VERSION).tar.gz -C .. WalkTest
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=walktest
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=walktest
 	sudo chown --reference Makefile ../../release/walktest*
 	rm -f backup*
 

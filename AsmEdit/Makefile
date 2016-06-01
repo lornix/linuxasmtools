@@ -7,12 +7,6 @@
 #
 # modify the following as needed
 #
-# select assembler, nasm, fasm, as, yasm
-#
-assembler := nasm
-#
-#
-#
 # hunt for library file, if this fails then set LIBS to file location
 # hunt at local dir, parent dir, then at $HOME/.a/
 lib1 = $(shell if test -f asmlib.a ; then echo asmlib.a ; fi)
@@ -53,35 +47,13 @@ LFLAGS = -static
 
 # the following variables are probably ok
 ######################################################
-home = $(HOME)
 here = $(shell pwd)
-version = $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 usr=$(shell basename $(HOME) )
 
-ifeq "$(assembler)" "nasm"
-CC = nasm
+ASM = nasm
 DEBUG = -g
-CFLAGS = -O99
-endif
-
-ifeq "$(assembler)" "as"
-CC = as
-DEBUG = -stabs
-CFLAGS =
-endif
-
-ifeq "$(assembler)" "yasm"
-CC = yasm
-DEBUG = -g stabs
-CFLAGS =
-endif
-
-
-ifeq "$(assembler)" "fasm"
-CC = fasm
-DEBUG =
-CFLAGS =
-endif
+ASFLAGS = -O99
 
 .SUFFIXES : .o .asm
 
@@ -197,13 +169,13 @@ release: tar deb rpm
 tar:
 	strip asmedit
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmedit-$(version).tar.gz -C .. AsmBug AsmMenu FileBrowse
+	tar cfz ../release/asmedit-$(VERSION).tar.gz -C .. AsmBug AsmMenu FileBrowse
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmedit
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmedit
 	sudo chown --reference Makefile ../release/asmedit*
 	rm -f backup*
 

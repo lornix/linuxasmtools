@@ -13,7 +13,7 @@
 
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 SHELL = /bin/bash
 here = $(shell pwd)
 #
@@ -216,14 +216,14 @@ release: tar deb rpm
 tar:
 	strip asmmgr
 	if [ ! -e "../release" ] ; then mkdir ../release ; fi
-	tar cfz ../release/asmmgr-$(version).tar.gz -C .. AsmMgr AsmProject FileSet AsmMenu AsmView examples/AsmColor
+	tar cfz ../release/asmmgr-$(VERSION).tar.gz -C .. AsmMgr AsmProject FileSet AsmMenu AsmView examples/AsmColor
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../release --maintainer=jeff@linuxasmtools.net -y
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../release -y --pkgname=asmmgr
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../release -y --pkgname=asmmgr
 	sudo chown --reference Makefile ../release/asmmgr*
 	rm -f backup*
 

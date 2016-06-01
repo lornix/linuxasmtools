@@ -19,10 +19,9 @@ export NASMENV=-felf32
 export LDEMULATION=elf_i386
 #
 #
-include "Makefile.Common"
+include Makefile.Common
 #
 SHELL = /bin/bash
-here = $(shell pwd)
 
 #dirs - used for install,uninstall
 dirs = AsmLib AsmLibx AsmEdit AsmMgr AsmRef AsmPlan AsmPub AsmSrc \
@@ -78,9 +77,9 @@ doc:	post doc2
 
 
 post:
-	for i in $(adirs); do cp -f README $(here)/$$i/README; done
-	for i in $(adirs); do cp -f COPYING $(here)/$$i/COPYING; done
-	for i in $(adirs); do cp -f INSTALL $(here)/$$i/INSTALL; done
+	for i in $(adirs); do cp -f README ./$$i/README; done
+	for i in $(adirs); do cp -f COPYING ./$$i/COPYING; done
+	for i in $(adirs); do cp -f INSTALL ./$$i/INSTALL; done
 
 doc2:	$(ddirs)
 	@if test -e /usr/bin/asmpub ; \
@@ -129,15 +128,15 @@ tar:
 	rm -f release/*.tar.gz
 	rm -f release/*.deb
 	rm -f release/*.rpm
-	tar cfz ./release/asmtools-$(version).tar.gz --exclude=release --exclude="web/out/*.gz" --exclude="web/out/*.deb" --exclude="web/out/*.rpm" -C .. asmtools
+	tar cfz ./release/asmtools-$(VERSION).tar.gz --exclude=release --exclude="web/out/*.gz" --exclude="web/out/*.deb" --exclude="web/out/*.rpm" -C .. asmtools
 	$(DO_RELEASE)
 
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=./release --maintainer=jeff@linuxasmtools.net -y --pkgname=asmtools
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=./release --maintainer=jeff@linuxasmtools.net -y --pkgname=asmtools
 
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=./release -y --pkgname=asmtools
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=./release -y --pkgname=asmtools
 	sudo chown --reference Makefile ./release/asmtools*
 	rm -f backup*
 

@@ -19,7 +19,7 @@ copy_executable := yes
 
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -150,11 +150,11 @@ release: tar deb rpm
 tar:
 	strip format_doc
 	if [ ! -e "../../release" ] ; then mkdir ../../release ; fi
-	tar cfz ../../release/format_doc-$(version).tar.gz -C .. FormatDoc
+	tar cfz ../../release/format_doc-$(VERSION).tar.gz -C .. FormatDoc
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=format_doc
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=format_doc
 	sudo chown --reference Makefile ../../release/format_doc*
 	rm -f backup*

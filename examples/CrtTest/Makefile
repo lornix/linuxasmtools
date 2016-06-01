@@ -19,7 +19,7 @@ copy_executable := yes
 
 local = $(shell pwd)
 home = $(HOME)
-version := $(shell cat VERSION)
+VERSION := $(shell cat VERSION)
 
 #
 # hunt for library file, if this fails then set LIBS to file location
@@ -155,12 +155,12 @@ release: tar deb rpm
 tar:
 	strip crt_test
 	if [ ! -e "../../release" ] ; then mkdir ../../release ; fi
-	tar cfz ../../release/crt_test-$(version).tar.gz -C .. CrtTest
+	tar cfz ../../release/crt_test-$(VERSION).tar.gz -C .. CrtTest
 
 deb:
-	sudo checkinstall -D --pkgversion=$(version) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
+	sudo checkinstall -D --pkgversion=$(VERSION) --pakdir=../../release --maintainer=jeff@linuxasmtools.net -y
 rpm:
-	sudo checkinstall -R --pkgversion=$(version) --pakdir=../../release -y --pkgname=crt_test
+	sudo checkinstall -R --pkgversion=$(VERSION) --pakdir=../../release -y --pkgname=crt_test
 	sudo chown --reference Makefile ../../release/crt_test*
 	rm -f backup*
 
