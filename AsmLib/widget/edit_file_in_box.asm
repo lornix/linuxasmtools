@@ -51,8 +51,8 @@ endstruc
 ;         (set to zero to disable outline)
 ;    lib_buf is used to build display lines
 ;    keyboard is assumed to be in "raw" mode, see: crt_open
-;     
-;    example: 
+;
+;    example:
 ;        call	crt_open
 ;        mov	ebx,filename
 ;        mov	ecx,1024	;file buffer size
@@ -61,10 +61,10 @@ endstruc
 ;        call	crt_close
 ;        mov	eax,1
 ;        int	80h
-;      
+;
 ;        [section .data]
 ;      filename: db 'local_file',0
-;      
+;
 ;      boxplus:
 ;      	dd	30003436h	;window color
 ;      	dd	0		;filled in
@@ -75,7 +75,7 @@ endstruc
 ;      	db	3		;starting row
 ;      	db	3		;starting column
 ;      	dd	30003131h	;color for outline box
-;      
+;
 ; OUTPUT
 ;   eax = negative system error# or positive if success
 ; NOTES
@@ -89,7 +89,7 @@ endstruc
 ;    will attempth display even if window size too small.
 ;    -
 ;    Tabs are not handled and should not be used.
-;    - 
+;    -
 ;    color = aaxxffbb aa-attr ff-foreground  bb-background
 ;    30-blk 31-red 32-grn 33-brn 34-blu 35-purple 36-cyan 37-gry
 ;    attributes 30-normal 31-bold 34-underscore 37-inverse
@@ -108,14 +108,14 @@ edit_file_in_box:
   mov	[file_descriptor],ebx
   pop	edx		;get buffer size
   js	eb_exit		;exit if error
-; ecx = ptr to file contents, eax=file length, ebx=ptr to mmap block 
+; ecx = ptr to file contents, eax=file length, ebx=ptr to mmap block
 ; edx = buffer length
   add	edx,ecx			;compute buffer end ptr now in edx
   mov	[esi + window_def.display_ptr],ecx
   add	eax,ecx			;compute file end ptr
   mov	[esi + window_def.end_ptr],eax	;save file end ptr
   mov	ecx,edx			;ecx = buffer end ptr
-  
+
   call	edit_text_in_box
 
 eb_exit1:

@@ -1,4 +1,0 @@
-nasm
-dis
-dis -> nasm -> _nasm.out.dis.bin
-cmp binary outputs

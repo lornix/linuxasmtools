@@ -26,6 +26,7 @@ libs:
 	for dir in $(DIRS); do $(MAKE) -C $$dir all; done
 #
 syscall:
+	$(MAKE) make_syscall
 	./make_syscall
 #
 test: test.o all

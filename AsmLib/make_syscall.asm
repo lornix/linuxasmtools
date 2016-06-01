@@ -134,7 +134,7 @@ move_number_str:
   jmp	short move_number_str
 move_number_end:
   mov	[edi],byte 0		;terminate number
-  
+
 ;convert number of binary
   mov	esi,syscall_number_str
   call	ascii_to_dword	;convert string
@@ -223,7 +223,7 @@ build_global:
   mov	ebx,[outfile_fd]
   call	file_close
 
-  jmp   sloop	
+  jmp   sloop
 
 s_done:
 
@@ -233,12 +233,13 @@ s_done:
 s_exit:
   xor	ebx,ebx
   mov	eax,1
-  int	byte 80h  
+  int	byte 80h
 ;-----------------------------------------------------------------
   [section .data]
 
 ;search paths
 search_paths:
+ db '/usr/include/x86_64-linux-gnu/asm/unistd_32.h',0
  db '/usr/include/asm-i486/unistd_32.h',0
  db '/usr/include/asm/unistd_32.h',0
  db 0 ;end of list
@@ -263,7 +264,7 @@ header_number: db '       ',0ah
  db ';              or   eax,eax',0ah
  db ';              ret',0ah
  db ';<;',0ah
- db ';------------------------------------------------------------------',0ah             
+ db ';------------------------------------------------------------------',0ah
  db '  [section .text align=1]',0ah
 syscall_header_size equ $ - syscall_header
 
