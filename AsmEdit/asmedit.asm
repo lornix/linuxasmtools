@@ -57,7 +57,7 @@
 ;
 ;INDEX: (search for key.. #0, #1 etc.)
 ; #0 structures includes
-; #1 main 
+; #1 main
 ; #2 keyboard and mouse commands
 ;   #A -> #Z menu keys
 ;   #a -> #z normal non-menu commands
@@ -165,7 +165,7 @@ winsize_struc_size:
 ;      popa
 ;----------- test code ---------------
 
-; The program begins execution here...... 
+; The program begins execution here......
 ;
 main:
 _start:
@@ -236,7 +236,7 @@ abort_exit:
   call	reset_clear_terminal
   mov	eax,1			;exit code for kernel
   xor	ebx,ebx			;return code
-  int	byte 80h			;exit	    
+  int	byte 80h			;exit
 
 ;----------------------------------------------------------
 ; MAIN function for processing keys - HandleChar processes
@@ -272,7 +272,7 @@ gs_cont:
   jecxz	gs_exit
   call	[ecx]				;call keyboard process !!!!
 gs_exit:
-  ret	
+  ret
 
 ; (#2#) key commands  ***********************************
 ; Everything in this section is attached to a keyboard key
@@ -308,7 +308,7 @@ InsWriteEnd:
 set_cmd_mode:			;escape processing
   mov	dword [key_mode],0	;set CMD mode
   call	clear_block
-scm_exit:  
+scm_exit:
   ret
 
 ; (#A#) key commands  ***********************************
@@ -441,7 +441,7 @@ m_newfile:
   call	init_newfile
   mov byte [file_change],UNCHANGED	;set changed flag to " "
   mov	byte [mouse_mode],2
-  ret	
+  ret
 
 ; (#O#) Other file    ***********************************
 ;-----	#O   - other file    --------------------------------------
@@ -462,7 +462,7 @@ m5_paragraph:
 
 m2mode:
   mov	byte [mouse_mode],2
-  ret 
+  ret
 
 ; (#R#) Replace/fine  ***********************************
 
@@ -560,7 +560,7 @@ m8_markblock:
 
 
 ; (#a#) again         ***********************************
-; removed, use macros instead  
+; removed, use macros instead
 again:
   cmp	byte [last_cmd],1
   jne	again_30		;jmp if last cmd was not find
@@ -568,7 +568,7 @@ again:
   call	find_again1
   mov	[editbuf_cursor_ptr],edi
 again_30:
-  cmp	byte [last_cmd],2	
+  cmp	byte [last_cmd],2
   jne	again_40		;exit if last cmd was not a macro
   mov	eax,macro_buffer
   mov	[macro_ptr],eax
@@ -582,7 +582,7 @@ again_90:
   ret
 
 again_err: db "Can not repeat inside macro",0
-  
+
 ; (#b#) block mark/unmark ****************************
 
 mark_block:
@@ -669,7 +669,7 @@ calc_10:
 ;
   mov	esi,edi
   call	calc_parse		;expect operator back
-  
+
   mov	al,[esi]		;get first char
   cmp	al,'+'
   je	calc_plus
@@ -732,7 +732,7 @@ calc_multiply:
   mul	ecx
   mov	ecx,eax		;results in eax?
   jmp	short calc_show
-calc_divide:  
+calc_divide:
   mov	eax,edx
   xor	edx,edx
   jecxz	calc_exita	;jmp if error
@@ -752,7 +752,7 @@ calc_show:
   push	ecx
   mov	eax,ecx
   mov	dword [calc3_msg],'    '
-  mov	dword [calc3_msg +4],'    '	
+  mov	dword [calc3_msg +4],'    '
   mov	edi,calc3_msg + 8
   call	IntegerToAscii
   pop	ecx
@@ -772,13 +772,13 @@ calc_show:
   mov	dl,[term_columns]
   add	edx,calc2_msg
   mov	byte [edx],0
-  
+
   call	display_color_at  	;display results
   mov	eax,[crt_cursor]	;put cursor at correct point
   call	move_cursor
   call	read_keys
 calc_exit:
-  ret  
+  ret
 
 
 ; (#d#) block delete  ***********************************
@@ -797,7 +797,7 @@ dmark_block:
   xchg  dword [blockend],edi
 mdb_1:
   call	save_block
-  call	cut_block  
+  call	cut_block
   jmp  clear_dblock		;done saving block
 begin_dblock:
   mov  dword [blockbegin],edi
@@ -841,7 +841,7 @@ mem_execute:
   mov	[macro_ptr],eax
   mov	byte [macro_flag],2	;enable playback
   jmp	mem_exit
-mem_exit:  
+mem_exit:
   ret
 
 ; (#f#) find          ***********************************
@@ -856,7 +856,7 @@ find_forward:
   mov	dword [scan_direction],1	;set direction flag - forward
   call	find_string
   ret
-	
+
 ; (#g#) get buffer/file *********************************
 
 get_file:
@@ -939,13 +939,13 @@ jump_menu:
   call	get_string
   mov	al,byte [char_out]
   jecxz jm_1			;jmp if string entered
-  jmp	jm_end  
+  jmp	jm_end
 jm_1:
   cmp	al,'s'
   jne	jm2			;jump if "s" for start of file
   mov	ecx,1			;move to beginning of file
   jmp	jm8
-jm2: 
+jm2:
   cmp	al,'e'			;check if 'e' for end
   jne	jm3			;jump if not "e"
   mov   ecx,999999
@@ -955,7 +955,7 @@ jm3:
   jne	jm4			;exit if not 'l'
   call	jump_line
   jmp	jm_end
-  
+
 jm4:
   cmp	al,'a'			;tag a
   jne	jm5
@@ -1049,7 +1049,7 @@ other:
 ;
   mov	eax,[active_window]
   or	eax,eax
-  jz	win0mode  
+  jz	win0mode
   dec	eax
   jz	win1mode
   dec	eax
@@ -1182,7 +1182,7 @@ par_01b:
   mov	[end_of_para],edx
   cmp	edx,[top_of_para]
   jne	p_05
-  jmp	par_60  
+  jmp	par_60
 ;
 ; make hole to give us some work room
 ;
@@ -1229,7 +1229,7 @@ par_09:
 ;
 ; loop to move data [esi] -> [edi] till right_margin reached.
 ; replace 0ah with space
-; 
+;
 par_10:
   cmp	esi,ebp
   jae	par_50			;jmp if paragraph formatted
@@ -1298,7 +1298,7 @@ par_40:
   inc	esi			;skip over space
   mov	al,0ah
   stosb
-  jmp	par_06			;go do next line  
+  jmp	par_06			;go do next line
 ;
 ; paragraph now formated, close hole
 ;  edi - points at end of good paragraph
@@ -1325,7 +1325,7 @@ par_62:
 par_70:
   call	center_cursor
 par_exit:
-  ret  
+  ret
 
 ;--------------
 ; assist with check for begin/end of paragraph
@@ -1424,7 +1424,7 @@ sef_03:
   jnz	qm_exit			;jmp if no name entered
   call	expand_filename
   call	check_file		;check if existing file may be overwritten
-  jc	qm_exit			;exit if user wants to abort  
+  jc	qm_exit			;exit if user wants to abort
   mov	byte [file_change],CHANGED ;force save under new name
   call	sef_20			;go write file
   jmp	qm_continue
@@ -1473,7 +1473,7 @@ save_and_exit:
   ret
 ;------------------------------------------------------
 
-init_newfile:  
+init_newfile:
   mov	eax,[file_end_ptr]
   cmp	eax,[editbuf_ptr]	;check for empty file
   je	qm_1a			;jmp if file unchanged
@@ -1530,12 +1530,12 @@ exec_browser:
   jmp	short eb_exit	;exit if launch failed
 eb_cont:
   mov	eax,browser_out	;get file name
-  mov	dl,0ah		;simple file 
+  mov	dl,0ah		;simple file
   call	file_read
   clc
 eb_exit:
   ret
-  
+
 ;--------------
 ; verify entered name will not overwrite an existing file
 ;  input: file_path has name of new file
@@ -1563,7 +1563,7 @@ check_file:
   call	read_keys
   cmp	byte [kbuf],'y'
   je	cf_expected_err
-  mov	byte [result_flag],1    
+  mov	byte [result_flag],1
 cf_expected_err:
   pop	ebx
   js	cf_skip_close		;kludge, redesign someday
@@ -1594,7 +1594,7 @@ expand_filename:
   mov	edi,file_path
   call	move_asciiz
 ef_exit:
-  ret  
+  ret
 
 ; (#r#) replace text  ***********************************
 
@@ -1633,7 +1633,7 @@ far_1:
   mov	ecx,replace_again_prompt;get msg address
   call	display_color_at	;display message
 
-  mov	eax,[crt_cursor]	
+  mov	eax,[crt_cursor]
   call	move_cursor
   call	read_keys
   mov	al,[kbuf]		;get char.
@@ -1649,7 +1649,7 @@ replace_all:
   jmp	do_replace
 
 skip_replace:
-  jmp	far_againj  	
+  jmp	far_againj
 
 do_replace:
   mov	edi,[replace_ptr]		;restore old buffer ptr
@@ -1715,7 +1715,7 @@ st_3:	cmp	al,'d'
   jne	st_5
   mov	[tag_d],edi
 st_5:
-  ret	
+  ret
 
 ; (#u#) unused        ***********************************
 ; (#v#) unused        ***********************************
@@ -1766,7 +1766,7 @@ win_exit:
   call	other
   call	other
   ret
-	
+
 ; (#x#) eXchange/overtype *******************************
 
 xchange_mode:
@@ -1789,7 +1789,7 @@ find_back:
 
 
 ; (#^a#) delete right  ***********************************
-  
+
 delete_right:
   mov	edi,[editbuf_cursor_ptr]
 dr_10:
@@ -1800,7 +1800,7 @@ dr_10:
   jc	dr_done		;jmp if error
   jmp	dr_10
 dr_done:
-  ret  
+  ret
 
 ; (#^r#) hex input     ***********************************
 
@@ -1820,7 +1820,7 @@ hi_10:
   call	hex_to_byte		;returns char in -al-
   mov	byte [kbuf],al		;save new char for NormChar
   call	NormChar
-hi_exit:  
+hi_exit:
   ret
 
 ; (#^u#) restore deleteted line *************************
@@ -1836,7 +1836,7 @@ restore_line:
   mov	esi,buffercopy		;saved line location
   call	MoveBlock
   call	KeyHome
-  ret  
+  ret
 
 ; (#^x#) delete left   ***********************************
 
@@ -1851,7 +1851,7 @@ dl_10:
   jc	dl_done		;jmp if error
   jmp	dl_10
 dl_done:
-  ret  
+  ret
 
 ; (#^z#) delete line   ***********************************
 
@@ -1881,7 +1881,7 @@ dll_20:
   mov	esi,ebx			;line begin to esi
   mov	edi,buffercopy		;destination to edi
   call	MoveBlock
-dl_cut:  
+dl_cut:
   mov	edi,ebx			;get start of line
   mov	eax,[buffered_line_len]
   call	DeleteByte		;remove line
@@ -1981,7 +1981,7 @@ f_make20:
 ;
   mov	byte [file2_location],2  ;set flag saying file2 in temp file
   mov	byte [file2_change],20h
-    
+
   mov	byte [active_window],5	;get new mode
   mov	ebx,ver_a_status	;new dimensions for old window
   mov	ebp,ver_b_status	;get new window dimensions
@@ -1991,7 +1991,7 @@ f_make20:
 f3_exit:
   mov	byte [key_mode],0	;set command mode
   ret
-  
+
 ; (#f4#) debugger ***********************************
 bug_name  db	'|/usr/share/asmedit/a.f4|',0
 
@@ -2092,7 +2092,7 @@ f_common:
   mov	dl,22h			;file editbuf with $HOME/base file
   call	file_read
   add	eax,[editbuf_ptr]	;compute file_end_ptr
- 
+
   mov	[file_end_ptr],eax
   mov	byte [file_location],1	;set in memory state for file
   mov	byte [eax],0ah		;put 0ah at end of file
@@ -2119,9 +2119,9 @@ key_down:
 ;
 ; we are at end of file, check for special case, last line ends with 0ah
 ;
-  mov	edi,[file_end_ptr]	;force end point, it may have strayed 
+  mov	edi,[file_end_ptr]	;force end point, it may have strayed
   cmp	byte [edi -1],0ah
-  jne	kd_exit			;jmp if last line without 0ah at end  
+  jne	kd_exit			;jmp if last line without 0ah at end
 kd_05:
   mov	bl,[crt_cursor]
   call	check_cursor_column
@@ -2129,7 +2129,7 @@ kd_05:
   call	compute_cursor_data
 kd_exit:
   ret
-;--------------------------  
+;--------------------------
 
 key_up:
   cmp	dword [cursor_linenr],1
@@ -2287,7 +2287,7 @@ KeyHome:
   mov	esi,[editbuf_cursor_line_ptr]
   call	compute_cursor_data
   ret
-;---------------  
+;---------------
 KeyEnd:
   mov	edi,[editbuf_cursor_ptr]
   call	next_line
@@ -2318,7 +2318,7 @@ kd_insert_mode:
   call	KeyDel				;jmp if at top of screen
 kd_exitx:
   ret
-  
+
 ; delete key
 
 KeyDel:
@@ -2332,7 +2332,7 @@ kd_end:
   ret
 
 ; (#3#) keyboard processing ******************************
-  
+
 ;- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ; input: esi = prompt message
 ;        edi = string buffer
@@ -2376,7 +2376,7 @@ gs_2a:
 gs_3:
   mov	[str_ptr],esi		;point at end of string
 
-  mov	eax,[str_max_count]	;restore max string length  
+  mov	eax,[str_max_count]	;restore max string length
   add	eax,[str_begin]
   mov	[str_max],eax		;sav max str ptr
 
@@ -2392,10 +2392,10 @@ gs_4:
   cmp	edi,ecx
   jb	gs_4
 
-  mov	byte [edi],0		;put zero at end  
+  mov	byte [edi],0		;put zero at end
   mov	dword [edi-8],'ESC='
   mov	dword [edi-4],'done'
-    
+
   mov	eax,[status_color1]	;get color (change to status_color)
   mov	bh,[status_line_row]
   mov	bl,1			;column 1
@@ -2450,7 +2450,7 @@ gs_rubout:
   dec	dword [str_cursor]
   mov	cl,20h			;get char to display
   mov	eax,[status_color1]	;get display color
-  mov	ebx,[str_cursor]	;get display location  
+  mov	ebx,[str_cursor]	;get display location
   call	display_char_at
 gs_ignore1:
   jmp	gs_lpp			;try again
@@ -2496,14 +2496,14 @@ gs_17:
   mov	eax,[str_begin]		;reset pointer
   mov	[eax],bl		;stuff new char at front of buffer
   mov	dword [eax+1],0		;clear end of buffer
-  mov	[str_ptr],eax 
+  mov	[str_ptr],eax
   pop	eax
   sub	[str_cursor],al		;adjust cursor
   call	blank_field
-gs_18:  
-  inc	byte [get_string_flg]	;disable this logic till next entry 
+gs_18:
+  inc	byte [get_string_flg]	;disable this logic till next entry
   mov	eax,[status_color1]	;get display color
-  mov	ebx,[str_cursor]	;get display location  
+  mov	ebx,[str_cursor]	;get display location
   call	display_char_at
   mov	eax,[str_ptr]
   cmp	eax,[str_max]
@@ -2523,7 +2523,7 @@ gs_done:
   jnz	gs_end
   mov	cl,1			;allow zero length stings for replace cmd
 gs_end:
-  ret 
+  ret
 ;----------------------
 blanks_msg	db	'                       ',0
 blank_field:
@@ -2533,7 +2533,7 @@ blank_field:
   mov	ecx,blanks_msg		;get msg address
   call	display_color_at	;display message
   popa
-  ret   
+  ret
 ;----------------------
 ; get hex char inside string input
 ;  input: none
@@ -2549,7 +2549,7 @@ gs_get_hex:
   mov	[optbuffer+1],al
   mov	esi,optbuffer
   call	hex_to_byte
-  mov	[kbuf],al	;save result  
+  mov	[kbuf],al	;save result
   popa
   mov	al,[kbuf]
   ret
@@ -2577,7 +2577,7 @@ rk_20:
 ; normal key read
 ;
 rk_30:
-  call	poll_keyboard		;read keys to kbuf  
+  call	poll_keyboard		;read keys to kbuf
   call	mouse_check		;check if mouse data read
   call	save_macro_data
 rk_exit:
@@ -2644,7 +2644,7 @@ mp_exit:
   ret
 ;---------------------------------------------
 ; read keys to kbuf
-;  input: 
+;  input:
 ;  output: kbuf has keys
 ;
 poll_keyboard:
@@ -2699,7 +2699,7 @@ delay_struc:
   dd	8	;nanoeconds
   [section .text]
 
-  
+
 ;-----------------------
 ; format mouse data
 ;   input: kbuf has mouse escape sequenes
@@ -2707,7 +2707,7 @@ delay_struc:
 ;            xx - 20=left but  21=middle 22=right 23=release
 ;            yy - column+20h
 ;            zz - row + 20h
-;  output: kbuf = ff,button,column,row  
+;  output: kbuf = ff,button,column,row
 ;
 mouse_check:
 ;  mov	byte [ecx],0			;put zero at end of string
@@ -2735,7 +2735,7 @@ mouse_check:
   sub	al,20h
   stosb				;store row
 mc_exit:
-  ret 
+  ret
 ;---------------------------------------------
 ; are we in macro record mode?
 ;
@@ -2775,37 +2775,37 @@ smd_exit:
 lookup_key:
   mov	esi,keystring_tbl
   xor	ecx,ecx
-k1:	mov	edi,kbuf
+m1:	mov	edi,kbuf
   mov	al,byte [edi]		;get kbuf entry
   cmp	al,byte [esi]		;compare to keystring
-  je	k4			;initial char. match
-k2:	inc	esi
-k3:	cmp	byte [esi],0		;end of tbl entry
-  jne	k2			;loop if not end of tbl str
-k3a:	inc	esi
+  je	m4			;initial char. match
+m2:	inc	esi
+m3:	cmp	byte [esi],0		;end of tbl entry
+  jne	m2			;loop if not end of tbl str
+m3a:	inc	esi
   inc	ecx
   cmp	byte [esi],0		;check if end of table
-  jne	k1			;jmp if more strings
+  jne	m1			;jmp if more strings
   xor	ecx,ecx			;flag no match
-  jmp	k6
+  jmp	m6
 ;
 ; we have a match
 ;
-k4:	inc	esi
+m4:	inc	esi
   inc	edi
   mov	al,byte [edi]		;get next kbuf entry
   cmp	byte [esi],al		;match?
-  jne	k3			;jmp if no match
+  jne	m3			;jmp if no match
   cmp	al,0			;end of kbuf string
-  je	k5			;jmp if match at zero in both
+  je	m5			;jmp if match at zero in both
   cmp	byte [esi],0		;end of table string
-  jne	k4			;keep comparing if more data
+  jne	m4			;keep comparing if more data
 ;
 ; are we at end of this string
 
-  jmp	k3a		
-k5:	inc	ecx			;point ecx at match
-k6:	ret
+  jmp	m3a
+m5:	inc	ecx			;point ecx at match
+m6:	ret
 ;---------------------
 ; decode_key - look up processing for this key
 ;  input - kbuf - has char zero terminated
@@ -2841,8 +2841,8 @@ dk_end:	ret
 ; look up mouse processing table
 ;  input: [mouse_mode]
 ; output: esi = table address
-;    
-get_mouse_table:  
+;
+get_mouse_table:
   xor	eax,eax
   mov	al,[mouse_mode]
   shl	eax,2
@@ -2901,13 +2901,13 @@ me_50:
 ;
 me_51:
   cmp	bh,[status_line_row]
-  jne	me_90		;not button, go move cursor    
+  jne	me_90		;not button, go move cursor
 ;
 ; decode mouse click using tables for each mode
 ;
   call	get_mouse_table		;returns table in eax
   call	decode_mouse_button
-  jmp	short me_exit  
+  jmp	short me_exit
 ;
 ; we are inside active window, mouse_mode was inactive, move cursor?
 ;
@@ -2938,7 +2938,7 @@ me_92:
   mov	bl,[mouse_col]
   call	check_cursor_column
 me_96:
-me_exit:      
+me_exit:
   ret
 
 ;--------------------------------------
@@ -2973,8 +2973,8 @@ dmb_20:
 ;
 dmb_30:
   or	edx,edx
-  jz	dmb_exit	;exit if not entry  
-  mov	esi,ecx		;get pointer to label text  
+  jz	dmb_exit	;exit if not entry
+  mov	esi,ecx		;get pointer to label text
   call	edx
 dmb_exit:
   ret
@@ -3174,7 +3174,7 @@ sb_exit:
 ; check program parameters for file name, init files
 ;  input:   esi = pointer to stack pointers
 ;  outupt:
-;         
+;
 ;
 parse_command_line:
   lodsd				;get parameter count
@@ -3188,7 +3188,7 @@ parse_command_line:
   push	esi
   mov	esi,eax
 pcl_14:
-  mov	edi,file_path  
+  mov	edi,file_path
 pcl_16:
   call	move_asciiz		;save program name
   call	expand_filename		;expand filename
@@ -3203,7 +3203,7 @@ pcl_16:
 ;
 ; we have found file2 (place in templateB database)
 ;
-  mov	edi,file2_path  
+  mov	edi,file2_path
   call	move_asciiz		;   save program name
 pcl_30:
   mov	edx,_parse
@@ -3244,7 +3244,7 @@ get_history:
   mov	esi,history_filename
   call	move_asciiz
   mov	eax,33			;access kernel call
-  mov	ebx,ini_path         
+  mov	ebx,ini_path
   mov	ecx,4  			;check for read permission
   int	byte 80h
   or	eax,eax
@@ -3256,7 +3256,7 @@ get_history:
 rh_setup:
   mov	byte [config_code],'1'
   mov	esi,config_filename		;config program + first time flag
-  call	sys_ex       
+  call	sys_ex
 ;
 ; return codes are: 0 - normal return
 ;                   5 - user aborted setup
@@ -3309,7 +3309,7 @@ uc_read:			;**** entry point from get_history
   js	uc_exit			;exit if error
   mov	esi,[editbuf_ptr]
   add	dword [editbuf_cursor_ptr],esi	;convert relative value to absolute
-  mov	byte [active_window],0	
+  mov	byte [active_window],0
   mov	byte [file_location],1
   mov	byte [file_change],20h	;set unchanged status
 uc_exit:
@@ -3371,12 +3371,12 @@ ccd_15:
   dec	bh
   jnz	ccd_12			;loop till top of screen
   inc	esi			;move past 0ah to line start
-  dec	bl			
+  dec	bl
 ;
 ccd_20:
   mov	[crt_top_ptr],esi	;set display top ptr
-  add	bl,[win_loc_row]	
-  dec	bl			
+  add	bl,[win_loc_row]
+  dec	bl
   mov	[crt_cursor + 1],bl		;set row#
 ;
 ; now set column for display
@@ -3395,7 +3395,7 @@ ccd_20:
   sub	edx,eax
   mov	[crt_top_linenr],edx
 
-  ret  
+  ret
 ;-------------------------------
 ; set highlight flag is .asm file
 ;
@@ -3456,17 +3456,17 @@ whf_10:
 ;
   mov	ebx,version		;output data
   mov	eax,ini_path
-  mov	ecx,[editbuf_ptr]         
+  mov	ecx,[editbuf_ptr]
   sub	dword [editbuf_cursor_ptr],ecx	;make editbuf pointer relative
   mov	ecx,a_ini_size
   mov	dl,2
   call	file_write
   mov	ecx,[editbuf_ptr]
   add	dword [editbuf_cursor_ptr],ecx	;restore cursor ptr
-; we don't want error reporting if the /.asmide/edit  missing, 
+; we don't want error reporting if the /.asmide/edit  missing,
 ;  call	error_check
   ret
-  
+
 ; (#6#) edit buffer & cursor processing *************************
 
 
@@ -3643,7 +3643,7 @@ db_exit:
 ; insert character into file buffer
 ;  input: edi = cursor locaton
 ;         [file_end_ptr] = file end
-;         eax = 
+;         eax =
 Insert1Byte:
   xor eax,eax
 make_hole0:
@@ -3664,7 +3664,7 @@ make_hole:
   stc
 mh_ret:
   ret
-  
+
 SpaceAva:
   push edi
   mov esi,[file_end_ptr]
@@ -3747,7 +3747,7 @@ lpu_11:
 lpu_20:
   inc	edi
 lpu_21:
-  ret  
+  ret
 ;
 ;--------------------------------------
 ; compute pointer from line number
@@ -3767,7 +3767,7 @@ cpfl_lp:
   call	next_line
   dec	edx
   jnz	cpfl_lp
-cpfl_exit:    
+cpfl_exit:
   ret
 ;------------------------------
 ;----------------------------
@@ -3791,7 +3791,7 @@ ccr_match:
   add	al,[win_loc_row]
   mov	[crt_cursor +1],al	;store row
   pop	edi
-  ret  
+  ret
 ;-------------------------------
 ; center cursor line
 ;  input: edi = current cursor ptr
@@ -3822,7 +3822,7 @@ cc_11:
   jmp	cc_11
 cc_11a:
   mov	edi,[editbuf_ptr]
-cc_12:  
+cc_12:
   mov	[crt_top_ptr],edi
   call	compute_line
   mov	[crt_top_linenr],edx
@@ -3833,7 +3833,7 @@ cc_12:
   call	compute_line
   mov	[cursor_linenr],edx
   ret
-  
+
 ;---------------------------
 ; set paramaters from cursor column [crt_cursor]
 ; input: bl = cursor column (1 based)
@@ -3874,7 +3874,7 @@ ccr_50:
   mov	dword [editbuf_cursor_ptr],edi	;save cursor ptr
 ccr_exit:
   ret
-    
+
 ;-------------------------
 ; set paramaters from cursor pointer
 ; input: edi = pointer to cursor data
@@ -3883,7 +3883,7 @@ ccr_exit:
 ;         crt_cursor - updated column
 ;         editbuf_cursor_line_ptr
 ;         crt_left_column
-;         
+;
 set_cursor_from_ptr:
   push	edi
   mov	[editbuf_cursor_ptr],edi
@@ -3900,12 +3900,12 @@ ccp_05:
   je	ccp_50			;jmp if at match point
   cmp	byte [edi],09h		;check if on tab
   jne	ccp_20			;jmp if not tab
-  dec	eax		
+  dec	eax
 ccp_10:
   inc	eax
   test	al,07
   jnz	ccp_10			;skip for tab
-  inc	eax		
+  inc	eax
   jmp	ccp_32
 ccp_20:
   cmp	byte [edi],0ah		;check if at end of line
@@ -3948,7 +3948,7 @@ ccp_left:
 ;
 ccp_60:
   dec	eax				;convert to zero based
-  add	al,[win_loc_col]		
+  add	al,[win_loc_col]
   mov	byte [crt_cursor],al		;store column
   pop	edi
   ret
@@ -4009,7 +4009,7 @@ gl_exit:
 ; compute line number from pointer
 ;  input:  edi = cursor ptr
 ;  output: edx = line number
-;  
+;
 compute_line:
   push edi
   mov esi,[editbuf_ptr]		;get text start
@@ -4030,7 +4030,7 @@ cl_lp:
   sub eax,ecx			;eax = distance to end
   cmp edi,esi			;at cursor posn?
   jbe cl_lp			;loop till end
-  
+
   pop ecx
   pop edi
   ret
@@ -4127,12 +4127,12 @@ cp_30:
   mov	edi,esi
   pop	esi
 cp_exit:
-  ret  
-  
+  ret
+
 ;-----------------------------
 ; input al = data byte
 ; output ax = char
-;  
+;
 byte_to_hex:
   mov	ah,al
   shr	al,1
@@ -4173,7 +4173,7 @@ dtha_lp:
   pop	eax
   ret
 
-;---------------------------	
+;---------------------------
 ; hex ascii to binary
 ;  inputs:  esi = ptr to hex ascii
 ;  output:  ecx = binary hex value
@@ -4201,9 +4201,9 @@ ha_got:	shl	ebx,cl
 	jmp	ha_loop
 ha_exit:
 	mov	ecx,ebx
-	pop	ebx		
+	pop	ebx
 	pop	eax
-	ret	
+	ret
 
 ;- - - - - - - - - - - - - - -
 ; convert 2 hex ascii characters to 1 hex byte
@@ -4222,7 +4222,7 @@ hex_to_byte:
 at1_exit:
 	pop	ecx
 	ret
-;---------------------------	
+;---------------------------
 ; inputs:  ch = accumulator for hex
 ; output:  ch = hex nibble in lower portion
 ;
@@ -4245,8 +4245,8 @@ hn_got:	shl	ch,cl
 	jmp	hn_exit
 hn_abort:
 	stc
-hn_exit:		
-	ret	
+hn_exit:
+	ret
 
 ;-----------------------------------
 ; convert ascii to decimal
@@ -4373,9 +4373,9 @@ our_name:  db 'a',0
 
   [section .data]
 match_cnt:  db 0
-  [section .text]  
+  [section .text]
 ;---------------------------------------------------------------
-    
+
 ; (#9#) display handlers  **************************************
 ;---------------------
 ;
@@ -4528,7 +4528,7 @@ sd_56:				;vertical b
   mov	eax,dword [ver_b_loc_col]
   mov	dword [win_loc_col],eax
 
-sd_90:    
+sd_90:
   ret
 ;-----------------------------------
 vertical_bar:
@@ -4583,8 +4583,8 @@ drv_lp:
   inc	ah
   dec	byte [repeat_count]
   jnz	drv_lp
-  ret  
-  
+  ret
+
 ;---------------------------
 ; switch windows or files, called from "W" or "O" commands
 ;  input: ebx = ptr to window dimensions (style for old file)
@@ -4599,13 +4599,13 @@ switch_windows:
 ;
 ;  mov	esi,[editbuf_cursor_ptr]
 ;  call	compute_cursor_data		;
-  ret  
+  ret
 
 ;-------------------------------
 ; restore window
 ;  input:  ebp = style for restored window
 
-restore_window:    
+restore_window:
 ;
 ; get template for new window
 ;
@@ -4661,7 +4661,7 @@ af_read_temp:
   call	read_edit_file
   jmp	af_exit3
 af_exit2:
-  call	error_handler  
+  call	error_handler
 af_exit3:
   ret
 ;--------------------------------------------------------------
@@ -4684,7 +4684,7 @@ read_edit_file:
   test	edx,_resttmp
   jz	ref_04			;jmp if filename at file_path
   mov	eax,file_tmp_name
-  jmp	short ref_06		;jmp if read of temp file  
+  jmp	short ref_06		;jmp if read of temp file
 ref_04:
   cmp	byte [file_path],0
   jnz	ref_05			;jmp if name found
@@ -4729,7 +4729,7 @@ ref_10:
   mov	ebp,0644q		;default attributes
 ref_12:
   test	edx,_resttmp
-  jnz	ref_12a			;jmp to ignore temp file attributes  
+  jnz	ref_12a			;jmp to ignore temp file attributes
   mov	ecx,ebp			;move attributes
   mov	[file_attributes],cx	;save attributes
 ref_12a:
@@ -4756,7 +4756,7 @@ ref_13:
   jb	ref_20			;jmp if pointer wrong
   cmp	esi,eax
   jbe	ref_24			;jmp if pointer ok
-ref_20:    
+ref_20:
   mov	esi,[editbuf_ptr]
 ;
 ; setup editbuf_cursor_ptr
@@ -4772,7 +4772,7 @@ ref_50:
 ;
 ;---------------------------------------------------------------
 ; input: ebx = pointer to window dimensions for restored window
-; 
+;
 save_current_win:
   cld
   push	ebp
@@ -4850,7 +4850,7 @@ ds_1:
   mov	edi,lib_buf		;data storage area
   mov	bl,0			;get starting virtual column of cursor
   mov	ecx,[crt_left_column]	;scroll (file line) right count
-  mov	dl,[win_columns]	;dl=total columns 
+  mov	dl,[win_columns]	;dl=total columns
 ;
 ; registers: eax - scratch
 ;            ebx - bh=starting virtual row  bl=starting virtual column
@@ -4860,7 +4860,7 @@ ds_1:
 ;            edi - stuff pointer in lib_buf
 ;            ebp - buffer pointer to editbuf (file data)
 ;
-;            
+;
   call	check_color
 ds_2:
   cmp	ebp,[file_end_ptr]
@@ -4877,12 +4877,12 @@ ds_3a:
   mov	bl,0			;virtual column = 0
   call	display_line
   mov	edi,lib_buf		;restore data storage area
-  inc	bh			;move to next row  
-  mov	dl,[win_columns]	;dl=columns 
+  inc	bh			;move to next row
+  mov	dl,[win_columns]	;dl=columns
   dec	dh
   jnz	ds_3			;loop till done
   jmp	ds_exit			;exit if done
- 
+
 ds_4:
   call	check_color
   cmp	byte [ebp],0ah		;check if at end of line
@@ -4895,7 +4895,7 @@ ds_5:
   call	stuff_char
   jnz	ds_5			;loop till line filled
   jmp	ds_50
-  
+
 ds_10:
   mov	al,byte [ebp]		;get display char
   inc	ebp			;move to next char
@@ -4947,7 +4947,7 @@ dsl_55:
 ds_50:
   mov	bl,0			;virtual column = 0
   call	display_line
-  inc	bh			;move to next row  
+  inc	bh			;move to next row
   dec	dh
   jz	ds_exit			;exit if last row displayed
 ds_52:
@@ -4972,14 +4972,14 @@ ds_60:
 
 ds_exit:
   call	color_cursor
-  ret  
+  ret
 
 ;---------------------------
 display_line:
   push	ebx
   push	edx
   mov	ax,bx			;get cursor position
-  add	ax,word [win_loc_col]	;compute physical crt column  
+  add	ax,word [win_loc_col]	;compute physical crt column
   call	move_cursor
   mov	edx,edi			;get lib_buf ptr
   sub	edx,lib_buf		;compute lenght of string
@@ -4998,7 +4998,7 @@ display_line:
 ;          bl = virtual column
 ;          dl = screen size
 ; output: if (zero flag) end of line reached
-;         if (non zero flag) 
+;         if (non zero flag)
 ;             either character stored
 ;                 or ecx decremented if not at zero
 ;
@@ -5111,7 +5111,7 @@ isb_exit:
 ;
 color_cursor:
   mov	eax,[cursor_color]	;get color (change to status_color)
-  mov	bx,[crt_cursor]  
+  mov	bx,[crt_cursor]
   mov	ecx,[editbuf_cursor_ptr]	;get ptr to data
   mov	cl,[ecx]		;get char under cursor
   cmp	cl,0ah
@@ -5122,7 +5122,7 @@ cc_x05:
   mov	cl,' '
 cc_x10:
   call	display_char_at	;display message
-  ret  
+  ret
 ;---------------------------
 ; input - eax = aaxxffbb  (aa-attribute ff-foreground  bb-background)
 ;   30-black 31-red 32-green 33-brown 34-blue 35-purple 36-cyan 37-grey
@@ -5159,12 +5159,12 @@ ssl_1:
   call	color0
   mov	dword [edi],'mode'
   add	edi,4
-    
+
   mov	ecx,2
   call	spaces
 
   call	color1
-  mov	eax,[cursor_linenr]  
+  mov	eax,[cursor_linenr]
   call	stuff_decimal		;stuff line number
   call	color0
   mov	dword [edi],"line"
@@ -5182,7 +5182,7 @@ ssl_1:
   call	color0
   mov	dword [edi],'col '
   add	edi,4
-  
+
   mov	ecx,1
   call	spaces
 
@@ -5192,7 +5192,7 @@ ssl_1:
   call	byte_to_hex
   mov	word [edi],ax
   add	edi,2
-  call	color0  
+  call	color0
   mov  dword [edi],'hex '
   add	edi,4
 
@@ -5215,8 +5215,8 @@ ssl_08:
 
   mov	al,byte [file_change]
   stosb				;stuff change flag "*" or "space"
-  
-  call	color0  
+
+  call	color0
   mov esi,file_path		;get pointer to filename
 ;
 ; find end of filename, (setup to show filename without full path)
@@ -5247,7 +5247,7 @@ ssl_12:
 
   mov	ecx,3
   call	spaces
-  
+
   mov	dword [edi],' F1='
   add	edi,4
   mov	dword [edi],'help'
@@ -5271,11 +5271,11 @@ write_status_line:
   mov eax, 0x4			; system call 0x4 (write)
   mov ebx, stdout		; file desc. is stdout
   int 0x80
-  
+
   mov	eax,[crt_cursor]
   call	move_cursor
   ret
-  
+
 ;--------------------------------------
 ; now truncate status line if too long
 ;  output: edi = end pointer
@@ -5289,7 +5289,7 @@ ssl_50:
   cmp	al,1bh			;check for color code
   jne	ssl_51			;jmp if not color
   add	esi,13			;move past color code
-  jmp	ssl_50	
+  jmp	ssl_50
 ssl_51:
   cmp	al,0
   jne	ssl_52
@@ -5316,7 +5316,7 @@ ssl_54:
   stosb
   mov	ecx,13
   rep	movsb
-  jmp	ssl_54  
+  jmp	ssl_54
 ssl_55:
   ret
 ;------------------------
@@ -5339,7 +5339,7 @@ spaces:
   mov	al,' '
   stosb
   loop	spaces
-  ret  
+  ret
 ;--------------------------------------
 ; input: eax=binary
 ;output: edi=data ptr
@@ -5356,7 +5356,7 @@ stuff_decimal:
   inc	esi			;move to data
   rep	movsb
   ret
-    
+
 ;------------------
 ; make status line buttons
 ;  input:  esi = control table pointer
@@ -5393,7 +5393,7 @@ mb_40:
   stosb				;put zero at end of status line
   call	truncate_status_line
   call	write_status_line
-  ret    
+  ret
 ;---------------
 mouse_spaces:
   push	esi
@@ -5427,7 +5427,7 @@ display_color_at:
   pop	ecx
   call	display_asciiz
   ret
-  
+
 ;-------------------------------
 ; display_asciiz - output string
 ;  input: ecx - ponter to string
@@ -5437,12 +5437,12 @@ display_color_at:
 
 display_asciiz:
   xor edx, edx
-.count_again:	
+.count_again:
   cmp [ecx + edx], byte 0x0
   je .done_count
   inc edx
   jmp .count_again
-.done_count:	
+.done_count:
   mov eax, 0x4			; system call 0x4 (write)
   mov ebx, stdout			; file desc. is stdout
   int 0x80
@@ -5477,7 +5477,7 @@ dca_4:
   int 0x80
 
   ret
-  
+
 ;--------------------------
 ; input - eax = aaxxffbb  (aa-attribute ff-foreground  bb-background)
 ;   30-black 31-red 32-green 33-brown 34-blue 35-purple 36-cyan 37-grey
@@ -5491,7 +5491,7 @@ set_color:
   mov	byte [vcs_atr],al
   mov	ecx,vt100_color_str
   call	display_asciiz
-  ret  
+  ret
 ;--------------------------
 ; input al = column (1-xx)
 ;       ah = row    (1-xx)
@@ -5527,7 +5527,7 @@ to_entry:
   div	ecx
   or	dl,30h
   mov	byte [edi],dl
-  dec	edi  
+  dec	edi
   or	eax,eax
   jnz	to_entry
   ret
@@ -5542,9 +5542,9 @@ vt_column:
   db	'000'		;column
   db	'H',0
 vt100_end:
-  
+
  [section .text]
-  
+
 ;
 ;------------------------
 ; input: none
@@ -5619,7 +5619,7 @@ mi_exit:
 
 ;-------------------------------------------------
   [section .data]
-alloc_top: dd 0     
+alloc_top: dd 0
   [section .text]
 
 ;----------------------------------
@@ -5720,8 +5720,8 @@ m1_menu:
   dd	KeyPgDn		;pgdn
   db	'PGDN'
   db	0
-;---------------------------  
-  
+;---------------------------
+
 m2_quit:		;control table
   dd	0	;null process
 ; db	null	;no name
@@ -5730,7 +5730,7 @@ m2_quit:		;control table
   dd	m1mode
   db	'< back'
   db	2
-;  
+;
   dd	m_abort		;abort (deZert)
   db	'(Z)abort'	;QA
   db	2
@@ -5745,12 +5745,12 @@ m2_quit:		;control table
 ;
   dd	m_update
   db	'Update'	;QU
-  db	2 
+  db	2
 ;
   dd	m_write
   db	'saVe-as'	;QW
   db	0		;end of table
-  
+
 ;-----------------------
 m3_window:		;control table
   dd	0	;null process
@@ -5806,7 +5806,7 @@ m4_jump:		;control table
   dd	m4_tags4
   dB	'tag d'
   db	2
-; 
+;
   dd	m4_tag1
   db	'go a'
   db	1
@@ -5859,36 +5859,36 @@ m5_misc:		;control table
   dd	key_f5
   db	'F5'
   db	1
-  
+
 ;
   dd	key_f6
   db	'F6'
   db	1
-  
+
   dd	key_f7
   db	'F7'
   db	1
-  
+
   dd	key_f8
   db	'F8'
   db	1
-  
+
   dd	key_f9
   db	'F9'
   db	1
-  
+
   dd	key_fa
   db	'F10'
   db	1
-  
+
   dd	key_fb
   db	'F11'
   db	1
-  
+
   dd	key_fc
   db	'F12'
   db	0
-  
+
 ;-----------------------
 m6_edit:		;control table
   dd	0	;null process
@@ -5910,7 +5910,7 @@ m6_edit:		;control table
   dd	m6_hex
   db	'hex edit'
   db	0
-  
+
 ;-----------------------
 m7_find:		;control table
   dd	0	;null process
@@ -5932,7 +5932,7 @@ m7_find:		;control table
   dd	m7_replace
   db	'Replace'
   db	0
-  
+
 ;-----------------------
 m8_block:		;control table
   dd	0	;null process
@@ -6103,8 +6103,8 @@ keystring_tbl:
   db 'k',0		;86
   db 'l',0		;87
   db ';',0		;88
-  db 27h,0		;89 single quote 
-  db 0dh,0		;90  enter 
+  db 27h,0		;89 single quote
+  db 0dh,0		;90  enter
   db 'A',0		;91
   db 'S',0		;92
   db 'D',0		;93
@@ -6261,14 +6261,14 @@ cmd_index_tbl:
   db 00	;'s',0		;80
   db 76	;'d',0		;81 - delete block
   db 68	;'f',0		;82 - find forward- find
-  db 77	;'g',0		;83 -  (insert file) - 
+  db 77	;'g',0		;83 -  (insert file) -
   db 59	;'h',0		;84 - KeyHelp
   db 67	;'j',0		;85 - jump menu
   db 00	;'k',0		;86
   db 00	;'l',0		;87
   db 00	;';',0		;88
-  db 00	;'rquote',0	;89 single quote 
-  db 00	;'enter',0	;90  enter 
+  db 00	;'rquote',0	;89 single quote
+  db 00	;'enter',0	;90  enter
   db 00	;'A',0		;91
   db 40	;'S',0		;92
   db 26	;'D',0		;93
@@ -6300,7 +6300,7 @@ cmd_index_tbl:
   db 46	;'<',0		;119
   db 00	;'>',0		;120
   db 00	;'?',0		;121
-  db 46	;'space',0	;122 space - main menu 
+  db 46	;'space',0	;122 space - main menu
 ; the above are vt100, next is xterm unique keys
   db 59	;'f1',0		;123 F1 - help
   db 47	;'f2',0		;124 F2
@@ -6342,7 +6342,7 @@ cmd_index_tbl:
 ; edit mode uses this table to convert key presses into actions.
 ; each possible key press has associated action.  Raw data can be
 ;  processed with control-r command.
-;  
+;
 edit_index_tbl:
   db 72	;'esc',0	;1
   db 59	;'f1',0		;2
@@ -6432,8 +6432,8 @@ edit_index_tbl:
   db 63	;'k',0		;86
   db 63	;'l',0		;87
   db 63	;';',0		;88
-  db 63	;'rquote',0	;89 single quote 
-  db 63	;'enter',0	;90  enter 
+  db 63	;'rquote',0	;89 single quote
+  db 63	;'enter',0	;90  enter
   db 63	;'A',0		;91
   db 63	;'S',0		;92
   db 63	;'D',0		;93
@@ -6477,13 +6477,13 @@ edit_index_tbl:
   db 50	;'f3',0		;129 f3
   db 51	;'f4',0		;130 f4
   db 79	;'f5',0		;131 f5
-;appended keys  
+;appended keys
   db 63	;'enter',0	;132 enteri
   db 00 ;'ctrl-c',0	;133 ctrl-c
   db 35 ;'ctrl-x',0	;134 ctrl-x
   db 49 ; ctrl-u	;135 ctrl-u
   db 61 ; ctrl-r	;136 ctrl-r  -hex in
-  db 63 ; explamation   ;137 explamation  
+  db 63 ; explamation   ;137 explamation
   db 10 ; home		;138
   db 15	; end  		;139
   db 30 ; backspace     ;140
@@ -6540,13 +6540,13 @@ process_adr_tbl:
   dd m10mode	;28 help menu
   dd m6_insert  ;29
   dd KeyDell	;30 ^h pico ^h emac ^h ws - del char left
-  dd delete_line ;31 
+  dd delete_line ;31
   dd m4mode	;32 jump menu
   dd m4_line	;33 jump to line
   dd delete_right ;34 delete to end of line
   dd delete_left ;35 - delete to begining of line
   dd m5mode	;36 misc menu
-  dd m3_other	;37 
+  dd m3_other	;37
   dd m5_paragraph ;38
   dd m2mode	;39 quit menu
   dd m9mode	;40 setup menu
@@ -6573,15 +6573,15 @@ process_adr_tbl:
   dd hex_input	;61 ^r hex input
   dd paragraph 	;62 paragraph (p)
   dd NormChar	;63 tab, space, etc. - insert into buffer
-  dd 00		;64 KeySuspend	 
+  dd 00		;64 KeySuspend
   dd 00         ;65
   dd 0   	;66
-  dd jump_menu	;67  j jump - aedit jump menu 
-  dd find_forward ;68 f find - aedit find forward  
+  dd jump_menu	;67  j jump - aedit jump menu
+  dd find_forward ;68 f find - aedit find forward
   dd find_back	;69  - find - aedit find back
   dd again	;70 - again for find,replace,macros
   dd set_tag	;71 - set tag
-  dd set_cmd_mode ;72 - esc 
+  dd set_cmd_mode ;72 - esc
   dd xchange_mode ;73 - enter exchange mode
   dd insert_mode	;74 - enter insert mode
   dd 0     	;75 -
@@ -6621,7 +6621,7 @@ status_color1	dd 30003137h ;used for special data on status line
 status_color2	dd 31003331h ;used for error messags or macro record
 exit_screen_color dd 31003334h ;used for error messags on status line
 cursor_color	dd 30003137h
-;----------------------------------------------------------  
+;----------------------------------------------------------
 ; (#14#) database - misc command data *************************************
 
 
@@ -6656,7 +6656,7 @@ find_str	times (maxfilenamelen+1) db 0
 find_str_len 	dd	0
 find_ptr	dd	0
 ;
-; repeat data used by "again" command and others. 
+; repeat data used by "again" command and others.
 do_again_ck	dd	0	;used by macro repeat to watch cursor
 do_again_ck2	dd	0	;end of buffer ptr for repeat forever check
 macro_forever_flg	db	0	;0=disabled  2=macro forever
@@ -6702,7 +6702,7 @@ repeat_count	db	0
 
 editbuf_end	dd	0	;current end of editbuf
 buffered_line_len dd	0	;lenght of line cut with ^z
-result_flag	db	0	;output from check_file routine  
+result_flag	db	0	;output from check_file routine
 
 vt100_color_str:
   db	1bh,'['
@@ -6736,7 +6736,7 @@ target_cursor_linenr	dd	0
 target_top_linenr	dd	0
 special_status_msg_ptr	dd	0
 
-config_filename	db	'|/usr/share/asmedit/asmedit_setup|' 
+config_filename	db	'|/usr/share/asmedit/asmedit_setup|'
 config_code     db	'x',0
 
 ;----------------------------------------------------------------
@@ -6841,7 +6841,7 @@ win_rows_b	db	0	;total rows
 
 template_size	equ	$-file2_template
 win_template_size equ	$-win_type_b
-win_short_size	equ	$-status_line_row_b        
+win_short_size	equ	$-status_line_row_b
 ;--------------------------------------------------------------------------
 
 ;---------------------------------------------------------
@@ -6865,7 +6865,7 @@ path_flag	resb	1	;0=local executable (in current working dir)
 				;2=ename_ptr has path + name + parameters
                                 ;3=ename has name + parameters and pname has path
                                 ;4=ename has name + path base is $HOME/[base]
-				
+
 launch_flag	resb	1	;0=launch and wait for completion, 1=launch and continue
                                 ;2=launch and die
 ename_ptr	resd	1	;pointer to executable program name + parameters

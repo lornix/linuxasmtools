@@ -1,10 +1,9 @@
-all:	show_sys_err
-
-
-show_sys_err: show_sys_err.o
-	ld -oshow_sys_err show_sys_err.o
-
-show_sys_err.o: show_sys_err.asm
-	nasm -g -oshow_sys_err.o show_sys_err.asm
-
-
+include ../../Makefile.Common
+#
+all:	$(TARGETS)
+#
+$(OBJS):
+#
+clean:
+	-rm -f $(TARGETS) $(OBJS)
+#
